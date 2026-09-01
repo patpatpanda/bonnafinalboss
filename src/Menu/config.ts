@@ -165,6 +165,35 @@ export const Menu: GlobalConfig = {
 
               fields: [
                 {
+                  name: 'category',
+                  label: 'Kategori',
+                  type: 'select',
+                  required: true,
+                  defaultValue: 'soft-drinks',
+                  options: [
+                    {
+                      label: 'Öl',
+                      value: 'beer',
+                    },
+                    {
+                      label: 'Vin',
+                      value: 'wine',
+                    },
+                    {
+                      label: 'Alkoholfritt',
+                      value: 'alcohol-free',
+                    },
+                    {
+                      label: 'Läsk',
+                      value: 'soft-drinks',
+                    },
+                    {
+                      label: 'Övrigt',
+                      value: 'other',
+                    },
+                  ],
+                },
+                {
                   name: 'name',
                   label: 'Namn',
                   type: 'text',

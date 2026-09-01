@@ -1942,26 +1942,14 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  navItems?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
-        id?: string | null;
-      }[]
-    | null;
+  description?: string | null;
+  contactTitle?: string | null;
+  contactText?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  instagram?: string | null;
+  facebook?: string | null;
+  youtube?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2110,6 +2098,7 @@ export interface Menu {
   drinksText?: string | null;
   drinks?:
     | {
+        category: 'beer' | 'wine' | 'alcohol-free' | 'soft-drinks' | 'other';
         name: string;
         description?: string | null;
         price: number;
@@ -2148,20 +2137,14 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
-    | T
-    | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
-        id?: T;
-      };
+  description?: T;
+  contactTitle?: T;
+  contactText?: T;
+  phone?: T;
+  email?: T;
+  instagram?: T;
+  facebook?: T;
+  youtube?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2247,6 +2230,7 @@ export interface MenuSelect<T extends boolean = true> {
   drinks?:
     | T
     | {
+        category?: T;
         name?: T;
         description?: T;
         price?: T;

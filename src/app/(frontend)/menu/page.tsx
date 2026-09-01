@@ -25,6 +25,29 @@ export default async function MenuPage() {
   const activeDrinks =
     menu.drinks?.filter((drink) => drink.active !== false) || []
 
+  const drinkCategories = [
+    {
+      value: 'beer',
+      label: 'Öl',
+    },
+    {
+      value: 'wine',
+      label: 'Vin',
+    },
+    {
+      value: 'alcohol-free',
+      label: 'Alkoholfritt',
+    },
+    {
+      value: 'soft-drinks',
+      label: 'Läsk',
+    },
+    {
+      value: 'other',
+      label: 'Övrigt',
+    },
+  ]
+
   return (
     <main className="min-h-screen bg-[#0b0b0b] text-[#f4f0e8]">
 
@@ -71,12 +94,15 @@ export default async function MenuPage() {
         <section className="px-5 py-20 md:px-10 md:py-32">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
 
-            {/* BURGARBILD */}
             <div className="relative min-h-[500px] overflow-hidden md:min-h-[650px]">
               {burgerImage?.url ? (
                 <Image
                   src={burgerImage.url}
-                  alt={burgerImage.alt || menu.burgerName || 'Veckans burgare'}
+                  alt={
+                    burgerImage.alt ||
+                    menu.burgerName ||
+                    'Veckans burgare'
+                  }
                   fill
                   className="object-cover transition duration-700 hover:scale-105"
                 />
@@ -86,13 +112,11 @@ export default async function MenuPage() {
                 </div>
               )}
 
-              {/* VECKANS BADGE */}
               <div className="absolute left-0 top-0 bg-[#d7a52b] px-5 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#111111]">
                 Veckans
               </div>
             </div>
 
-            {/* BURGARINFO */}
             <div>
               <div className="flex items-center gap-4">
                 <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
@@ -190,7 +214,7 @@ export default async function MenuPage() {
         <section className="px-5 py-20 md:px-10 md:py-28">
           <div className="mx-auto max-w-5xl">
 
-            <div className="mb-12">
+            <div className="mb-14">
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
                 I glaset
               </p>
@@ -206,29 +230,53 @@ export default async function MenuPage() {
               )}
             </div>
 
-            <div className="grid gap-x-16 md:grid-cols-2">
-              {activeDrinks.map((drink, index) => (
-                <div
-                  key={drink.id || index}
-                  className="grid grid-cols-[1fr_auto] gap-5 border-t border-[#292929] py-6"
-                >
-                  <div>
-                    <h3 className="font-black uppercase tracking-[0.02em]">
-                      {drink.name}
-                    </h3>
+            <div className="space-y-16">
+              {drinkCategories.map((category) => {
+                const drinks = activeDrinks.filter(
+                  (drink) => drink.category === category.value,
+                )
 
-                    {drink.description && (
-                      <p className="mt-2 text-sm leading-6 text-[#77736c]">
-                        {drink.description}
-                      </p>
-                    )}
+                if (drinks.length === 0) {
+                  return null
+                }
+
+                return (
+                  <div key={category.value}>
+                    <div className="mb-6 flex items-center gap-5">
+                      <h3 className="text-xl font-black uppercase tracking-[0.08em] text-[#f4f0e8] md:text-2xl">
+                        {category.label}
+                      </h3>
+
+                      <span className="h-px flex-1 bg-[#292929]" />
+                    </div>
+
+                    <div className="grid gap-x-16 md:grid-cols-2">
+                      {drinks.map((drink, index) => (
+                        <div
+                          key={drink.id || index}
+                          className="grid grid-cols-[1fr_auto] gap-5 border-t border-[#292929] py-6"
+                        >
+                          <div>
+                            <h4 className="font-black uppercase tracking-[0.02em]">
+                              {drink.name}
+                            </h4>
+
+                            {drink.description && (
+                              <p className="mt-2 text-sm leading-6 text-[#77736c]">
+                                {drink.description}
+                              </p>
+                            )}
+                          </div>
+
+                          <span className="font-black text-[#d7a52b]">
+                            {drink.price} kr
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-
-                  <span className="font-black text-[#d7a52b]">
-                    {drink.price} kr
-                  </span>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>

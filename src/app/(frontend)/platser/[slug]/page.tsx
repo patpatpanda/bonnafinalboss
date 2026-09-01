@@ -171,22 +171,7 @@ export default async function LocationPage({ params }: PageProps) {
       )}
 
       {/* BOKNING CTA */}
-      <section className="border-t border-[#242424] px-5 py-20 text-center md:py-28">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
-          Kom hungrig
-        </p>
-
-        <h2 className="mt-5 text-4xl font-black uppercase tracking-[-0.04em] md:text-6xl">
-          Säkra ditt bord
-        </h2>
-
-        <a
-          href="/book"
-          className="mt-8 inline-block border border-[#d7a52b] bg-[#d7a52b] px-8 py-5 text-sm font-black uppercase tracking-[0.18em] text-[#111111] transition hover:bg-transparent hover:text-[#d7a52b]"
-        >
-          Boka bord
-        </a>
-      </section>
+      
 
     </main>
   )
