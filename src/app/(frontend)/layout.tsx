@@ -12,6 +12,7 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
+import BonnaHeader from '@/components/BonnaHeader'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -34,7 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }}
           />
 
-          <Header />
+        <BonnaHeader />
           {children}
           <Footer />
         </Providers>

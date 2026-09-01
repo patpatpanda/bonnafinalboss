@@ -1,4 +1,5 @@
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
