@@ -11,6 +11,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Locations } from './collections/Locations'
 import { Users } from './collections/Users'
+import { Menu } from './Menu/config'
 import { Bookings } from './collections/Bookings'
 import { Homepage } from './Homepage/config'
 import { OpeningHours } from './collections/OpeningHours'
@@ -100,6 +101,7 @@ export default buildConfig({
     Footer,
     BookingSettings,
     Homepage,
+    Menu,
   ],
 
   plugins,

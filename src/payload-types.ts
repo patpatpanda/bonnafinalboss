@@ -122,12 +122,14 @@ export interface Config {
     footer: Footer;
     'booking-settings': BookingSetting;
     homepage: Homepage;
+    menu: Menu;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'booking-settings': BookingSettingsSelect<false> | BookingSettingsSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
+    menu: MenuSelect<false> | MenuSelect<true>;
   };
   locale: null;
   widgets: {
@@ -2080,6 +2082,46 @@ export interface Homepage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu".
+ */
+export interface Menu {
+  id: number;
+  eyebrow?: string | null;
+  title: string;
+  intro?: string | null;
+  heroImage?: (number | null) | Media;
+  burgerActive?: boolean | null;
+  burgerEyebrow?: string | null;
+  burgerName: string;
+  burgerDescription?: string | null;
+  burgerPrice: number;
+  burgerImage?: (number | null) | Media;
+  sidesTitle?: string | null;
+  sides?:
+    | {
+        name: string;
+        description?: string | null;
+        price: number;
+        active?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  drinksTitle?: string | null;
+  drinksText?: string | null;
+  drinks?:
+    | {
+        name: string;
+        description?: string | null;
+        price: number;
+        active?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2171,6 +2213,46 @@ export interface HomepageSelect<T extends boolean = true> {
   shopImage?: T;
   shopButtonText?: T;
   shopButtonLink?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu_select".
+ */
+export interface MenuSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  intro?: T;
+  heroImage?: T;
+  burgerActive?: T;
+  burgerEyebrow?: T;
+  burgerName?: T;
+  burgerDescription?: T;
+  burgerPrice?: T;
+  burgerImage?: T;
+  sidesTitle?: T;
+  sides?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        price?: T;
+        active?: T;
+        id?: T;
+      };
+  drinksTitle?: T;
+  drinksText?: T;
+  drinks?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        price?: T;
+        active?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
