@@ -3,99 +3,109 @@ import type { CollectionConfig } from 'payload'
 export const OpeningHours: CollectionConfig = {
   slug: 'opening-hours',
 
+  labels: {
+    singular: 'Öppettid',
+    plural: 'Öppettider',
+  },
+
   admin: {
     useAsTitle: 'title',
+    defaultColumns: [
+      'title',
+      'location',
+      'startDate',
+      'endDate',
+      'active',
+    ],
   },
 
   fields: [
     {
       name: 'title',
+      label: 'Rubrik',
       type: 'text',
-      defaultValue: 'Ordinarie öppettider',
       required: true,
+      defaultValue: 'Ordinarie öppettider',
+      admin: {
+        description:
+          'Exempel: Ordinarie öppettider, Vecka 35–37 eller Semesterstängt.',
+      },
     },
+
     {
-      name: 'monday',
-      type: 'group',
+      name: 'location',
+      label: 'Plats',
+      type: 'relationship',
+      relationTo: 'locations',
+
+      // TILLFÄLLIGT FALSE UNDER MIGRERINGEN
+      required: false,
+
+      admin: {
+        description:
+          'Välj om öppettiderna gäller Ladan eller Saloonen.',
+      },
+    },
+
+    {
+      name: 'active',
+      label: 'Visa på hemsidan',
+      type: 'checkbox',
+      defaultValue: true,
+    },
+
+    {
+      type: 'row',
       fields: [
         {
-          name: 'closed',
-          type: 'checkbox',
-          defaultValue: false,
+          name: 'startDate',
+          label: 'Gäller från',
+          type: 'date',
+          admin: {
+            width: '50%',
+            date: {
+              pickerAppearance: 'dayOnly',
+            },
+          },
         },
+
         {
-          name: 'open',
-          type: 'text',
-        },
-        {
-          name: 'close',
-          type: 'text',
-        },
-      ],
-    },
-    {
-      name: 'tuesday',
-      type: 'group',
-      fields: [
-        {
-          name: 'closed',
-          type: 'checkbox',
-          defaultValue: false,
-        },
-        {
-          name: 'open',
-          type: 'text',
-        },
-        {
-          name: 'close',
-          type: 'text',
+          name: 'endDate',
+          label: 'Gäller till',
+          type: 'date',
+          admin: {
+            width: '50%',
+            date: {
+              pickerAppearance: 'dayOnly',
+            },
+          },
         },
       ],
     },
+
     {
-      name: 'wednesday',
-      type: 'group',
-      fields: [
-        { name: 'closed', type: 'checkbox', defaultValue: false },
-        { name: 'open', type: 'text' },
-        { name: 'close', type: 'text' },
-      ],
+      name: 'information',
+      label: 'Öppettider / information',
+      type: 'textarea',
+
+      // TILLFÄLLIGT FALSE UNDER MIGRERINGEN
+      required: false,
+
+      admin: {
+        description:
+          'Skriv fritt. Exempel: "Lördag–söndag 11:00–16:00" eller "Semesterstängt vecka 32–34".',
+      },
     },
+
     {
-      name: 'thursday',
-      type: 'group',
-      fields: [
-        { name: 'closed', type: 'checkbox', defaultValue: false },
-        { name: 'open', type: 'text' },
-        { name: 'close', type: 'text' },
-      ],
-    },
-    {
-      name: 'friday',
-      type: 'group',
-      fields: [
-        { name: 'closed', type: 'checkbox', defaultValue: false },
-        { name: 'open', type: 'text' },
-        { name: 'close', type: 'text' },
-      ],
-    },
-    {
-      name: 'saturday',
-      type: 'group',
-      fields: [
-        { name: 'closed', type: 'checkbox', defaultValue: false },
-        { name: 'open', type: 'text' },
-        { name: 'close', type: 'text' },
-      ],
-    },
-    {
-      name: 'sunday',
-      type: 'group',
-      fields: [
-        { name: 'closed', type: 'checkbox', defaultValue: false },
-        { name: 'open', type: 'text' },
-        { name: 'close', type: 'text' },
-      ],
+      name: 'priority',
+      label: 'Sorteringsordning',
+      type: 'number',
+      defaultValue: 0,
+      admin: {
+        description:
+          'Högre nummer kan användas för att visa viktigare information först.',
+      },
     },
   ],
 }

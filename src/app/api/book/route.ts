@@ -14,6 +14,21 @@ const dayNames = [
   'saturday',
 ] as const
 
+function timeToMinutes(time: string) {
+  const [hours, minutes] = time.split(':').map(Number)
+
+  return hours * 60 + minutes
+}
+
+function bookingsOverlap(
+  startA: number,
+  endA: number,
+  startB: number,
+  endB: number,
+) {
+  return startA < endB && startB < endA
+}
+
 export async function POST(request: Request) {
   const payload = await getPayload({ config })
 
@@ -29,7 +44,6 @@ export async function POST(request: Request) {
     message,
   } = body
 
-  // Kontrollera obligatoriska fält
   if (!date || !guests || !time || !name || !email || !phone) {
     return NextResponse.json(
       {
@@ -41,7 +55,6 @@ export async function POST(request: Request) {
 
   const guestCount = Number(guests)
 
-  // Kontrollera antal gäster
   if (!Number.isFinite(guestCount)) {
     return NextResponse.json(
       {
@@ -51,7 +64,6 @@ export async function POST(request: Request) {
     )
   }
 
-  // Kontrollera datum
   const selectedDate = new Date(`${date}T12:00:00`)
 
   if (Number.isNaN(selectedDate.getTime())) {
@@ -63,7 +75,6 @@ export async function POST(request: Request) {
     )
   }
 
-  // Förhindra bokning bakåt i tiden
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
@@ -76,12 +87,10 @@ export async function POST(request: Request) {
     )
   }
 
-  // Hämta bokningsinställningar
   const settings = await payload.findGlobal({
     slug: 'booking-settings',
   })
 
-  // Kontrollera max antal personer per bokning
   if (
     guestCount < 1 ||
     guestCount > settings.maxGuestsPerBooking
@@ -94,10 +103,16 @@ export async function POST(request: Request) {
     )
   }
 
-  // Kontrollera att vald veckodag är bokningsbar
   const selectedDay = dayNames[selectedDate.getDay()]
 
-  if (!settings.bookableDays?.includes(selectedDay)) {
+  const daySettings = settings[selectedDay]
+
+  if (
+    !daySettings ||
+    !daySettings.bookable ||
+    !daySettings.firstBookingTime ||
+    !daySettings.lastBookingTime
+  ) {
     return NextResponse.json(
       {
         error: 'Restaurangen tar inte emot bokningar den dagen.',
@@ -106,7 +121,6 @@ export async function POST(request: Request) {
     )
   }
 
-  // Hämta eventuella bokningsundantag
   const exceptions = await payload.find({
     collection: 'booking-exceptions',
     where: {
@@ -114,10 +128,10 @@ export async function POST(request: Request) {
         equals: date,
       },
     },
+    limit: 100,
   })
 
-  // Kontrollera om hela dagen är blockerad
-  const fullDayException = exceptions.docs.find(
+  const fullDayException = exceptions.docs.some(
     (exception) => exception.type === 'full-day',
   )
 
@@ -130,7 +144,6 @@ export async function POST(request: Request) {
     )
   }
 
-  // Samla alla specifikt blockerade tider
   const blockedTimes: string[] = exceptions.docs
     .filter(
       (exception) =>
@@ -141,7 +154,6 @@ export async function POST(request: Request) {
         exception.blockedTimes || [],
     )
 
-  // Kontrollera att vald tid inte är blockerad
   if (blockedTimes.includes(time)) {
     return NextResponse.json(
       {
@@ -151,14 +163,12 @@ export async function POST(request: Request) {
     )
   }
 
-  // Generera tillåtna bokningstider
   const validTimes = generateBookingTimes(
-    settings.firstBookingTime,
-    settings.lastBookingTime,
+    daySettings.firstBookingTime,
+    daySettings.lastBookingTime,
     settings.intervalMinutes,
   )
 
-  // Kontrollera att vald tid är giltig
   if (!validTimes.includes(time)) {
     return NextResponse.json(
       {
@@ -168,20 +178,30 @@ export async function POST(request: Request) {
     )
   }
 
-  // Hämta befintliga bokningar på samma datum och tid
+  const configuredDuration = Number(
+    settings.bookingDurationMinutes,
+  )
+
+  const durationMinutes =
+    Number.isFinite(configuredDuration) &&
+    configuredDuration > 0
+      ? configuredDuration
+      : 90
+
+  const candidateStart =
+    timeToMinutes(time)
+
+  const candidateEnd =
+    candidateStart + durationMinutes
+
   const existingBookings = await payload.find({
     collection: 'bookings',
-    limit: 100,
+    limit: 500,
     where: {
       and: [
         {
           date: {
             equals: date,
-          },
-        },
-        {
-          time: {
-            equals: time,
           },
         },
         {
@@ -193,33 +213,89 @@ export async function POST(request: Request) {
     },
   })
 
-  // Räkna redan bokade gäster
-  const alreadyBookedGuests = existingBookings.docs.reduce(
-    (total, booking) =>
-      total + booking.guests,
-    0,
-  )
+  const overlappingBookings =
+    existingBookings.docs.filter((booking) => {
+      if (!booking.time) {
+        return false
+      }
 
-  // Kontrollera kapacitet
-  if (
-    alreadyBookedGuests + guestCount >
-    settings.maxGuestsPerSlot
+      const existingStart =
+        timeToMinutes(booking.time)
+
+      const existingDuration =
+        Number(booking.durationMinutes) ||
+        durationMinutes
+
+      const existingEnd =
+        existingStart + existingDuration
+
+      return bookingsOverlap(
+        candidateStart,
+        candidateEnd,
+        existingStart,
+        existingEnd,
+      )
+    })
+
+  for (
+    let slotStart = candidateStart;
+    slotStart < candidateEnd;
+    slotStart += settings.intervalMinutes
   ) {
-    return NextResponse.json(
-      {
-        error: 'Det finns inte tillräckligt med plats på den valda tiden.',
-      },
-      { status: 400 },
-    )
+    const slotEnd =
+      slotStart + settings.intervalMinutes
+
+    const guestsAtThisTime =
+      overlappingBookings
+        .filter((booking) => {
+          if (!booking.time) {
+            return false
+          }
+
+          const existingStart =
+            timeToMinutes(booking.time)
+
+          const existingDuration =
+            Number(booking.durationMinutes) ||
+            durationMinutes
+
+          const existingEnd =
+            existingStart + existingDuration
+
+          return bookingsOverlap(
+            slotStart,
+            slotEnd,
+            existingStart,
+            existingEnd,
+          )
+        })
+        .reduce(
+          (total, booking) =>
+            total + Number(booking.guests || 0),
+          0,
+        )
+
+    if (
+      guestsAtThisTime + guestCount >
+      settings.maxGuestsPerSlot
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            'Det finns inte tillräckligt med plats under hela den valda bokningstiden.',
+        },
+        { status: 400 },
+      )
+    }
   }
 
-  // Skapa bokningen
   const booking = await payload.create({
     collection: 'bookings',
     data: {
       date,
       guests: guestCount,
       time,
+      durationMinutes,
       name,
       email,
       phone,
@@ -228,44 +304,43 @@ export async function POST(request: Request) {
     },
   })
 
-  // Skicka bekräftelse till gästen
- await payload.sendEmail({
-  to: email,
-  subject: 'Din bordsbokning är bekräftad',
-  html: `
-    <h1>Din bokning är bekräftad!</h1>
+  await payload.sendEmail({
+    to: email,
+    subject: 'Din bordsbokning är bekräftad',
+    html: `
+      <h1>Din bokning är bekräftad!</h1>
 
-    <p>Hej ${name},</p>
+      <p>Hej ${name},</p>
 
-    <p>Din bordsbokning är nu bekräftad.</p>
+      <p>Din bordsbokning är nu bekräftad.</p>
 
-    <p>
-      <strong>Datum:</strong> ${date}<br />
-      <strong>Tid:</strong> ${time}<br />
-      <strong>Antal personer:</strong> ${guestCount}
-    </p>
+      <p>
+        <strong>Datum:</strong> ${date}<br />
+        <strong>Tid:</strong> ${time}<br />
+        <strong>Antal personer:</strong> ${guestCount}<br />
+        <strong>Bokningstid:</strong> ${durationMinutes} minuter
+      </p>
 
-    <p>Vi ser fram emot att träffa er!</p>
-  `,
-})
+      <p>Vi ser fram emot att träffa er!</p>
+    `,
+  })
 
-  // Skicka information till restaurangen
-  const restaurantEmail = process.env.RESTAURANT_EMAIL
+  const restaurantEmail =
+    process.env.RESTAURANT_EMAIL
 
   if (restaurantEmail) {
     await payload.sendEmail({
       to: restaurantEmail,
       subject: `Ny bekräftad bokning - ${date} ${time}`,
       html: `
-        <h1>Ny bordsbokning</h1>
-
-        <p>En ny bokning har kommit in.</p>
+        <h1>Ny bekräftad bordsbokning</h1>
 
         <h2>Bokningsinformation</h2>
 
         <p>
           <strong>Datum:</strong> ${date}<br />
           <strong>Tid:</strong> ${time}<br />
+          <strong>Bokningstid:</strong> ${durationMinutes} minuter<br />
           <strong>Antal personer:</strong> ${guestCount}
         </p>
 

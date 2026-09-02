@@ -14,6 +14,21 @@ const dayNames = [
   'saturday',
 ] as const
 
+function timeToMinutes(time: string) {
+  const [hours, minutes] = time.split(':').map(Number)
+
+  return hours * 60 + minutes
+}
+
+function bookingsOverlap(
+  startA: number,
+  endA: number,
+  startB: number,
+  endB: number,
+) {
+  return startA < endB && startB < endA
+}
+
 export async function GET(request: Request) {
   const payload = await getPayload({ config })
 
@@ -22,41 +37,72 @@ export async function GET(request: Request) {
   const date = searchParams.get('date')
   const guests = Number(searchParams.get('guests'))
 
-  // Kontrollera input
-  if (!date || !guests) {
+  if (!date || !Number.isFinite(guests)) {
     return NextResponse.json(
-      { error: 'Datum och antal personer krävs.' },
-      { status: 400 },
+      {
+        error: 'Datum och antal personer krävs.',
+      },
+      {
+        status: 400,
+      },
     )
   }
 
-  // Hämta bokningsinställningarna
   const settings = await payload.findGlobal({
     slug: 'booking-settings',
   })
 
-  // Kontrollera antal personer
   if (
     guests < 1 ||
     guests > settings.maxGuestsPerBooking
   ) {
     return NextResponse.json(
-      { error: 'Ogiltigt antal personer.' },
-      { status: 400 },
+      {
+        error: `Max ${settings.maxGuestsPerBooking} personer per bokning.`,
+      },
+      {
+        status: 400,
+      },
     )
   }
 
-  // Kontrollera att vald veckodag är bokningsbar
   const selectedDate = new Date(`${date}T12:00:00`)
-  const selectedDay = dayNames[selectedDate.getDay()]
 
-  if (!settings.bookableDays?.includes(selectedDay)) {
+  if (Number.isNaN(selectedDate.getTime())) {
+    return NextResponse.json(
+      {
+        error: 'Ogiltigt datum.',
+      },
+      {
+        status: 400,
+      },
+    )
+  }
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  if (selectedDate < today) {
     return NextResponse.json({
       availableTimes: [],
     })
   }
 
-  // Hämta eventuella undantag för datumet
+  const selectedDay = dayNames[selectedDate.getDay()]
+
+  const daySettings = settings[selectedDay]
+
+  if (
+    !daySettings ||
+    !daySettings.bookable ||
+    !daySettings.firstBookingTime ||
+    !daySettings.lastBookingTime
+  ) {
+    return NextResponse.json({
+      availableTimes: [],
+    })
+  }
+
   const exceptions = await payload.find({
     collection: 'booking-exceptions',
     where: {
@@ -64,38 +110,45 @@ export async function GET(request: Request) {
         equals: date,
       },
     },
+    limit: 100,
   })
 
-  // Om hela dagen är blockerad
-  const fullDayException = exceptions.docs.find(
+  const fullDayBlocked = exceptions.docs.some(
     (exception) => exception.type === 'full-day',
   )
 
-  if (fullDayException) {
+  if (fullDayBlocked) {
     return NextResponse.json({
       availableTimes: [],
     })
   }
 
-  // Samla alla blockerade tider för datumet
- const blockedTimes: string[] = exceptions.docs
-  .filter(
-    (exception) =>
-      exception.type === 'specific-times',
-  )
-  .flatMap(
-    (exception) =>
-      exception.blockedTimes || [],
-  )
+  const blockedTimes: string[] = exceptions.docs
+    .filter(
+      (exception) =>
+        exception.type === 'specific-times',
+    )
+    .flatMap(
+      (exception) =>
+        exception.blockedTimes || [],
+    )
 
-  // Generera alla normala bokningstider
   const allTimes = generateBookingTimes(
-    settings.firstBookingTime,
-    settings.lastBookingTime,
+    daySettings.firstBookingTime,
+    daySettings.lastBookingTime,
     settings.intervalMinutes,
   )
 
-  // Hämta befintliga bokningar för datumet
+  const configuredDuration = Number(
+    settings.bookingDurationMinutes,
+  )
+
+  const durationMinutes =
+    Number.isFinite(configuredDuration) &&
+    configuredDuration > 0
+      ? configuredDuration
+      : 90
+
   const bookings = await payload.find({
     collection: 'bookings',
     limit: 500,
@@ -115,28 +168,91 @@ export async function GET(request: Request) {
     },
   })
 
-  // Filtrera fram tider som faktiskt är tillgängliga
-  const availableTimes = allTimes.filter((time) => {
-    // Blockerad manuellt via undantag
-    if (blockedTimes.includes(time)) {
-      return false
-    }
+  const availableTimes = allTimes.filter(
+    (candidateTime) => {
+      if (blockedTimes.includes(candidateTime)) {
+        return false
+      }
 
-    // Räkna hur många gäster som redan är bokade
-    const bookedGuests = bookings.docs
-      .filter((booking) => booking.time === time)
-      .reduce(
-        (total, booking) =>
-          total + booking.guests,
-        0,
-      )
+      const candidateStart =
+        timeToMinutes(candidateTime)
 
-    // Kontrollera att den nya bokningen får plats
-    return (
-      bookedGuests + guests <=
-      settings.maxGuestsPerSlot
-    )
-  })
+      const candidateEnd =
+        candidateStart + durationMinutes
+
+      const overlappingBookings =
+        bookings.docs.filter((booking) => {
+          if (!booking.time) {
+            return false
+          }
+
+          const existingStart =
+            timeToMinutes(booking.time)
+
+          const existingDuration =
+            Number(booking.durationMinutes) ||
+            durationMinutes
+
+          const existingEnd =
+            existingStart + existingDuration
+
+          return bookingsOverlap(
+            candidateStart,
+            candidateEnd,
+            existingStart,
+            existingEnd,
+          )
+        })
+
+      for (
+        let slotStart = candidateStart;
+        slotStart < candidateEnd;
+        slotStart += settings.intervalMinutes
+      ) {
+        const slotEnd =
+          slotStart + settings.intervalMinutes
+
+        const bookedGuestsAtThisTime =
+          overlappingBookings
+            .filter((booking) => {
+              if (!booking.time) {
+                return false
+              }
+
+              const existingStart =
+                timeToMinutes(booking.time)
+
+              const existingDuration =
+                Number(booking.durationMinutes) ||
+                durationMinutes
+
+              const existingEnd =
+                existingStart + existingDuration
+
+              return bookingsOverlap(
+                slotStart,
+                slotEnd,
+                existingStart,
+                existingEnd,
+              )
+            })
+            .reduce(
+              (total, booking) =>
+                total + Number(booking.guests || 0),
+              0,
+            )
+
+        if (
+          bookedGuestsAtThisTime + guests >
+          settings.maxGuestsPerSlot
+        ) {
+          return false
+        }
+      }
+
+      return true
+    },
+  )
 
   return NextResponse.json({
     availableTimes,

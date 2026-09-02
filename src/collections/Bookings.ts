@@ -10,7 +10,14 @@ export const Bookings: CollectionConfig = {
 
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['date', 'time', 'name', 'guests', 'status'],
+    defaultColumns: [
+      'date',
+      'time',
+      'name',
+      'guests',
+      'durationMinutes',
+      'status',
+    ],
   },
 
   fields: [
@@ -20,18 +27,21 @@ export const Bookings: CollectionConfig = {
       type: 'text',
       required: true,
     },
+
     {
       name: 'email',
       label: 'E-post',
       type: 'email',
       required: true,
     },
+
     {
       name: 'phone',
       label: 'Telefonnummer',
       type: 'text',
       required: true,
     },
+
     {
       name: 'date',
       label: 'Datum',
@@ -43,12 +53,14 @@ export const Bookings: CollectionConfig = {
         },
       },
     },
+
     {
       name: 'time',
       label: 'Tid',
       type: 'text',
       required: true,
     },
+
     {
       name: 'guests',
       label: 'Antal personer',
@@ -56,11 +68,30 @@ export const Bookings: CollectionConfig = {
       required: true,
       min: 1,
     },
+
+    // =========================
+    // BOKNINGSLÄNGD
+    // =========================
+
+    {
+      name: 'durationMinutes',
+      label: 'Bokningslängd',
+      type: 'number',
+      required: true,
+      defaultValue: 90,
+      min: 30,
+      admin: {
+        description:
+          'Hur många minuter bordet är reserverat för den här bokningen.',
+      },
+    },
+
     {
       name: 'message',
       label: 'Meddelande',
       type: 'textarea',
     },
+
     {
       name: 'status',
       label: 'Status',

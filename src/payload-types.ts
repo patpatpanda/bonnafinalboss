@@ -792,42 +792,67 @@ export interface Form {
  */
 export interface OpeningHour {
   id: number;
+  /**
+   * Exempel: Ordinarie öppettider, Vecka 35–37 eller Semesterstängt.
+   */
   title: string;
-  monday?: {
-    closed?: boolean | null;
-    open?: string | null;
-    close?: string | null;
-  };
-  tuesday?: {
-    closed?: boolean | null;
-    open?: string | null;
-    close?: string | null;
-  };
-  wednesday?: {
-    closed?: boolean | null;
-    open?: string | null;
-    close?: string | null;
-  };
-  thursday?: {
-    closed?: boolean | null;
-    open?: string | null;
-    close?: string | null;
-  };
-  friday?: {
-    closed?: boolean | null;
-    open?: string | null;
-    close?: string | null;
-  };
-  saturday?: {
-    closed?: boolean | null;
-    open?: string | null;
-    close?: string | null;
-  };
-  sunday?: {
-    closed?: boolean | null;
-    open?: string | null;
-    close?: string | null;
-  };
+  /**
+   * Välj om öppettiderna gäller Ladan eller Saloonen.
+   */
+  location?: (number | null) | Location;
+  active?: boolean | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  /**
+   * Skriv fritt. Exempel: "Lördag–söndag 11:00–16:00" eller "Semesterstängt vecka 32–34".
+   */
+  information?: string | null;
+  /**
+   * Högre nummer kan användas för att visa viktigare information först.
+   */
+  priority?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+  id: number;
+  name: string;
+  /**
+   * Exempel: ladan eller saloonen. Använd små bokstäver och inga mellanslag.
+   */
+  slug: string;
+  active?: boolean | null;
+  shortDescription: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  heroImage?: (number | null) | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  ctaText?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -843,6 +868,10 @@ export interface Booking {
   date: string;
   time: string;
   guests: number;
+  /**
+   * Hur många minuter bordet är reserverat för den här bokningen.
+   */
+  durationMinutes: number;
   message?: string | null;
   status: 'pending' | 'confirmed' | 'cancelled';
   updatedAt: string;
@@ -886,48 +915,6 @@ export interface BookingException {
       )[]
     | null;
   reason: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "locations".
- */
-export interface Location {
-  id: number;
-  name: string;
-  /**
-   * Exempel: ladan eller saloonen. Använd små bokstäver och inga mellanslag.
-   */
-  slug: string;
-  active?: boolean | null;
-  shortDescription: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  heroImage?: (number | null) | Media;
-  gallery?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  address?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  ctaText?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1528,55 +1515,12 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface OpeningHoursSelect<T extends boolean = true> {
   title?: T;
-  monday?:
-    | T
-    | {
-        closed?: T;
-        open?: T;
-        close?: T;
-      };
-  tuesday?:
-    | T
-    | {
-        closed?: T;
-        open?: T;
-        close?: T;
-      };
-  wednesday?:
-    | T
-    | {
-        closed?: T;
-        open?: T;
-        close?: T;
-      };
-  thursday?:
-    | T
-    | {
-        closed?: T;
-        open?: T;
-        close?: T;
-      };
-  friday?:
-    | T
-    | {
-        closed?: T;
-        open?: T;
-        close?: T;
-      };
-  saturday?:
-    | T
-    | {
-        closed?: T;
-        open?: T;
-        close?: T;
-      };
-  sunday?:
-    | T
-    | {
-        closed?: T;
-        open?: T;
-        close?: T;
-      };
+  location?: T;
+  active?: T;
+  startDate?: T;
+  endDate?: T;
+  information?: T;
+  priority?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1591,6 +1535,7 @@ export interface BookingsSelect<T extends boolean = true> {
   date?: T;
   time?: T;
   guests?: T;
+  durationMinutes?: T;
   message?: T;
   status?: T;
   updatedAt?: T;
@@ -1960,61 +1905,418 @@ export interface Footer {
 export interface BookingSetting {
   id: number;
   maxGuestsPerBooking: number;
+  /**
+   * Max antal gäster som kan vara bokade samtidigt.
+   */
   maxGuestsPerSlot: number;
-  firstBookingTime:
-    | '10:00'
-    | '10:30'
-    | '11:00'
-    | '11:30'
-    | '12:00'
-    | '12:30'
-    | '13:00'
-    | '13:30'
-    | '14:00'
-    | '14:30'
-    | '15:00'
-    | '15:30'
-    | '16:00'
-    | '16:30'
-    | '17:00'
-    | '17:30'
-    | '18:00'
-    | '18:30'
-    | '19:00'
-    | '19:30'
-    | '20:00'
-    | '20:30'
-    | '21:00'
-    | '21:30'
-    | '22:00';
-  lastBookingTime:
-    | '10:00'
-    | '10:30'
-    | '11:00'
-    | '11:30'
-    | '12:00'
-    | '12:30'
-    | '13:00'
-    | '13:30'
-    | '14:00'
-    | '14:30'
-    | '15:00'
-    | '15:30'
-    | '16:00'
-    | '16:30'
-    | '17:00'
-    | '17:30'
-    | '18:00'
-    | '18:30'
-    | '19:00'
-    | '19:30'
-    | '20:00'
-    | '20:30'
-    | '21:00'
-    | '21:30'
-    | '22:00';
+  /**
+   * Exempel: 30 innebär 11:00, 11:30, 12:00 osv.
+   */
   intervalMinutes: number;
-  bookableDays: ('monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday')[];
+  bookingDurationMinutes: '60' | '90' | '120' | '150' | '180';
+  monday?: {
+    bookable?: boolean | null;
+    firstBookingTime?:
+      | (
+          | '10:00'
+          | '10:30'
+          | '11:00'
+          | '11:30'
+          | '12:00'
+          | '12:30'
+          | '13:00'
+          | '13:30'
+          | '14:00'
+          | '14:30'
+          | '15:00'
+          | '15:30'
+          | '16:00'
+          | '16:30'
+          | '17:00'
+          | '17:30'
+          | '18:00'
+          | '18:30'
+          | '19:00'
+          | '19:30'
+          | '20:00'
+          | '20:30'
+          | '21:00'
+          | '21:30'
+          | '22:00'
+        )
+      | null;
+    lastBookingTime?:
+      | (
+          | '10:00'
+          | '10:30'
+          | '11:00'
+          | '11:30'
+          | '12:00'
+          | '12:30'
+          | '13:00'
+          | '13:30'
+          | '14:00'
+          | '14:30'
+          | '15:00'
+          | '15:30'
+          | '16:00'
+          | '16:30'
+          | '17:00'
+          | '17:30'
+          | '18:00'
+          | '18:30'
+          | '19:00'
+          | '19:30'
+          | '20:00'
+          | '20:30'
+          | '21:00'
+          | '21:30'
+          | '22:00'
+        )
+      | null;
+  };
+  tuesday?: {
+    bookable?: boolean | null;
+    firstBookingTime?:
+      | (
+          | '10:00'
+          | '10:30'
+          | '11:00'
+          | '11:30'
+          | '12:00'
+          | '12:30'
+          | '13:00'
+          | '13:30'
+          | '14:00'
+          | '14:30'
+          | '15:00'
+          | '15:30'
+          | '16:00'
+          | '16:30'
+          | '17:00'
+          | '17:30'
+          | '18:00'
+          | '18:30'
+          | '19:00'
+          | '19:30'
+          | '20:00'
+          | '20:30'
+          | '21:00'
+          | '21:30'
+          | '22:00'
+        )
+      | null;
+    lastBookingTime?:
+      | (
+          | '10:00'
+          | '10:30'
+          | '11:00'
+          | '11:30'
+          | '12:00'
+          | '12:30'
+          | '13:00'
+          | '13:30'
+          | '14:00'
+          | '14:30'
+          | '15:00'
+          | '15:30'
+          | '16:00'
+          | '16:30'
+          | '17:00'
+          | '17:30'
+          | '18:00'
+          | '18:30'
+          | '19:00'
+          | '19:30'
+          | '20:00'
+          | '20:30'
+          | '21:00'
+          | '21:30'
+          | '22:00'
+        )
+      | null;
+  };
+  wednesday?: {
+    bookable?: boolean | null;
+    firstBookingTime?:
+      | (
+          | '10:00'
+          | '10:30'
+          | '11:00'
+          | '11:30'
+          | '12:00'
+          | '12:30'
+          | '13:00'
+          | '13:30'
+          | '14:00'
+          | '14:30'
+          | '15:00'
+          | '15:30'
+          | '16:00'
+          | '16:30'
+          | '17:00'
+          | '17:30'
+          | '18:00'
+          | '18:30'
+          | '19:00'
+          | '19:30'
+          | '20:00'
+          | '20:30'
+          | '21:00'
+          | '21:30'
+          | '22:00'
+        )
+      | null;
+    lastBookingTime?:
+      | (
+          | '10:00'
+          | '10:30'
+          | '11:00'
+          | '11:30'
+          | '12:00'
+          | '12:30'
+          | '13:00'
+          | '13:30'
+          | '14:00'
+          | '14:30'
+          | '15:00'
+          | '15:30'
+          | '16:00'
+          | '16:30'
+          | '17:00'
+          | '17:30'
+          | '18:00'
+          | '18:30'
+          | '19:00'
+          | '19:30'
+          | '20:00'
+          | '20:30'
+          | '21:00'
+          | '21:30'
+          | '22:00'
+        )
+      | null;
+  };
+  thursday: {
+    bookable?: boolean | null;
+    firstBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+    lastBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+  };
+  friday: {
+    bookable?: boolean | null;
+    firstBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+    lastBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+  };
+  saturday: {
+    bookable?: boolean | null;
+    firstBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+    lastBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+  };
+  sunday: {
+    bookable?: boolean | null;
+    firstBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+    lastBookingTime:
+      | '10:00'
+      | '10:30'
+      | '11:00'
+      | '11:30'
+      | '12:00'
+      | '12:30'
+      | '13:00'
+      | '13:30'
+      | '14:00'
+      | '14:30'
+      | '15:00'
+      | '15:30'
+      | '16:00'
+      | '16:30'
+      | '17:00'
+      | '17:30'
+      | '18:00'
+      | '18:30'
+      | '19:00'
+      | '19:30'
+      | '20:00'
+      | '20:30'
+      | '21:00'
+      | '21:30'
+      | '22:00';
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2027,7 +2329,14 @@ export interface Homepage {
   heroEyebrow?: string | null;
   heroTitle: string;
   heroText?: string | null;
+  /**
+   * Bred hero-bild som används på dator och större skärmar.
+   */
   heroImage?: (number | null) | Media;
+  /**
+   * Stående hero-bild som används på mobiltelefoner.
+   */
+  heroImageMobile?: (number | null) | Media;
   primaryButtonText?: string | null;
   primaryButtonLink?: string | null;
   secondaryButtonText?: string | null;
@@ -2156,10 +2465,57 @@ export interface FooterSelect<T extends boolean = true> {
 export interface BookingSettingsSelect<T extends boolean = true> {
   maxGuestsPerBooking?: T;
   maxGuestsPerSlot?: T;
-  firstBookingTime?: T;
-  lastBookingTime?: T;
   intervalMinutes?: T;
-  bookableDays?: T;
+  bookingDurationMinutes?: T;
+  monday?:
+    | T
+    | {
+        bookable?: T;
+        firstBookingTime?: T;
+        lastBookingTime?: T;
+      };
+  tuesday?:
+    | T
+    | {
+        bookable?: T;
+        firstBookingTime?: T;
+        lastBookingTime?: T;
+      };
+  wednesday?:
+    | T
+    | {
+        bookable?: T;
+        firstBookingTime?: T;
+        lastBookingTime?: T;
+      };
+  thursday?:
+    | T
+    | {
+        bookable?: T;
+        firstBookingTime?: T;
+        lastBookingTime?: T;
+      };
+  friday?:
+    | T
+    | {
+        bookable?: T;
+        firstBookingTime?: T;
+        lastBookingTime?: T;
+      };
+  saturday?:
+    | T
+    | {
+        bookable?: T;
+        firstBookingTime?: T;
+        lastBookingTime?: T;
+      };
+  sunday?:
+    | T
+    | {
+        bookable?: T;
+        firstBookingTime?: T;
+        lastBookingTime?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2173,6 +2529,7 @@ export interface HomepageSelect<T extends boolean = true> {
   heroTitle?: T;
   heroText?: T;
   heroImage?: T;
+  heroImageMobile?: T;
   primaryButtonText?: T;
   primaryButtonLink?: T;
   secondaryButtonText?: T;

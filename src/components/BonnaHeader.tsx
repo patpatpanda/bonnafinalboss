@@ -10,9 +10,9 @@ export default function BonnaHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#242424] bg-[#0b0b0b]/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
-       <Link href="/" className="relative block h-[85px] w-[230px] md:h-[100px] md:w-[290px]">
+       <Link href="/" className="relative block h-[105px] w-[150px] md:h-[100px] md:w-[250px]">
   <Image
-    src="/images/bonnatosen-logo.png"
+    src="/images/bonlogga.png"
     alt="Bonnatösens Burgare"
     fill
     priority
@@ -41,6 +41,9 @@ export default function BonnaHeader() {
           >
             Shop
           </Link>
+          <Link href="/#opening-hours">
+  Öppettider
+</Link>
 
           <Link
             href="/book"

@@ -8,9 +8,17 @@ import RichText from '@/components/RichText'
 export default async function HomePage() {
   const payload = await getPayload({ config })
 
+  // =========================
+  // STARTSIDA
+  // =========================
+
   const homepage = await payload.findGlobal({
     slug: 'homepage',
   })
+
+  // =========================
+  // PLATSER
+  // =========================
 
   const locationsResult = await payload.find({
     collection: 'locations',
@@ -24,16 +32,36 @@ export default async function HomePage() {
 
   const locations = locationsResult.docs
 
+  // =========================
+  // ÖPPETTIDER
+  // =========================
+
   const openingHoursResult = await payload.find({
     collection: 'opening-hours',
-    limit: 1,
+    limit: 100,
+    sort: '-priority',
+    where: {
+      active: {
+        equals: true,
+      },
+    },
+    depth: 1,
   })
 
-  const openingHours = openingHoursResult.docs[0]
+  const openingHours = openingHoursResult.docs
+
+  // =========================
+  // BILDER
+  // =========================
 
   const heroImage =
     typeof homepage.heroImage === 'object'
       ? homepage.heroImage
+      : null
+
+  const heroImageMobile =
+    typeof homepage.heroImageMobile === 'object'
+      ? homepage.heroImageMobile
       : null
 
   const aboutImage =
@@ -51,37 +79,51 @@ export default async function HomePage() {
       ? homepage.shopImage
       : null
 
-  const days = openingHours
-    ? [
-        ['Måndag', openingHours.monday],
-        ['Tisdag', openingHours.tuesday],
-        ['Onsdag', openingHours.wednesday],
-        ['Torsdag', openingHours.thursday],
-        ['Fredag', openingHours.friday],
-        ['Lördag', openingHours.saturday],
-        ['Söndag', openingHours.sunday],
-      ]
-    : []
-
   return (
     <main className="bg-[#0b0b0b] text-[#f4f0e8]">
 
-      {/* HERO */}
+      {/* =========================
+          HERO
+      ========================= */}
       <section className="relative min-h-[90vh] overflow-hidden border-b border-[#242424]">
+
+        {/* MOBIL HERO */}
+        {heroImageMobile?.url && (
+          <Image
+            src={heroImageMobile.url}
+            alt={heroImageMobile.alt || 'Bonnatösen'}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover md:hidden"
+          />
+        )}
+
+        {/* DESKTOP HERO */}
         {heroImage?.url && (
           <Image
             src={heroImage.url}
             alt={heroImage.alt || 'Bonnatösen'}
             fill
             priority
-            className="object-cover"
+            sizes="100vw"
+            className={
+              heroImageMobile?.url
+                ? 'hidden object-cover md:block'
+                : 'object-cover'
+            }
           />
         )}
 
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0b] via-black/20 to-black/20" />
+        {/* OVERLAY */}
+        <div className="absolute inset-0 bg-black/45" />
 
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0b] via-black/10 to-black/10" />
+
+        {/* HERO CONTENT */}
         <div className="relative mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-5 pb-20 pt-32 text-center md:px-10">
+
+          {/* LOGGA */}
           <div className="relative mb-10 h-[120px] w-[270px] sm:h-[150px] sm:w-[340px] md:h-[190px] md:w-[430px]">
             <Image
               src="/images/bonnatosen-logo.png"
@@ -94,6 +136,7 @@ export default async function HomePage() {
 
           {homepage.heroEyebrow && (
             <div className="mb-7 flex items-center gap-4">
+
               <span className="h-px w-10 bg-[#d7a52b] md:w-16" />
 
               <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#d7a52b] md:text-xs">
@@ -101,6 +144,7 @@ export default async function HomePage() {
               </span>
 
               <span className="h-px w-10 bg-[#d7a52b] md:w-16" />
+
             </div>
           )}
 
@@ -117,6 +161,7 @@ export default async function HomePage() {
           )}
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+
             {homepage.primaryButtonText &&
               homepage.primaryButtonLink && (
                 <Link
@@ -136,21 +181,31 @@ export default async function HomePage() {
                   {homepage.secondaryButtonText}
                 </Link>
               )}
+
           </div>
+
         </div>
+
       </section>
 
-      {/* OM BONNATÖSEN */}
+      {/* =========================
+          OM BONNATÖSEN
+      ========================= */}
       <section className="px-5 py-20 md:px-10 md:py-32">
+
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:gap-20">
+
           <div className="flex flex-col justify-center">
+
             {homepage.aboutEyebrow && (
               <div className="mb-5 flex items-center gap-4">
+
                 <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
                   {homepage.aboutEyebrow}
                 </span>
 
                 <span className="h-px flex-1 bg-[#292929]" />
+
               </div>
             )}
 
@@ -162,15 +217,19 @@ export default async function HomePage() {
 
             {homepage.aboutText && (
               <div className="mt-8 text-base leading-8 text-[#aaa59c] md:text-lg">
+
                 <RichText
                   data={homepage.aboutText}
                   enableGutter={false}
                 />
+
               </div>
             )}
+
           </div>
 
           <div className="relative min-h-[420px] overflow-hidden md:min-h-[580px]">
+
             {aboutImage?.url ? (
               <Image
                 src={aboutImage.url}
@@ -183,26 +242,37 @@ export default async function HomePage() {
                 Lägg till bild i Payload
               </div>
             )}
+
           </div>
+
         </div>
+
       </section>
 
-      {/* PLATSER */}
+      {/* =========================
+          PLATSER
+      ========================= */}
       <section
         id="locations"
         className="border-y border-[#242424] bg-[#0e0e0e] px-5 py-20 md:px-10 md:py-32"
       >
+
         <div className="mx-auto max-w-7xl">
+
           <div className="mb-12 md:mb-16">
+
             <div className="mb-5 flex items-center gap-4">
+
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
                 {homepage.locationsEyebrow}
               </span>
 
               <span className="h-px flex-1 bg-[#292929]" />
+
             </div>
 
             <div className="grid gap-6 lg:grid-cols-2">
+
               <h2 className="text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-6xl">
                 {homepage.locationsTitle}
               </h2>
@@ -212,10 +282,13 @@ export default async function HomePage() {
                   {homepage.locationsText}
                 </p>
               )}
+
             </div>
+
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
+
             {locations.map((location, index) => {
               const image =
                 typeof location.heroImage === 'object'
@@ -228,6 +301,7 @@ export default async function HomePage() {
                   href={`/platser/${location.slug}`}
                   className="group relative min-h-[580px] overflow-hidden border border-[#242424]"
                 >
+
                   {image?.url && (
                     <Image
                       src={image.url}
@@ -244,6 +318,7 @@ export default async function HomePage() {
                   </span>
 
                   <div className="absolute inset-x-0 bottom-0 p-7 md:p-10">
+
                     <h3 className="text-5xl font-black uppercase tracking-[-0.05em] md:text-7xl">
                       {location.name}
                     </h3>
@@ -255,23 +330,36 @@ export default async function HomePage() {
                     )}
 
                     <div className="mt-7 flex items-center gap-3 text-xs font-black uppercase tracking-[0.2em] text-[#d7a52b]">
+
                       {location.ctaText || 'Läs mer'}
+
                       <span className="transition-transform group-hover:translate-x-2">
                         →
                       </span>
+
                     </div>
+
                   </div>
+
                 </Link>
               )
             })}
+
           </div>
+
         </div>
+
       </section>
 
-      {/* MENY */}
+      {/* =========================
+          MENY
+      ========================= */}
       <section className="px-5 py-20 md:px-10 md:py-32">
+
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
+
           <div className="relative min-h-[520px] overflow-hidden">
+
             {menuImage?.url ? (
               <Image
                 src={menuImage.url}
@@ -284,9 +372,11 @@ export default async function HomePage() {
                 Lägg till menybild i Payload
               </div>
             )}
+
           </div>
 
           <div className="lg:pl-12">
+
             {homepage.menuEyebrow && (
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
                 {homepage.menuEyebrow}
@@ -311,67 +401,107 @@ export default async function HomePage() {
                 className="mt-9 inline-flex items-center gap-4 border-b border-[#d7a52b] pb-2 text-xs font-black uppercase tracking-[0.2em] text-[#d7a52b] transition hover:gap-6"
               >
                 {homepage.menuButtonText || 'Se menyn'}
+
                 <span>→</span>
               </Link>
             )}
+
           </div>
+
         </div>
+
       </section>
 
-      {/* ÖPPETTIDER */}
-      {openingHours && (
-        <section className="border-y border-[#242424] bg-[#0e0e0e] px-5 py-20 md:px-10 md:py-32">
-          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-            <div>
+      {/* =========================
+          ÖPPETTIDER
+      ========================= */}
+      {openingHours.length > 0 && (
+        <section
+          id="opening-hours"
+          className="scroll-mt-24 border-y border-[#242424] bg-[#0e0e0e] px-5 py-20 md:px-10 md:py-32"
+        >
+
+          <div className="mx-auto max-w-7xl">
+
+            <div className="mb-12">
+
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
                 När ses vi?
               </span>
 
-              <h2 className="mt-5 text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-6xl">
+              <h2 className="mt-5 text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] text-[#f4f0e8] md:text-6xl">
                 Öppettider
               </h2>
+
             </div>
 
-            <div className="border-t border-[#292929]">
-              {days.map(([label, day]) => {
-                const dayData = day as {
-                  closed?: boolean | null
-                  open?: string | null
-                  close?: string | null
-                }
+            <div className="grid gap-6 md:grid-cols-2">
+
+              {openingHours.map((item) => {
+                const location =
+                  typeof item.location === 'object'
+                    ? item.location
+                    : null
 
                 return (
-                  <div
-                    key={label as string}
-                    className="flex items-center justify-between border-b border-[#292929] py-5"
+                  <article
+                    key={item.id}
+                    className="border border-[#292929] bg-[#111111] p-6 md:p-8"
                   >
-                    <span className="font-bold uppercase tracking-[0.08em]">
-                      {label as string}
-                    </span>
 
-                    <span
-                      className={
-                        dayData?.closed
-                          ? 'text-[#5f5b55]'
-                          : 'font-bold text-[#d7a52b]'
-                      }
-                    >
-                      {dayData?.closed
-                        ? 'Stängt'
-                        : `${dayData?.open || ''} – ${dayData?.close || ''}`}
-                    </span>
-                  </div>
+                    {location?.name && (
+                      <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#d7a52b]">
+                        {location.name}
+                      </p>
+                    )}
+
+                    <h3 className="mt-3 text-2xl font-black uppercase tracking-[-0.03em] text-[#f4f0e8]">
+                      {item.title}
+                    </h3>
+
+                    {(item.startDate || item.endDate) && (
+                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.18em] text-[#77736c]">
+                        {formatDateRange(
+                          item.startDate,
+                          item.endDate,
+                        )}
+                      </p>
+                    )}
+
+                    <div className="mt-7 flex flex-wrap gap-x-10 gap-y-4">
+                      {item.information
+                        ?.split('\n')
+                        .filter(Boolean)
+                        .map((line, index) => (
+                          <div
+                            key={index}
+                            className="text-base font-medium text-[#d0cbc2]"
+                          >
+                            {line}
+                          </div>
+                        ))}
+                    </div>
+
+                  </article>
                 )
               })}
+
             </div>
+
           </div>
+
         </section>
       )}
 
-      {/* SHOP */}
+      {/* =========================
+          SHOP
+      ========================= */}
       <section className="px-5 py-20 md:px-10 md:py-32">
+
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
+
           <div className="lg:pr-12">
+
             {homepage.shopEyebrow && (
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d7a52b]">
                 {homepage.shopEyebrow}
@@ -396,12 +526,15 @@ export default async function HomePage() {
                 className="mt-9 inline-flex items-center gap-4 border-b border-[#d7a52b] pb-2 text-xs font-black uppercase tracking-[0.2em] text-[#d7a52b] transition hover:gap-6"
               >
                 {homepage.shopButtonText || 'Till shoppen'}
+
                 <span>→</span>
               </Link>
             )}
+
           </div>
 
           <div className="relative min-h-[500px] overflow-hidden">
+
             {shopImage?.url ? (
               <Image
                 src={shopImage.url}
@@ -414,10 +547,43 @@ export default async function HomePage() {
                 Lägg till shopbild i Payload
               </div>
             )}
+
           </div>
+
         </div>
+
       </section>
 
     </main>
   )
+}
+
+// =========================
+// DATUMFORMATERING
+// =========================
+
+function formatDateRange(
+  startDate?: string | null,
+  endDate?: string | null,
+) {
+  const format = (value: string) =>
+    new Intl.DateTimeFormat('sv-SE', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(value))
+
+  if (startDate && endDate) {
+    return `${format(startDate)} – ${format(endDate)}`
+  }
+
+  if (startDate) {
+    return `Från ${format(startDate)}`
+  }
+
+  if (endDate) {
+    return `Till ${format(endDate)}`
+  }
+
+  return ''
 }
