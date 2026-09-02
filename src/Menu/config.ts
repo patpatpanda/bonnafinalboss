@@ -76,13 +76,46 @@ export const Menu: GlobalConfig = {
               label: 'Beskrivning',
               type: 'textarea',
             },
+
+            // =========================
+            // BURGARPRISER I MENYN
+            // =========================
             {
-              name: 'burgerPrice',
-              label: 'Pris',
-              type: 'number',
-              min: 0,
-              required: true,
+              type: 'row',
+
+              fields: [
+                {
+                  name: 'singleBurgerPrice',
+                  label: 'Pris enkel',
+                  type: 'number',
+                  min: 0,
+                  required: true,
+                  defaultValue: 135,
+
+                  admin: {
+                    width: '50%',
+                    description:
+                      'Priset för enkel burgare i menyn.',
+                  },
+                },
+
+                {
+                  name: 'doubleBurgerPrice',
+                  label: 'Pris dubbel',
+                  type: 'number',
+                  min: 0,
+                  required: true,
+                  defaultValue: 165,
+
+                  admin: {
+                    width: '50%',
+                    description:
+                      'Priset för dubbel burgare i menyn.',
+                  },
+                },
+              ],
             },
+
             {
               name: 'burgerImage',
               label: 'Bild',
@@ -105,6 +138,7 @@ export const Menu: GlobalConfig = {
               type: 'text',
               defaultValue: 'Tillbehör',
             },
+
             {
               name: 'sides',
               label: 'Tillbehör',
@@ -153,11 +187,13 @@ export const Menu: GlobalConfig = {
               type: 'text',
               defaultValue: 'Dryck',
             },
+
             {
               name: 'drinksText',
               label: 'Text under rubriken',
               type: 'textarea',
             },
+
             {
               name: 'drinks',
               label: 'Drycker',
@@ -170,6 +206,7 @@ export const Menu: GlobalConfig = {
                   type: 'select',
                   required: true,
                   defaultValue: 'soft-drinks',
+
                   options: [
                     {
                       label: 'Öl',

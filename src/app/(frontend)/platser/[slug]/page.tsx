@@ -45,7 +45,7 @@ export default async function LocationPage({ params }: PageProps) {
       {/* =========================
           HERO
       ========================= */}
-      <section className="relative min-h-[70vh] overflow-hidden border-b border-[#242424]">
+     <section className="relative min-h-[60vh] overflow-hidden border-b border-[#242424]">
 
         {heroImage?.url && (
           <Image
@@ -58,7 +58,7 @@ export default async function LocationPage({ params }: PageProps) {
         )}
 
         {/* Mycket lätt toning över hela bilden */}
-        <div className="absolute inset-0 bg-black/5" />
+        <div className="absolute inset-0 bg-black/45" />
 
         {/* 
           Mörk gradient bakom texten.
@@ -231,6 +231,70 @@ export default async function LocationPage({ params }: PageProps) {
 
         </section>
       )}
+      {/* =========================
+    LEADER BERGSLAGEN / EU
+    Visas endast på Ladan
+========================= */}
+{slug === 'ladan' && (
+  <section className="border-t border-[#242424] bg-[#f5f2eb] px-5 py-20 text-[#1b1b1b] md:px-10 md:py-28">
+    <div className="mx-auto max-w-7xl">
+
+      <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-20">
+
+        {/* TEXT */}
+        <div>
+          <div className="mb-5 flex items-center gap-4">
+            <span className="h-px w-12 bg-[#d7a52b]" />
+
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#8a6819]">
+              Med stöd från EU & Leader Bergslagen
+            </span>
+          </div>
+
+          <h2 className="max-w-2xl text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-5xl lg:text-6xl">
+            Renovering av
+            <br />
+            ladans tak
+          </h2>
+
+          <div className="mt-8 max-w-2xl space-y-6 text-base leading-8 text-[#57534c] md:text-lg">
+            <p>
+              Med stöd från EU och Leader Bergslagen har vi renoverat
+              den del av ladans tak som var i störst behov av åtgärd.
+            </p>
+
+            <p>
+              Syftet var att säkra byggnaden och skapa förutsättningar
+              för att utveckla ladan till en året-runt-anpassad
+              mötesplats för evenemang, marknader och samarbeten.
+            </p>
+
+            <p>
+              Renoveringen har stärkt konstruktionen och gett ett nytt,
+              hållbart tak som gör det möjligt att fortsätta utveckla
+              gården som en samlingsplats för både lokala aktörer och
+              besökare.
+            </p>
+          </div>
+        </div>
+
+        {/* LEADER / EU LOGGA */}
+        <div className="flex items-center justify-center border border-[#ded9cf] bg-white p-6 md:p-10">
+          <div className="relative aspect-[2.7/1] w-full max-w-[600px]">
+            <Image
+              src="/images/lll.png"
+              alt="Leader Bergslagen – Medfinansieras av Europeiska unionen"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+)}
 
     </main>
   )

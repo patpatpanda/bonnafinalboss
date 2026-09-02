@@ -12,6 +12,7 @@ import { Posts } from './collections/Posts'
 import { Locations } from './collections/Locations'
 import { Users } from './collections/Users'
 import { Menu } from './Menu/config'
+import { Products } from './collections/Products'
 import { Bookings } from './collections/Bookings'
 import { Homepage } from './Homepage/config'
 import { OpeningHours } from './collections/OpeningHours'
@@ -22,7 +23,7 @@ import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
-
+import { ShopPage } from './ShopPage/config'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -32,10 +33,13 @@ export default buildConfig({
       beforeLogin: ['@/components/BeforeLogin'],
       beforeDashboard: ['@/components/BeforeDashboard'],
     },
+
     importMap: {
       baseDir: path.resolve(dirname),
     },
+
     user: Users.slug,
+
     livePreview: {
       breakpoints: [
         {
@@ -63,10 +67,12 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromAddress: process.env.SMTP_USER || '',
     defaultFromName: 'Bordsbokning',
+
     transportOptions: {
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT) || 587,
       secure: false,
+
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
@@ -92,6 +98,7 @@ export default buildConfig({
     Bookings,
     BookingExceptions,
     Locations,
+    Products
   ],
 
   cors: [getServerSideURL()].filter(Boolean),
@@ -102,6 +109,7 @@ export default buildConfig({
     BookingSettings,
     Homepage,
     Menu,
+    ShopPage
   ],
 
   plugins,
@@ -111,19 +119,31 @@ export default buildConfig({
   sharp,
 
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(
+      dirname,
+      'payload-types.ts',
+    ),
   },
 
   jobs: {
     access: {
-      run: ({ req }: { req: PayloadRequest }): boolean => {
-        if (req.user) return true
+      run: ({
+        req,
+      }: {
+        req: PayloadRequest
+      }): boolean => {
+        if (req.user) {
+          return true
+        }
 
         const secret = process.env.CRON_SECRET
 
-        if (!secret) return false
+        if (!secret) {
+          return false
+        }
 
-        const authHeader = req.headers.get('authorization')
+        const authHeader =
+          req.headers.get('authorization')
 
         return authHeader === `Bearer ${secret}`
       },

@@ -76,6 +76,7 @@ export interface Config {
     bookings: Booking;
     'booking-exceptions': BookingException;
     locations: Location;
+    products: Product;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -102,6 +103,7 @@ export interface Config {
     bookings: BookingsSelect<false> | BookingsSelect<true>;
     'booking-exceptions': BookingExceptionsSelect<false> | BookingExceptionsSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -123,6 +125,7 @@ export interface Config {
     'booking-settings': BookingSetting;
     homepage: Homepage;
     menu: Menu;
+    'shop-page': ShopPage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -130,6 +133,7 @@ export interface Config {
     'booking-settings': BookingSettingsSelect<false> | BookingSettingsSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
     menu: MenuSelect<false> | MenuSelect<true>;
+    'shop-page': ShopPageSelect<false> | ShopPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -920,6 +924,73 @@ export interface BookingException {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: number;
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  /**
+   * Kort text som visas på produktkortet i shoppen.
+   */
+  shortDescription?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Pris i svenska kronor.
+   */
+  price: number;
+  images?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  hasSizes?: boolean | null;
+  /**
+   * Lägg till de storlekar som går att köpa.
+   */
+  sizes?:
+    | {
+        /**
+         * Exempel: S, M, L, XL.
+         */
+        size: string;
+        stock: number;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Används för produkter som inte har olika storlekar.
+   */
+  stock?: number | null;
+  /**
+   * Kan användas för att lyfta produkten extra på shop-sidan.
+   */
+  featured?: boolean | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1143,6 +1214,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'locations';
         value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1574,6 +1649,37 @@ export interface LocationsSelect<T extends boolean = true> {
   phone?: T;
   email?: T;
   ctaText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  generateSlug?: T;
+  slug?: T;
+  shortDescription?: T;
+  description?: T;
+  price?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  hasSizes?: T;
+  sizes?:
+    | T
+    | {
+        size?: T;
+        stock?: T;
+        id?: T;
+      };
+  stock?: T;
+  featured?: T;
+  active?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2391,7 +2497,14 @@ export interface Menu {
   burgerEyebrow?: string | null;
   burgerName: string;
   burgerDescription?: string | null;
-  burgerPrice: number;
+  /**
+   * Priset för enkel burgare i menyn.
+   */
+  singleBurgerPrice: number;
+  /**
+   * Priset för dubbel burgare i menyn.
+   */
+  doubleBurgerPrice: number;
   burgerImage?: (number | null) | Media;
   sidesTitle?: string | null;
   sides?:
@@ -2415,6 +2528,41 @@ export interface Menu {
         id?: string | null;
       }[]
     | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shop-page".
+ */
+export interface ShopPage {
+  id: number;
+  eyebrow?: string | null;
+  title: string;
+  intro?: string | null;
+  heroImage?: (number | null) | Media;
+  productsEyebrow?: string | null;
+  productsTitle?: string | null;
+  productsText?: string | null;
+  infoActive?: boolean | null;
+  infoEyebrow?: string | null;
+  infoTitle?: string | null;
+  infoText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  infoImage?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2570,7 +2718,8 @@ export interface MenuSelect<T extends boolean = true> {
   burgerEyebrow?: T;
   burgerName?: T;
   burgerDescription?: T;
-  burgerPrice?: T;
+  singleBurgerPrice?: T;
+  doubleBurgerPrice?: T;
   burgerImage?: T;
   sidesTitle?: T;
   sides?:
@@ -2594,6 +2743,27 @@ export interface MenuSelect<T extends boolean = true> {
         active?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shop-page_select".
+ */
+export interface ShopPageSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  intro?: T;
+  heroImage?: T;
+  productsEyebrow?: T;
+  productsTitle?: T;
+  productsText?: T;
+  infoActive?: T;
+  infoEyebrow?: T;
+  infoTitle?: T;
+  infoText?: T;
+  infoImage?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

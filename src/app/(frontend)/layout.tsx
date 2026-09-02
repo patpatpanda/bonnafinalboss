@@ -7,7 +7,6 @@ import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
 import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
@@ -26,13 +25,14 @@ export default async function RootLayout({
 
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable)}
+      className={cn(
+        GeistSans.variable,
+        GeistMono.variable,
+      )}
       lang="sv"
       suppressHydrationWarning
     >
       <head>
-        <InitTheme />
-
         <link
           href="/favicon.ico"
           rel="icon"
