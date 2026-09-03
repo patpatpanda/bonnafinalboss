@@ -76,46 +76,22 @@ export const Menu: GlobalConfig = {
               label: 'Beskrivning',
               type: 'textarea',
             },
-
-            // =========================
-            // BURGARPRISER I MENYN
-            // =========================
             {
-              type: 'row',
-
-              fields: [
-                {
-                  name: 'singleBurgerPrice',
-                  label: 'Pris enkel',
-                  type: 'number',
-                  min: 0,
-                  required: true,
-                  defaultValue: 135,
-
-                  admin: {
-                    width: '50%',
-                    description:
-                      'Priset för enkel burgare i menyn.',
-                  },
-                },
-
-                {
-                  name: 'doubleBurgerPrice',
-                  label: 'Pris dubbel',
-                  type: 'number',
-                  min: 0,
-                  required: true,
-                  defaultValue: 165,
-
-                  admin: {
-                    width: '50%',
-                    description:
-                      'Priset för dubbel burgare i menyn.',
-                  },
-                },
-              ],
+              name: 'singleBurgerPrice',
+              label: 'Pris enkel',
+              type: 'number',
+              min: 0,
+              required: true,
+              defaultValue: 135,
             },
-
+            {
+              name: 'doubleBurgerPrice',
+              label: 'Pris dubbel',
+              type: 'number',
+              min: 0,
+              required: true,
+              defaultValue: 165,
+            },
             {
               name: 'burgerImage',
               label: 'Bild',
@@ -138,10 +114,62 @@ export const Menu: GlobalConfig = {
               type: 'text',
               defaultValue: 'Tillbehör',
             },
-
             {
               name: 'sides',
               label: 'Tillbehör',
+              type: 'array',
+
+              fields: [
+                {
+                  name: 'name',
+                  label: 'Namn',
+                  type: 'text',
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  label: 'Beskrivning',
+                  type: 'textarea',
+                },
+                {
+                  name: 'price',
+                  label: 'Pris',
+                  type: 'number',
+                  min: 0,
+                  required: true,
+                },
+                {
+                  name: 'active',
+                  label: 'Visa på menyn',
+                  type: 'checkbox',
+                  defaultValue: true,
+                },
+              ],
+            },
+          ],
+        },
+
+        // =========================
+        // DESSERT
+        // =========================
+        {
+          label: 'Dessert',
+
+          fields: [
+            {
+              name: 'dessertsTitle',
+              label: 'Rubrik',
+              type: 'text',
+              defaultValue: 'Dessert',
+            },
+            {
+              name: 'dessertsText',
+              label: 'Text under rubriken',
+              type: 'textarea',
+            },
+            {
+              name: 'desserts',
+              label: 'Desserter',
               type: 'array',
 
               fields: [
@@ -187,13 +215,11 @@ export const Menu: GlobalConfig = {
               type: 'text',
               defaultValue: 'Dryck',
             },
-
             {
               name: 'drinksText',
               label: 'Text under rubriken',
               type: 'textarea',
             },
-
             {
               name: 'drinks',
               label: 'Drycker',
