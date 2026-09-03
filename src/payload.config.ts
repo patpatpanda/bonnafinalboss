@@ -144,30 +144,34 @@ export default buildConfig({
 
     s3Storage({
       collections: {
-        media: true,
+        media: {
+          disablePayloadAccessControl: true,
+
+          generateFileURL: ({ filename }) => {
+            const projectUrl = process.env.SUPABASE_PUBLIC_URL
+            const bucket = process.env.SUPABASE_S3_BUCKET || 'media'
+
+            if (!projectUrl) {
+              throw new Error('SUPABASE_PUBLIC_URL saknas')
+            }
+
+            return `${projectUrl}/storage/v1/object/public/${bucket}/${filename}`
+          },
+        },
       },
 
-      bucket:
-        process.env.SUPABASE_S3_BUCKET || 'media',
+      bucket: process.env.SUPABASE_S3_BUCKET || 'media',
 
       config: {
-        endpoint:
-          process.env.SUPABASE_S3_ENDPOINT,
+        endpoint: process.env.SUPABASE_S3_ENDPOINT,
 
-        region:
-          process.env.SUPABASE_S3_REGION ||
-          'eu-west-1',
+        region: process.env.SUPABASE_S3_REGION || 'eu-west-1',
 
         forcePathStyle: true,
 
         credentials: {
-          accessKeyId:
-            process.env.SUPABASE_S3_ACCESS_KEY ||
-            '',
-
-          secretAccessKey:
-            process.env.SUPABASE_S3_SECRET_KEY ||
-            '',
+          accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY || '',
+          secretAccessKey: process.env.SUPABASE_S3_SECRET_KEY || '',
         },
       },
     }),
@@ -207,22 +211,17 @@ export default buildConfig({
           return true
         }
 
-        const secret =
-          process.env.CRON_SECRET
+        const secret = process.env.CRON_SECRET
 
         if (!secret) {
           return false
         }
 
-        const authHeader =
-          req.headers.get(
-            'authorization',
-          )
-
-        return (
-          authHeader ===
-          `Bearer ${secret}`
+        const authHeader = req.headers.get(
+          'authorization',
         )
+
+        return authHeader === `Bearer ${secret}`
       },
     },
 

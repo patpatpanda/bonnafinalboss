@@ -8,15 +8,20 @@ import { redirects } from './redirects'
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
-const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
+const NEXT_PUBLIC_SERVER_URL =
+  process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.NEXT_PUBLIC_SERVER_URL ||
+      process.env.__NEXT_PRIVATE_ORIGIN ||
+      'http://localhost:3000'
 
 const nextConfig: NextConfig = {
-  // Temporarily required on Windows until Next.js fixes Turbopack Sass resolution.
-  // See: https://github.com/vercel/next.js/issues/86431
+  // Temporarily required on Windows until Next.js fixes
+  // Turbopack Sass resolution.
   sassOptions: {
-    loadPaths: ['./node_modules/@payloadcms/ui/dist/scss/'],
+    loadPaths: [
+      './node_modules/@payloadcms/ui/dist/scss/',
+    ],
   },
 
   images: {
@@ -33,20 +38,38 @@ const nextConfig: NextConfig = {
     qualities: [100],
 
     remotePatterns: [
-      // Din egen server
-      ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
-        const url = new URL(item)
+      // =========================
+      // EGEN SERVER / PAYLOAD
+      // =========================
+      ...[NEXT_PUBLIC_SERVER_URL].map(
+        (item) => {
+          const url = new URL(item)
 
-        return {
-          hostname: url.hostname,
-          protocol: url.protocol.replace(':', '') as 'http' | 'https',
-        }
-      }),
+          return {
+            hostname: url.hostname,
+            protocol: url.protocol.replace(
+              ':',
+              '',
+            ) as 'http' | 'https',
+          }
+        },
+      ),
 
-      // Shopify produktbilder
+      // =========================
+      // SHOPIFY
+      // =========================
       {
         protocol: 'https',
         hostname: 'cdn.shopify.com',
+      },
+
+      // =========================
+      // SUPABASE STORAGE
+      // =========================
+      {
+        protocol: 'https',
+        hostname:
+          'sqmxevrcieaknkpeythz.supabase.co',
       },
     ],
   },
@@ -54,7 +77,12 @@ const nextConfig: NextConfig = {
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
-      '.js': ['.ts', '.tsx', '.js', '.jsx'],
+      '.js': [
+        '.ts',
+        '.tsx',
+        '.js',
+        '.jsx',
+      ],
       '.mjs': ['.mts', '.mjs'],
     }
 
