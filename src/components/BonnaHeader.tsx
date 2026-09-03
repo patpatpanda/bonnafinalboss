@@ -14,7 +14,7 @@ export default function BonnaHeader() {
         {/* LOGGA */}
         <Link
           href="/"
-          className="relative block h-[105px] w-[150px] md:h-[100px] md:w-[250px]"
+          className="relative block h-[105px] w-[150px] md:h-[70px] md:w-[200px]"
         >
           <Image
             src="/images/bonlogga.png"

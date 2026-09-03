@@ -145,7 +145,7 @@ export default async function HomePage() {
     "
   >
 
-    {/* LOGGA */}
+    {/* LOGGA
     <div
       className="
         relative
@@ -169,7 +169,7 @@ export default async function HomePage() {
         sizes="(max-width: 640px) 320px, (max-width: 768px) 360px, 430px"
         className="object-contain"
       />
-    </div>
+    </div> */}
 
     {/* EYEBROW */}
     {homepage.heroEyebrow && (
@@ -354,7 +354,7 @@ export default async function HomePage() {
 
           {/* YOUTUBE */}
           <a
-            href="DIN-YOUTUBE-LÄNK-HÄR"
+            href="https://www.youtube.com/@Bonnalife"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex min-h-[420px] overflow-hidden border border-[#FAC800]/35 bg-[#111111] md:min-h-[580px]"
