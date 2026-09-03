@@ -78,110 +78,233 @@ export default async function HomePage() {
   return (
     <main className="bg-[#090909] text-white">
 
-      {/* =========================
-          HERO
-      ========================= */}
-      <section className="relative min-h-[90vh] overflow-hidden border-b border-[#2d2d2d]">
+     {/* =========================
+    HERO
+========================= */}
+<section className="relative min-h-[92svh] overflow-hidden border-b border-[#2d2d2d] md:min-h-[90vh]">
 
-        {/* MOBIL HERO */}
-        {heroImageMobile?.url && (
-          <Image
-            src={heroImageMobile.url}
-            alt={heroImageMobile.alt || 'Bonnatösen'}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover md:hidden"
-          />
+  {/* MOBIL HERO */}
+  {heroImageMobile?.url && (
+    <Image
+      src={heroImageMobile.url}
+      alt={heroImageMobile.alt || 'Bonnatösen'}
+      fill
+      priority
+      sizes="100vw"
+      className="object-cover object-center md:hidden"
+    />
+  )}
+
+  {/* DESKTOP HERO */}
+  {heroImage?.url && (
+    <Image
+      src={heroImage.url}
+      alt={heroImage.alt || 'Bonnatösen'}
+      fill
+      priority
+      sizes="100vw"
+      className={
+        heroImageMobile?.url
+          ? 'hidden object-cover md:block'
+          : 'object-cover'
+      }
+    />
+  )}
+
+  {/* OVERLAYS */}
+  <div className="absolute inset-0 bg-black/45" />
+
+  <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-black/10 to-black/20" />
+
+  {/* HERO CONTENT */}
+  <div
+    className="
+      relative
+      mx-auto
+      flex
+      min-h-[92svh]
+      max-w-7xl
+      -translate-y-16
+      flex-col
+      items-center
+      justify-center
+      px-5
+      pb-12
+      pt-24
+      text-center
+
+      sm:-translate-y-12
+      sm:px-6
+      sm:pt-28
+
+      md:min-h-[90vh]
+      md:-translate-y-20
+      md:px-10
+      md:pb-20
+      md:pt-32
+    "
+  >
+
+    {/* LOGGA */}
+    <div
+      className="
+        relative
+        mb-6
+        h-[150px]
+        w-[320px]
+
+        sm:h-[170px]
+        sm:w-[360px]
+
+        md:mb-8
+        md:h-[190px]
+        md:w-[430px]
+      "
+    >
+      <Image
+        src="/images/bonnatosen-logo.png"
+        alt="Bonnatösens Burgare"
+        fill
+        priority
+        sizes="(max-width: 640px) 320px, (max-width: 768px) 360px, 430px"
+        className="object-contain"
+      />
+    </div>
+
+    {/* EYEBROW */}
+    {homepage.heroEyebrow && (
+      <div className="mb-5 flex items-center gap-3 sm:gap-4 md:mb-6">
+
+        <span className="h-px w-8 bg-[#FAC800] sm:w-10 md:w-16" />
+
+        <span className="text-[11px] font-black uppercase tracking-[0.28em] text-[#FAC800] sm:text-xs sm:tracking-[0.35em]">
+          {homepage.heroEyebrow}
+        </span>
+
+        <span className="h-px w-8 bg-[#FAC800] sm:w-10 md:w-16" />
+
+      </div>
+    )}
+
+    {/* TITEL */}
+    {homepage.heroTitle && (
+      <HeroTitleReveal text={homepage.heroTitle} />
+    )}
+
+    {/* TEXT */}
+    {homepage.heroText && (
+      <p
+        className="
+          mt-6
+          max-w-[340px]
+          text-[15px]
+          font-medium
+          leading-6
+          text-white
+
+          sm:max-w-xl
+          sm:text-base
+          sm:leading-7
+
+          md:mt-8
+          md:max-w-2xl
+          md:text-lg
+        "
+      >
+        {homepage.heroText}
+      </p>
+    )}
+
+    {/* KNAPPAR */}
+    <div
+      className="
+        mt-8
+        flex
+        w-full
+        max-w-[340px]
+        flex-col
+        gap-3
+
+        sm:w-auto
+        sm:max-w-none
+        sm:flex-row
+
+        md:mt-10
+      "
+    >
+
+      {homepage.primaryButtonText &&
+        homepage.primaryButtonLink && (
+          <Link
+            href={homepage.primaryButtonLink}
+            className="
+              flex
+              w-full
+              items-center
+              justify-center
+              border-2
+              border-[#FAC800]
+              bg-[#FAC800]
+              px-7
+              py-4
+              text-xs
+              font-black
+              uppercase
+              tracking-[0.16em]
+              text-black
+              transition
+
+              hover:bg-transparent
+              hover:text-white
+
+              sm:w-auto
+              sm:px-8
+              sm:py-5
+            "
+          >
+            {homepage.primaryButtonText}
+          </Link>
         )}
 
-        {/* DESKTOP HERO */}
-        {heroImage?.url && (
-          <Image
-            src={heroImage.url}
-            alt={heroImage.alt || 'Bonnatösen'}
-            fill
-            priority
-            sizes="100vw"
-            className={
-              heroImageMobile?.url
-                ? 'hidden object-cover md:block'
-                : 'object-cover'
-            }
-          />
+      {homepage.secondaryButtonText &&
+        homepage.secondaryButtonLink && (
+          <Link
+            href={homepage.secondaryButtonLink}
+            className="
+              flex
+              w-full
+              items-center
+              justify-center
+              border
+              border-[#FAC800]
+              bg-black/50
+              px-7
+              py-4
+              text-xs
+              font-black
+              uppercase
+              tracking-[0.16em]
+              text-white
+              backdrop-blur
+              transition
+
+              hover:bg-[#FAC800]
+              hover:text-black
+
+              sm:w-auto
+              sm:px-8
+              sm:py-5
+            "
+          >
+            {homepage.secondaryButtonText}
+          </Link>
         )}
 
-        {/* OVERLAYS */}
-        <div className="absolute inset-0 bg-black/45" />
+    </div>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-black/5 to-black/20" />
+  </div>
 
-        {/* HERO CONTENT */}
-        <div className="relative mx-auto flex min-h-[90vh] max-w-7xl -translate-y-10 flex-col items-center justify-center px-5 pb-20 pt-32 text-center md:-translate-y-20 md:px-10">
-
-          {/* LOGGA */}
-          <div className="relative mb-8 h-[120px] w-[270px] sm:h-[150px] sm:w-[340px] md:h-[190px] md:w-[430px]">
-            <Image
-              src="/images/bonnatosen-logo.png"
-              alt="Bonnatösens Burgare"
-              fill
-              priority
-              className="object-contain"
-            />
-          </div>
-
-          {homepage.heroEyebrow && (
-            <div className="mb-6 flex items-center gap-4">
-
-              <span className="h-px w-10 bg-[#FAC800] md:w-16" />
-
-              <span className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800] md:text-xs">
-                {homepage.heroEyebrow}
-              </span>
-
-              <span className="h-px w-10 bg-[#FAC800] md:w-16" />
-
-            </div>
-          )}
-
-        {homepage.heroTitle && (
-  <HeroTitleReveal text={homepage.heroTitle} />
-)}
-
-          {homepage.heroText && (
-            <p className="mt-8 max-w-2xl text-base leading-7 text-[#FFF] md:text-lg">
-              {homepage.heroText}
-            </p>
-          )}
-
-          {/* KNAPPAR */}
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-
-            {homepage.primaryButtonText &&
-              homepage.primaryButtonLink && (
-                <Link
-                  href={homepage.primaryButtonLink}
-                  className="border-2 border-[#FAC800] bg-[#FAC800] px-8 py-5 text-xs font-black uppercase tracking-[0.18em] text-black transition hover:bg-transparent hover:text-[#FFF]"
-                >
-                  {homepage.primaryButtonText}
-                </Link>
-              )}
-
-            {homepage.secondaryButtonText &&
-              homepage.secondaryButtonLink && (
-                <Link
-                  href={homepage.secondaryButtonLink}
-                  className="border border-[#FAC800] bg-black/50 px-8 py-5 text-xs font-black uppercase tracking-[0.18em] text-[#FFF] backdrop-blur transition hover:bg-[#FAC800] hover:text-black"
-                >
-                  {homepage.secondaryButtonText}
-                </Link>
-              )}
-
-          </div>
-
-        </div>
-
-      </section>
+</section>
 
       {/* =========================
           OM BONNATÖSEN
