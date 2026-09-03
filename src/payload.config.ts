@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -20,14 +21,19 @@ import { BookingExceptions } from './collections/BookingExceptions'
 import { BookingSettings } from './BookingSettings/config'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { ShopPage } from './ShopPage/config'
+
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
-import { ShopPage } from './ShopPage/config'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  // =========================
+  // ADMIN
+  // =========================
   admin: {
     components: {
       beforeLogin: ['@/components/BeforeLogin'],
@@ -64,6 +70,9 @@ export default buildConfig({
     },
   },
 
+  // =========================
+  // EMAIL
+  // =========================
   email: nodemailerAdapter({
     defaultFromAddress: process.env.SMTP_USER || '',
     defaultFromName: 'Bordsbokning',
@@ -80,14 +89,23 @@ export default buildConfig({
     },
   }),
 
+  // =========================
+  // EDITOR
+  // =========================
   editor: defaultLexical,
 
+  // =========================
+  // DATABASE
+  // =========================
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
 
+  // =========================
+  // COLLECTIONS
+  // =========================
   collections: [
     Pages,
     Posts,
@@ -98,26 +116,76 @@ export default buildConfig({
     Bookings,
     BookingExceptions,
     Locations,
-    Products
+    Products,
   ],
 
+  // =========================
+  // CORS
+  // =========================
   cors: [getServerSideURL()].filter(Boolean),
 
+  // =========================
+  // GLOBALS
+  // =========================
   globals: [
     Header,
     Footer,
     BookingSettings,
     Homepage,
     Menu,
-    ShopPage
+    ShopPage,
   ],
 
-  plugins,
+  // =========================
+  // PLUGINS
+  // =========================
+  plugins: [
+    ...plugins,
 
+    s3Storage({
+      collections: {
+        media: true,
+      },
+
+      bucket:
+        process.env.SUPABASE_S3_BUCKET || 'media',
+
+      config: {
+        endpoint:
+          process.env.SUPABASE_S3_ENDPOINT,
+
+        region:
+          process.env.SUPABASE_S3_REGION ||
+          'eu-west-1',
+
+        forcePathStyle: true,
+
+        credentials: {
+          accessKeyId:
+            process.env.SUPABASE_S3_ACCESS_KEY ||
+            '',
+
+          secretAccessKey:
+            process.env.SUPABASE_S3_SECRET_KEY ||
+            '',
+        },
+      },
+    }),
+  ],
+
+  // =========================
+  // PAYLOAD SECRET
+  // =========================
   secret: process.env.PAYLOAD_SECRET,
 
+  // =========================
+  // SHARP
+  // =========================
   sharp,
 
+  // =========================
+  // TYPESCRIPT
+  // =========================
   typescript: {
     outputFile: path.resolve(
       dirname,
@@ -125,6 +193,9 @@ export default buildConfig({
     ),
   },
 
+  // =========================
+  // JOBS
+  // =========================
   jobs: {
     access: {
       run: ({
@@ -136,16 +207,22 @@ export default buildConfig({
           return true
         }
 
-        const secret = process.env.CRON_SECRET
+        const secret =
+          process.env.CRON_SECRET
 
         if (!secret) {
           return false
         }
 
         const authHeader =
-          req.headers.get('authorization')
+          req.headers.get(
+            'authorization',
+          )
 
-        return authHeader === `Bearer ${secret}`
+        return (
+          authHeader ===
+          `Bearer ${secret}`
+        )
       },
     },
 
