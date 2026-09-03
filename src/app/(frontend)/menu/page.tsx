@@ -2,13 +2,14 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+export const dynamic = 'force-dynamic'
+
 export default async function MenuPage() {
   const payload = await getPayload({ config })
 
   const menu = await payload.findGlobal({
     slug: 'menu',
   })
-
   const heroImage =
     typeof menu.heroImage === 'object'
       ? menu.heroImage
