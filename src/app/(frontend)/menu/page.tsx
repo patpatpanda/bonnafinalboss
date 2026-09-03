@@ -10,6 +10,7 @@ export default async function MenuPage() {
   const menu = await payload.findGlobal({
     slug: 'menu',
   })
+
   const heroImage =
     typeof menu.heroImage === 'object'
       ? menu.heroImage
@@ -24,10 +25,12 @@ export default async function MenuPage() {
     menu.sides?.filter(
       (side) => side.active !== false,
     ) || []
-const activeDesserts =
-  menu.desserts?.filter(
-    (dessert) => dessert.active !== false,
-  ) || []
+
+  const activeDesserts =
+    menu.desserts?.filter(
+      (dessert) => dessert.active !== false,
+    ) || []
+
   const activeDrinks =
     menu.drinks?.filter(
       (drink) => drink.active !== false,
@@ -184,8 +187,6 @@ const activeDesserts =
                 </p>
               )}
 
-              {/* Inget separat pris här längre */}
-
               <div className="mt-10 h-px w-full bg-[#FAC800]/25" />
 
               <p className="mt-5 text-[10px] font-black uppercase tracking-[0.28em] text-[#FAC800]">
@@ -203,6 +204,7 @@ const activeDesserts =
           WESTERN MENYBLAD
       ========================= */}
       {(activeSides.length > 0 ||
+        activeDesserts.length > 0 ||
         activeDrinks.length > 0 ||
         menu.burgerActive !== false) && (
         <section className="px-4 py-16 md:px-10 md:py-28">
@@ -314,15 +316,17 @@ const activeDesserts =
               )}
 
               {/* =========================
-                  TILLBEHÖR + DRYCK
+                  TILLBEHÖR + DESSERT + DRYCK
               ========================= */}
               <div className="grid gap-12 md:grid-cols-2 md:gap-0">
 
                 {/* =====================
-                    VÄNSTER - TILLBEHÖR
+                    VÄNSTER
+                    TILLBEHÖR + DESSERT
                 ===================== */}
                 <div className="md:border-r md:border-[#765a35]/50 md:pr-10">
 
+                  {/* TILLBEHÖR */}
                   {activeSides.length > 0 && (
                     <section>
 
@@ -355,6 +359,56 @@ const activeDesserts =
                     </section>
                   )}
 
+                  {/* DESSERT */}
+                  {activeDesserts.length > 0 && (
+                    <section
+                      className={
+                        activeSides.length > 0
+                          ? 'mt-14 border-t border-[#75562c]/40 pt-12'
+                          : ''
+                      }
+                    >
+
+                      <WesternHeading>
+                        {menu.dessertsTitle ||
+                          'Dessert'}
+                      </WesternHeading>
+
+                      {menu.dessertsText && (
+                        <p className="mb-8 text-[11px] font-semibold uppercase leading-[1.7] tracking-[0.05em] text-[#665033]">
+                          {menu.dessertsText}
+                        </p>
+                      )}
+
+                      <div className="space-y-7">
+
+                        {activeDesserts.map(
+                          (
+                            dessert,
+                            index,
+                          ) => (
+                            <WesternItem
+                              key={
+                                dessert.id ||
+                                index
+                              }
+                              name={
+                                dessert.name
+                              }
+                              description={
+                                dessert.description ||
+                                undefined
+                              }
+                              price={`${dessert.price}:-`}
+                            />
+                          ),
+                        )}
+
+                      </div>
+
+                    </section>
+                  )}
+
                 </div>
 
                 {/* =====================
@@ -364,6 +418,7 @@ const activeDesserts =
 
                   {activeDrinks.length > 0 && (
                     <>
+
                       <WesternHeading>
                         {menu.drinksTitle ||
                           'Dryck'}
@@ -441,6 +496,7 @@ const activeDesserts =
                         )}
 
                       </div>
+
                     </>
                   )}
 
