@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import HeroTitleReveal from '@/components/HeroTitleReveal'
 import RichText from '@/components/RichText'
+import YeehawReveal from '@/components/shop/YeehawReveal'
 export const dynamic = 'force-dynamic'
 export default async function HomePage() {
   const payload = await getPayload({ config })
@@ -170,6 +171,10 @@ export default async function HomePage() {
         className="object-contain"
       />
     </div> */}
+    {/* YEEHAW */}
+<div className="mb-6 flex justify-center md:mb-8">
+  <YeehawReveal />
+</div>
 
     {/* EYEBROW */}
     {homepage.heroEyebrow && (
