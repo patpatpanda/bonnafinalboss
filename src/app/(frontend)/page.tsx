@@ -28,6 +28,7 @@ export default async function HomePage() {
       },
     },
     limit: 10,
+    depth: 1,
   })
 
   const locations = locationsResult.docs
