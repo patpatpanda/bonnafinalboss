@@ -162,16 +162,24 @@ export default buildConfig({
 
       bucket: process.env.SUPABASE_S3_BUCKET || 'media',
 
+      // Viktigt:
+      // skickar uppladdningen direkt från browsern till Supabase Storage
+      clientUploads: true,
+
       config: {
         endpoint: process.env.SUPABASE_S3_ENDPOINT,
 
-        region: process.env.SUPABASE_S3_REGION || 'eu-west-1',
+        region:
+          process.env.SUPABASE_S3_REGION || 'eu-west-1',
 
         forcePathStyle: true,
 
         credentials: {
-          accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY || '',
-          secretAccessKey: process.env.SUPABASE_S3_SECRET_KEY || '',
+          accessKeyId:
+            process.env.SUPABASE_S3_ACCESS_KEY || '',
+
+          secretAccessKey:
+            process.env.SUPABASE_S3_SECRET_KEY || '',
         },
       },
     }),
@@ -217,9 +225,8 @@ export default buildConfig({
           return false
         }
 
-        const authHeader = req.headers.get(
-          'authorization',
-        )
+        const authHeader =
+          req.headers.get('authorization')
 
         return authHeader === `Bearer ${secret}`
       },
