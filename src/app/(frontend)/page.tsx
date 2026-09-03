@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-
+import HeroTitleReveal from '@/components/HeroTitleReveal'
 import RichText from '@/components/RichText'
 
 export default async function HomePage() {
@@ -143,16 +143,9 @@ export default async function HomePage() {
             </div>
           )}
 
-          {homepage.heroTitle && (
-            <h1
-              className="max-w-5xl text-5xl font-black uppercase leading-[0.84] tracking-[-0.05em] sm:text-6xl md:text-8xl lg:text-[7.5rem]"
-              style={{
-                fontFamily: 'Georgia, Times New Roman, serif',
-              }}
-            >
-              {homepage.heroTitle}
-            </h1>
-          )}
+        {homepage.heroTitle && (
+  <HeroTitleReveal text={homepage.heroTitle} />
+)}
 
           {homepage.heroText && (
             <p className="mt-8 max-w-2xl text-base leading-7 text-[#FFF] md:text-lg">
@@ -514,7 +507,7 @@ export default async function HomePage() {
                     <div className="relative z-10">
 
                       {location?.name && (
-                        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FFF]">
+                        <p className="text-[20px] font-black uppercase tracking-[0.3em] text-[#FFF]">
                           {location.name}
                         </p>
                       )}

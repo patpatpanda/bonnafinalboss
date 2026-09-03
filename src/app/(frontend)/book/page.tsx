@@ -11,73 +11,78 @@ export default async function BookPage() {
   })
 
   return (
-    <main className="min-h-screen bg-[#0a0907] text-[#f4f0e8]">
+    <main className="min-h-screen bg-[#0b0b0b] text-white">
 
       {/* =========================
           HERO
       ========================= */}
-      <section className="relative overflow-hidden border-b border-[#2b2218]">
+      <section className="relative overflow-hidden border-b border-[#242424]">
 
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#2b1c10_0%,#0a0907_58%)]" />
+        {/* BAKGRUND */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#201b08_0%,#0b0b0b_58%)]" />
 
-        <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,rgba(215,180,105,.15)_0,transparent_20%),radial-gradient(circle_at_80%_75%,rgba(150,95,40,.12)_0,transparent_28%)]" />
+        {/* DISKRET STRUKTUR */}
+        <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,rgba(250,200,0,.12)_0,transparent_20%),radial-gradient(circle_at_80%_75%,rgba(250,200,0,.08)_0,transparent_28%)]" />
 
         <div className="relative mx-auto flex min-h-[58vh] max-w-7xl flex-col items-center justify-center px-5 py-24 text-center md:px-10">
 
-          {/* ORNAMENT */}
-          <div className="mb-6 text-3xl text-[#d7b469]">
-            ❦
-          </div>
-
+          {/* LITEN RUBRIK */}
           <div className="mb-6 flex items-center gap-4">
 
-            <span className="h-px w-12 bg-[#d7b469] md:w-24" />
+            <span className="h-px w-12 bg-[#FAC800] md:w-24" />
 
-            <span className="text-[10px] font-black uppercase tracking-[0.35em] text-[#d7b469] md:text-xs">
+            <span className="text-[10px] font-black uppercase tracking-[0.35em] text-white md:text-xs">
               Bonnatösens Saloon
             </span>
 
-            <span className="h-px w-12 bg-[#d7b469] md:w-24" />
+            <span className="h-px w-12 bg-[#FAC800] md:w-24" />
 
           </div>
 
+          {/* HUVUDRUBRIK */}
           <h1
-            className="text-6xl font-black uppercase leading-[0.82] tracking-[-0.05em] sm:text-7xl md:text-8xl lg:text-[8.5rem]"
+            className="text-6xl font-black uppercase leading-[0.82] tracking-[-0.05em] text-white sm:text-7xl md:text-8xl lg:text-[8.5rem]"
             style={{
-              fontFamily: 'Georgia, Times New Roman, serif',
+              fontFamily:
+                'Georgia, Times New Roman, serif',
             }}
           >
             Boka
             <br />
-
-            <span className="text-[#d7b469]">
-              bord
-            </span>
+            bord
           </h1>
 
-          <div className="mt-8 flex items-center gap-4">
-            <span className="h-px w-16 bg-[#6f5736]" />
-            <span className="text-[#d7b469]">✦</span>
-            <span className="h-px w-16 bg-[#6f5736]" />
+          {/* ACCENT */}
+          <div className="mt-8 flex items-center gap-3">
+
+            <span className="h-px w-16 bg-[#FAC800]" />
+
+            <span className="h-[4px] w-[4px] rotate-45 bg-[#FAC800]" />
+
+            <span className="h-px w-16 bg-[#FAC800]" />
+
           </div>
 
-          <p className="mt-7 max-w-xl text-base leading-7 text-[#c7b8a2] md:text-lg">
+          {/* BESKRIVNING */}
+          <p className="mt-7 max-w-xl text-base leading-7 text-white md:text-lg">
             Här bokar du bord på{' '}
-            <strong className="font-bold text-[#f4f0e8]">
+            <strong className="font-bold text-white">
               Bonnatösens Saloon
             </strong>{' '}
             inne på bryggeriområdet i Nora.
           </p>
 
-          <div className="mt-7 border border-[#6f5736] bg-[#140f0a]/80 px-6 py-3">
+          {/* PLATS */}
+          <div className="mt-7 border border-[#FAC800] bg-black/40 px-6 py-3">
 
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#d7b469]">
+            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white">
               Bryggeriområdet · Nora
             </span>
 
           </div>
 
         </div>
+
       </section>
 
       {/* =========================
@@ -87,38 +92,43 @@ export default async function BookPage() {
 
         <div className="mx-auto max-w-5xl">
 
-          {/* INTRO */}
+          {/* =========================
+              INTRO
+          ========================= */}
           <div className="mb-10 text-center md:mb-14">
 
             <div className="mb-5 flex items-center justify-center gap-4">
 
-              <span className="h-px w-12 bg-[#6f5736]" />
+              <span className="h-px w-12 bg-[#FAC800]" />
 
-              <span className="text-xs font-black uppercase tracking-[0.3em] text-[#d7b469]">
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-white">
                 Reservation
               </span>
 
-              <span className="h-px w-12 bg-[#6f5736]" />
+              <span className="h-px w-12 bg-[#FAC800]" />
 
             </div>
 
             <h2
-              className="text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-6xl"
+              className="text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] text-white md:text-6xl"
               style={{
-                fontFamily: 'Georgia, Times New Roman, serif',
+                fontFamily:
+                  'Georgia, Times New Roman, serif',
               }}
             >
               Säkra ditt bord
             </h2>
 
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#9f927f] md:text-base">
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white md:text-base">
               Välj datum, antal personer och en ledig tid.
               Bokningen gäller Saloonen på bryggeriområdet i Nora.
             </p>
 
           </div>
 
-          {/* WESTERN-KORT */}
+          {/* =========================
+              WESTERN-KORT
+          ========================= */}
           <div
             className="
               relative
@@ -149,42 +159,39 @@ export default async function BookPage() {
               "
             />
 
-            {/* RAMAR */}
+            {/* YTTRE RAM */}
             <div className="pointer-events-none absolute inset-3 border border-[#735630]/80" />
-            <div className="pointer-events-none absolute inset-5 border border-[#735630]/40" />
 
-            {/* HÖRN */}
-            <WesternCorner className="left-7 top-7" />
-            <WesternCorner className="right-7 top-7 rotate-90" />
-            <WesternCorner className="bottom-7 right-7 rotate-180" />
-            <WesternCorner className="bottom-7 left-7 -rotate-90" />
+            {/* INRE RAM */}
+            <div className="pointer-events-none absolute inset-5 border border-[#735630]/40" />
 
             <div className="relative z-10">
 
+              {/* =========================
+                  KORT HEADER
+              ========================= */}
               <div className="mb-8 text-center">
 
-                <div className="text-2xl text-[#75562c]">
-                  ❦
-                </div>
-
-                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.35em]">
+                <p className="text-[10px] font-black uppercase tracking-[0.35em]">
                   Bonnatösens Saloon
                 </p>
 
                 <h3
                   className="mt-3 text-3xl font-black uppercase tracking-[-0.04em] md:text-5xl"
                   style={{
-                    fontFamily: 'Georgia, Times New Roman, serif',
+                    fontFamily:
+                      'Georgia, Times New Roman, serif',
                   }}
                 >
                   Bordsbokning
                 </h3>
 
-                <div className="mx-auto mt-5 flex max-w-md items-center gap-4">
+                {/* WESTERN-LINJE */}
+                <div className="mx-auto mt-5 flex max-w-md items-center gap-3">
 
                   <span className="h-px flex-1 bg-[#75562c]" />
 
-                  <span>✦</span>
+                  <span className="h-[5px] w-[5px] rotate-45 bg-[#75562c]" />
 
                   <span className="h-px flex-1 bg-[#75562c]" />
 
@@ -192,9 +199,14 @@ export default async function BookPage() {
 
               </div>
 
+              {/* =========================
+                  FORMULÄR
+              ========================= */}
               <BookingForm
                 times={[]}
-                maxGuestsPerBooking={settings.maxGuestsPerBooking}
+                maxGuestsPerBooking={
+                  settings.maxGuestsPerBooking
+                }
               />
 
             </div>
@@ -206,26 +218,5 @@ export default async function BookPage() {
       </section>
 
     </main>
-  )
-}
-
-function WesternCorner({
-  className = '',
-}: {
-  className?: string
-}) {
-  return (
-    <div
-      aria-hidden="true"
-      className={`pointer-events-none absolute h-16 w-16 text-[#75562c]/70 ${className}`}
-    >
-      <div className="absolute left-0 top-0 h-px w-14 bg-current" />
-
-      <div className="absolute left-0 top-0 h-14 w-px bg-current" />
-
-      <div className="absolute left-2 top-2 text-2xl">
-        ❧
-      </div>
-    </div>
   )
 }

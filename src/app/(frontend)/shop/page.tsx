@@ -4,7 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { getProducts } from '@/lib/shopify'
-
+import YeehawReveal from '@/components/shop/YeehawReveal'
 export default async function ShopPage() {
   const payload = await getPayload({
     config,
@@ -75,7 +75,7 @@ export default async function ShopPage() {
                   'Georgia, Times New Roman, serif',
               }}
             >
-              {shopPage.title}
+              {shopPage.title} <YeehawReveal />
             </h1>
           )}
 
