@@ -2497,17 +2497,22 @@ export interface Menu {
   burgerEyebrow?: string | null;
   burgerName: string;
   burgerDescription?: string | null;
-  /**
-   * Priset för enkel burgare i menyn.
-   */
   singleBurgerPrice: number;
-  /**
-   * Priset för dubbel burgare i menyn.
-   */
   doubleBurgerPrice: number;
   burgerImage?: (number | null) | Media;
   sidesTitle?: string | null;
   sides?:
+    | {
+        name: string;
+        description?: string | null;
+        price: number;
+        active?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  dessertsTitle?: string | null;
+  dessertsText?: string | null;
+  desserts?:
     | {
         name: string;
         description?: string | null;
@@ -2723,6 +2728,17 @@ export interface MenuSelect<T extends boolean = true> {
   burgerImage?: T;
   sidesTitle?: T;
   sides?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        price?: T;
+        active?: T;
+        id?: T;
+      };
+  dessertsTitle?: T;
+  dessertsText?: T;
+  desserts?:
     | T
     | {
         name?: T;

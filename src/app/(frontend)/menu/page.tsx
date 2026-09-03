@@ -24,7 +24,10 @@ export default async function MenuPage() {
     menu.sides?.filter(
       (side) => side.active !== false,
     ) || []
-
+const activeDesserts =
+  menu.desserts?.filter(
+    (dessert) => dessert.active !== false,
+  ) || []
   const activeDrinks =
     menu.drinks?.filter(
       (drink) => drink.active !== false,
