@@ -477,9 +477,7 @@ export default async function HomePage() {
 
                   <div className="pointer-events-none absolute inset-4 border border-[#FAC800]/25" />
 
-                  <span className="absolute left-7 top-7 text-xs font-black tracking-[0.25em] text-[#FFF]">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
+                 
 
                   <div className="absolute inset-x-0 bottom-0 p-7 md:p-10">
 

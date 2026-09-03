@@ -5,6 +5,9 @@ import config from '@payload-config'
 
 import { getProducts } from '@/lib/shopify'
 import YeehawReveal from '@/components/shop/YeehawReveal'
+
+export const dynamic = 'force-dynamic'
+
 export default async function ShopPage() {
   const payload = await getPayload({
     config,
@@ -32,7 +35,7 @@ export default async function ShopPage() {
       {/* =========================
           HERO
       ========================= */}
-      <section className="relative min-h-[65vh] overflow-hidden border-b border-[#292929]">
+      <section className="relative min-h-[52vh] overflow-hidden border-b border-[#292929] md:min-h-[58vh]">
 
         {heroImage?.url && (
           <Image
@@ -51,36 +54,37 @@ export default async function ShopPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-black/10 to-black/30" />
 
         {/* HERO CONTENT */}
-        <div className="relative mx-auto flex min-h-[65vh] max-w-7xl flex-col justify-end px-5 pb-16 pt-28 md:px-10 md:pb-24">
+        <div className="relative mx-auto flex min-h-[52vh] max-w-7xl flex-col justify-end px-5 pb-12 pt-24 md:min-h-[58vh] md:px-10 md:pb-20 md:pt-28">
 
           {shopPage.eyebrow && (
-            <div className="mb-6 flex items-center gap-4">
+            <div className="mb-5 flex items-center gap-4">
 
-              <span className="h-px w-12 bg-[#FAC800]" />
+              <span className="h-px w-10 bg-[#FAC800] md:w-12" />
 
-              <span className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF] md:text-xs">
+              <span className="text-[10px] font-black uppercase tracking-[0.35em] text-white md:text-xs">
                 {shopPage.eyebrow}
               </span>
 
-              <span className="h-px w-12 bg-[#FAC800]" />
+              <span className="h-px w-10 bg-[#FAC800] md:w-12" />
 
             </div>
           )}
 
           {shopPage.title && (
             <h1
-              className="max-w-5xl text-6xl font-black uppercase leading-[0.82] tracking-[-0.055em] sm:text-7xl md:text-8xl lg:text-[9rem]"
+              className="max-w-5xl text-5xl font-black uppercase leading-[0.82] tracking-[-0.055em] sm:text-6xl md:text-8xl lg:text-[8.5rem]"
               style={{
                 fontFamily:
                   'Georgia, Times New Roman, serif',
               }}
             >
-              {shopPage.title} <YeehawReveal />
+              {shopPage.title}{' '}
+              <YeehawReveal />
             </h1>
           )}
 
           {shopPage.intro && (
-            <p className="mt-7 max-w-2xl text-base leading-8 text-[#FFF] md:text-lg">
+            <p className="mt-6 max-w-2xl text-base leading-7 text-white md:mt-7 md:text-lg md:leading-8">
               {shopPage.intro}
             </p>
           )}
@@ -92,7 +96,7 @@ export default async function ShopPage() {
       {/* =========================
           PRODUKTINTRO
       ========================= */}
-      <section className="px-5 pb-12 pt-20 md:px-10 md:pb-16 md:pt-28">
+      <section className="px-5 pb-10 pt-16 md:px-10 md:pb-14 md:pt-24">
 
         <div className="mx-auto max-w-7xl">
 
@@ -127,7 +131,7 @@ export default async function ShopPage() {
             </div>
 
             {shopPage.productsText && (
-              <p className="max-w-xl text-sm leading-7 text-[#FAC800] md:text-base lg:justify-self-end">
+              <p className="max-w-xl text-sm leading-7 text-white/75 md:text-base lg:justify-self-end">
                 {shopPage.productsText}
               </p>
             )}
@@ -149,13 +153,13 @@ export default async function ShopPage() {
 
           {/* PRODUKTCOUNT */}
           {products.length > 0 && (
-            <div className="mb-8 flex items-center justify-between">
+            <div className="mb-9 flex items-center justify-between">
 
-              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#FFF]">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white md:text-xs">
                 Sortiment
               </span>
 
-              <span className="text-[9px] font-black uppercase tracking-[0.25em] text-[#FFF]/60">
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/60 md:text-xs">
                 {products.length}{' '}
                 {products.length === 1
                   ? 'produkt'
@@ -181,7 +185,7 @@ export default async function ShopPage() {
                 Shoppen är tom
               </h2>
 
-              <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-[#FFF]">
+              <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-white/70">
                 Inga produkter finns i shoppen just nu.
                 Kom tillbaka snart.
               </p>
@@ -230,13 +234,13 @@ export default async function ShopPage() {
                               transition
                               duration-700
                               ease-out
-                              group-hover:scale-[1.035]
+                              md:group-hover:scale-[1.035]
                             "
                           />
                         ) : (
                           <div className="absolute inset-0 flex items-center justify-center">
 
-                            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FFF]">
+                            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white">
                               Ingen bild
                             </span>
 
@@ -248,20 +252,17 @@ export default async function ShopPage() {
 
                         {/* HÖRN */}
                         <span className="absolute left-4 top-4 h-5 w-5 border-l border-t border-[#FAC800]/60" />
-
                         <span className="absolute right-4 top-4 h-5 w-5 border-r border-t border-[#FAC800]/60" />
-
                         <span className="absolute bottom-4 left-4 h-5 w-5 border-b border-l border-[#FAC800]/60" />
-
                         <span className="absolute bottom-4 right-4 h-5 w-5 border-b border-r border-[#FAC800]/60" />
 
-                        {/* HOVER CTA */}
+                        {/* CTA - SYNLIG MOBIL / HOVER DESKTOP */}
                         <div
                           className="
                             absolute
                             inset-x-5
                             bottom-5
-                            translate-y-3
+                            translate-y-0
                             border
                             border-[#FAC800]
                             bg-black/95
@@ -272,13 +273,16 @@ export default async function ShopPage() {
                             font-black
                             uppercase
                             tracking-[0.25em]
-                            text-[#FFF]
-                            opacity-0
+                            text-white
+                            opacity-100
                             backdrop-blur
                             transition-all
                             duration-300
-                            group-hover:translate-y-0
-                            group-hover:opacity-100
+
+                            md:translate-y-3
+                            md:opacity-0
+                            md:group-hover:translate-y-0
+                            md:group-hover:opacity-100
                           "
                         >
                           Visa produkt
@@ -297,10 +301,6 @@ export default async function ShopPage() {
 
                         <div className="min-w-0">
 
-                          <p className="mb-2 text-[8px] font-black uppercase tracking-[0.3em] text-[#FFF]">
-                            Bonnatösen
-                          </p>
-
                           <h3
                             className="
                               text-2xl
@@ -311,7 +311,6 @@ export default async function ShopPage() {
                               text-white
                               transition
                               duration-200
-                              group-hover:text-[#FFF]
                             "
                             style={{
                               fontFamily:
@@ -324,7 +323,7 @@ export default async function ShopPage() {
                         </div>
 
                         <span
-                          className="shrink-0 text-lg font-black text-[#FFF]"
+                          className="shrink-0 text-lg font-black text-[#FAC800]"
                           style={{
                             fontFamily:
                               'Georgia, Times New Roman, serif',
@@ -341,7 +340,7 @@ export default async function ShopPage() {
                       </div>
 
                       {product.description && (
-                        <p className="mt-4 line-clamp-2 max-w-md text-sm leading-6 text-[#FFF]/70">
+                        <p className="mt-4 line-clamp-2 max-w-md text-sm leading-6 text-white/70">
                           {product.description}
                         </p>
                       )}
@@ -350,7 +349,7 @@ export default async function ShopPage() {
 
                         <span className="h-px w-7 bg-[#FAC800]/40 transition-all duration-300 group-hover:w-12 group-hover:bg-[#FAC800]" />
 
-                        <span className="text-[9px] font-black uppercase tracking-[0.22em] text-[#FFF]/70 transition group-hover:text-[#FFF]">
+                        <span className="text-[9px] font-black uppercase tracking-[0.22em] text-white/70 transition group-hover:text-white">
                           Se mer
                         </span>
 
@@ -406,7 +405,7 @@ export default async function ShopPage() {
 
                   <span className="h-px w-10 bg-[#FAC800]" />
 
-                  <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF]">
+                  <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white">
                     {shopPage.infoEyebrow}
                   </p>
 
@@ -426,6 +425,35 @@ export default async function ShopPage() {
               )}
 
               <div className="mt-8 h-px max-w-xs bg-[#FAC800]/35" />
+
+              {/* FALLBACK-TEXT */}
+              <p className="mt-8 max-w-xl text-base leading-8 text-white/75 md:text-lg">
+                Merch och prylar från Bonnatösen.
+                Beställ online och bär med dig en bit
+                av gården, burgarna och Saloonen.
+              </p>
+
+              <Link
+                href="/#locations"
+                className="
+                  mt-9
+                  inline-flex
+                  border
+                  border-[#FAC800]
+                  px-7
+                  py-4
+                  text-[10px]
+                  font-black
+                  uppercase
+                  tracking-[0.2em]
+                  text-white
+                  transition
+                  hover:bg-[#FAC800]
+                  hover:text-black
+                "
+              >
+                Besök Bonnatösen
+              </Link>
 
             </div>
 

@@ -21,6 +21,7 @@ export default function BonnaHeader() {
             alt="Bonnatösens Burgare"
             fill
             priority
+            sizes="(max-width: 768px) 150px, 250px"
             className="object-contain object-left"
           />
         </Link>
@@ -28,7 +29,7 @@ export default function BonnaHeader() {
         {/* =========================
             DESKTOP
         ========================= */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-7 md:flex">
 
           <Link
             href="/"
@@ -42,6 +43,20 @@ export default function BonnaHeader() {
             className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4f0e8] transition hover:text-[#FAC800]"
           >
             Meny
+          </Link>
+
+          <Link
+            href="/platser/ladan"
+            className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4f0e8] transition hover:text-[#FAC800]"
+          >
+            Ladan
+          </Link>
+
+          <Link
+            href="/platser/saloon"
+            className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4f0e8] transition hover:text-[#FAC800]"
+          >
+            Saloonen
           </Link>
 
           <Link
@@ -149,6 +164,26 @@ export default function BonnaHeader() {
               className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
             >
               Meny
+            </Link>
+
+            <Link
+              href="/platser/ladan"
+              onClick={() =>
+                setOpen(false)
+              }
+              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+            >
+              Ladan
+            </Link>
+
+            <Link
+              href="/platser/saloon"
+              onClick={() =>
+                setOpen(false)
+              }
+              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+            >
+              Saloonen
             </Link>
 
             <Link
