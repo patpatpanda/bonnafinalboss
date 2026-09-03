@@ -276,79 +276,87 @@ export default async function LocationPage({
         </section>
       )}
 
-      {/* =========================
-          GALLERI
-      ========================= */}
-      {location.gallery &&
-        location.gallery.length > 0 && (
-          <section className="px-5 py-20 md:px-10 md:py-28">
+     {/* =========================
+    GALLERI
+========================= */}
+{location.gallery &&
+  location.gallery.length > 0 && (
+    <section className="px-5 py-20 md:px-10 md:py-28">
 
-            <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl">
 
-              {/* RUBRIK */}
-              <div className="mb-10 flex items-center gap-4">
+        {/* RUBRIK */}
+        <div className="mb-10 flex items-center gap-4">
 
-                <span className="text-xs font-bold uppercase tracking-[0.3em] text-white">
-                  Bilder
-                </span>
+          <span className="text-xs font-bold uppercase tracking-[0.3em] text-white">
+            Bilder
+          </span>
 
-                <span className="h-px flex-1 bg-[#FAC800]/40" />
+          <span className="h-px flex-1 bg-[#FAC800]/40" />
+
+        </div>
+
+        {/* BILDER */}
+        <div className="grid gap-4 md:grid-cols-2">
+
+          {location.gallery.map((item, index) => {
+            const image =
+              typeof item.image === 'object'
+                ? item.image
+                : null
+
+            if (!image?.url) {
+              return null
+            }
+
+            return (
+              <div
+                key={item.id || index}
+                className="
+                  group
+                  relative
+                  aspect-[16/10]
+                  overflow-hidden
+                  border
+                  border-[#242424]
+                  bg-[#111]
+                  transition
+                  hover:border-[#FAC800]
+                "
+              >
+                <Image
+                  src={image.url}
+                  alt={image.alt || location.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="
+                    object-cover
+                    transition
+                    duration-700
+                  "
+                />
+
+                {/* INNER BORDER */}
+                <div className="
+                  pointer-events-none
+                  absolute
+                  inset-3
+                  border
+                  border-transparent
+                  transition
+                  group-hover:border-[#FAC800]/40
+                " />
 
               </div>
+            )
+          })}
 
-              {/* BILDER */}
-              <div className="grid gap-4 md:grid-cols-2">
+        </div>
 
-                {location.gallery.map(
-                  (item, index) => {
-                    const image =
-                      typeof item.image ===
-                      'object'
-                        ? item.image
-                        : null
+      </div>
 
-                    if (!image?.url) {
-                      return null
-                    }
-
-                    return (
-                      <div
-                        key={item.id || index}
-                        className="
-                          group
-                          relative
-                          aspect-[4/3]
-                          overflow-hidden
-                          border
-                          border-[#242424]
-                          transition
-                          hover:border-[#FAC800]
-                        "
-                      >
-                        <Image
-                          src={image.url}
-                          alt={
-                            image.alt ||
-                            location.name
-                          }
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover transition duration-700 group-hover:scale-105"
-                        />
-
-                        {/* INNER BORDER */}
-                        <div className="pointer-events-none absolute inset-3 border border-transparent transition group-hover:border-[#FAC800]/40" />
-
-                      </div>
-                    )
-                  },
-                )}
-
-              </div>
-
-            </div>
-
-          </section>
+    </section>
+  
         )}
 
       {/* =========================
