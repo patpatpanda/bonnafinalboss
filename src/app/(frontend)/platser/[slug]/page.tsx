@@ -276,7 +276,7 @@ export default async function LocationPage({
         </section>
       )}
 
-     {/* =========================
+    {/* =========================
     GALLERI
 ========================= */}
 {location.gallery &&
@@ -297,7 +297,7 @@ export default async function LocationPage({
         </div>
 
         {/* BILDER */}
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid items-start gap-4 md:grid-cols-2">
 
           {location.gallery.map((item, index) => {
             const image =
@@ -315,11 +315,10 @@ export default async function LocationPage({
                 className="
                   group
                   relative
-                  aspect-[16/10]
                   overflow-hidden
                   border
                   border-[#242424]
-                  bg-[#111]
+                  bg-[#111111]
                   transition
                   hover:border-[#FAC800]
                 "
@@ -327,25 +326,28 @@ export default async function LocationPage({
                 <Image
                   src={image.url}
                   alt={image.alt || location.name}
-                  fill
+                  width={image.width || 1600}
+                  height={image.height || 1200}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="
-                    object-cover
-                    transition
-                    duration-700
+                    h-auto
+                    w-full
+                    object-contain
                   "
                 />
 
                 {/* INNER BORDER */}
-                <div className="
-                  pointer-events-none
-                  absolute
-                  inset-3
-                  border
-                  border-transparent
-                  transition
-                  group-hover:border-[#FAC800]/40
-                " />
+                <div
+                  className="
+                    pointer-events-none
+                    absolute
+                    inset-3
+                    border
+                    border-transparent
+                    transition
+                    group-hover:border-[#FAC800]/40
+                  "
+                />
 
               </div>
             )
@@ -356,8 +358,9 @@ export default async function LocationPage({
       </div>
 
     </section>
+  )}
   
-        )}
+        
 
       {/* =========================
           LEADER BERGSLAGEN / EU
