@@ -4,7 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import HeroTitleReveal from '@/components/HeroTitleReveal'
 import RichText from '@/components/RichText'
-
+export const revalidate = 60
 export default async function HomePage() {
   const payload = await getPayload({ config })
 
