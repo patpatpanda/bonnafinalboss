@@ -79,7 +79,7 @@ export default async function ShopPage() {
               }}
             >
               {shopPage.title}{' '}
-              <YeehawReveal />
+              
             </h1>
           )}
 
