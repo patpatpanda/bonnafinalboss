@@ -79,10 +79,10 @@ export default async function HomePage() {
   return (
     <main className="bg-[#090909] text-white">
 
-     {/* =========================
-    HERO
+    {/* =========================
+    HERO — WESTERN EDITORIAL
 ========================= */}
-<section className="relative min-h-[92svh] overflow-hidden border-b border-[#2d2d2d] md:min-h-[90vh]">
+<section className="relative min-h-[88svh] overflow-hidden border-b border-[#2d2d2d] md:min-h-[90vh]">
 
   {/* MOBIL HERO */}
   {heroImageMobile?.url && (
@@ -112,200 +112,223 @@ export default async function HomePage() {
     />
   )}
 
-  {/* OVERLAYS */}
-  <div className="absolute inset-0 bg-black/45" />
+  {/* MÖRKNING */}
+  <div className="absolute inset-0 bg-black/35" />
 
-  <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-black/10 to-black/20" />
+  {/* MÖRKARE PÅ VÄNSTER SIDA */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
 
-  {/* HERO CONTENT */}
+  {/* MÖRK NEDERKANT */}
+  <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-transparent to-black/20" />
+
+  {/* =========================
+      CONTENT
+  ========================= */}
   <div
     className="
       relative
       mx-auto
       flex
-      min-h-[92svh]
+      min-h-[88svh]
       max-w-7xl
-      -translate-y-16
-      flex-col
       items-center
-      justify-center
       px-5
-      pb-12
-      pt-24
-      text-center
-
-      sm:-translate-y-12
-      sm:px-6
-      sm:pt-28
+      py-16
 
       md:min-h-[90vh]
-      md:-translate-y-20
       md:px-10
-      md:pb-20
-      md:pt-32
+      md:py-24
     "
   >
 
-    {/* LOGGA
-    <div
-      className="
-        relative
-        mb-6
-        h-[150px]
-        w-[320px]
+    <div className="w-full max-w-[760px]">
 
-        sm:h-[170px]
-        sm:w-[360px]
-
-        md:mb-8
-        md:h-[190px]
-        md:w-[430px]
-      "
-    >
-      <Image
-        src="/images/bonnatosen-logo.png"
-        alt="Bonnatösens Burgare"
-        fill
-        priority
-        sizes="(max-width: 640px) 320px, (max-width: 768px) 360px, 430px"
-        className="object-contain"
-      />
-    </div> */}
-    {/* YEEHAW */}
-<div className="mb-6 flex justify-center md:mb-8">
-  <YeehawReveal />
-</div>
-
-    {/* EYEBROW */}
-    {homepage.heroEyebrow && (
-      <div className="mb-5 flex items-center gap-3 sm:gap-4 md:mb-6">
-
-        <span className="h-px w-8 bg-[#FAC800] sm:w-10 md:w-16" />
-
-        <span className="text-[11px] font-black uppercase tracking-[0.28em] text-[#FAC800] sm:text-xs sm:tracking-[0.35em]">
-          {homepage.heroEyebrow}
+      {/* TOP LINE */}
+      
+      {/* YEEHAW */}
+      <div className="mb-3 flex items-center">
+        <span
+          className="
+            -rotate-3
+            border
+            border-[#FAC800]
+            bg-[#FAC800]
+            px-4
+            py-2
+            text-xs
+            font-black
+            uppercase
+            tracking-[0.2em]
+            text-black
+            md:px-5
+            md:text-sm
+          "
+        >
+          Yeehaw!
         </span>
+      </div>
 
-        <span className="h-px w-8 bg-[#FAC800] sm:w-10 md:w-16" />
+      {/* =========================
+          STOR RUBRIK
+      ========================= */}
+      {homepage.heroTitle && (
+        <h1
+          className="
+            max-w-[900px]
+            text-[3.6rem]
+            font-black
+            uppercase
+            leading-[0.82]
+            tracking-[-0.065em]
+            text-white
+
+            sm:text-[4.8rem]
+
+            md:text-[6.5rem]
+
+            lg:text-[8rem]
+          "
+          style={{
+            fontFamily:
+              'Georgia, Times New Roman, serif',
+          }}
+        >
+          {homepage.heroTitle}
+        </h1>
+      )}
+
+      {/* GUL LINJE */}
+      <div className="my-7 flex items-center gap-3 md:my-9">
+
+        <span className="h-[3px] w-20 bg-[#FAC800]" />
+
+        <span className="h-[3px] w-3 bg-[#FAC800]" />
 
       </div>
-    )}
 
-    {/* TITEL */}
-    {homepage.heroTitle && (
-      <HeroTitleReveal text={homepage.heroTitle} />
-    )}
+      {/* TEXT */}
+      {homepage.heroText && (
+        <p
+          className="
+            max-w-[520px]
+            text-[15px]
+            font-medium
+            leading-7
+            text-white/90
 
-    {/* TEXT */}
-    {homepage.heroText && (
-      <p
+            sm:text-base
+
+            md:text-lg
+            md:leading-8
+          "
+        >
+          {homepage.heroText}
+        </p>
+      )}
+
+      {/* KNAPPAR */}
+      <div
         className="
-          mt-6
-          max-w-[340px]
-          text-[15px]
-          font-medium
-          leading-6
-          text-white
+          mt-8
+          flex
+          max-w-[420px]
+          flex-col
+          gap-3
 
-          sm:max-w-xl
-          sm:text-base
-          sm:leading-7
+          sm:max-w-none
+          sm:flex-row
 
-          md:mt-8
-          md:max-w-2xl
-          md:text-lg
+          md:mt-10
         "
       >
-        {homepage.heroText}
-      </p>
-    )}
 
-    {/* KNAPPAR */}
-    <div
-      className="
-        mt-8
-        flex
-        w-full
-        max-w-[340px]
-        flex-col
-        gap-3
+        {homepage.primaryButtonText &&
+          homepage.primaryButtonLink && (
+            <Link
+              href={homepage.primaryButtonLink}
+              className="
+                flex
+                items-center
+                justify-center
+                border-2
+                border-[#FAC800]
+                bg-[#FAC800]
+                px-8
+                py-4
+                text-xs
+                font-black
+                uppercase
+                tracking-[0.17em]
+                text-black
+                transition
 
-        sm:w-auto
-        sm:max-w-none
-        sm:flex-row
+                hover:bg-transparent
+                hover:text-[#FAC800]
 
-        md:mt-10
-      "
-    >
+                md:py-5
+              "
+            >
+              {homepage.primaryButtonText}
+            </Link>
+          )}
 
-      {homepage.primaryButtonText &&
-        homepage.primaryButtonLink && (
-          <Link
-            href={homepage.primaryButtonLink}
-            className="
-              flex
-              w-full
-              items-center
-              justify-center
-              border-2
-              border-[#FAC800]
-              bg-[#FAC800]
-              px-7
-              py-4
-              text-xs
-              font-black
-              uppercase
-              tracking-[0.16em]
-              text-black
-              transition
+        {homepage.secondaryButtonText &&
+          homepage.secondaryButtonLink && (
+            <Link
+              href={homepage.secondaryButtonLink}
+              className="
+                flex
+                items-center
+                justify-center
+                border
+                border-white/50
+                bg-black/30
+                px-8
+                py-4
+                text-xs
+                font-black
+                uppercase
+                tracking-[0.17em]
+                text-white
+                backdrop-blur-sm
+                transition
 
-              hover:bg-transparent
-              hover:text-white
+                hover:border-[#FAC800]
+                hover:text-[#FAC800]
 
-              sm:w-auto
-              sm:px-8
-              sm:py-5
-            "
-          >
-            {homepage.primaryButtonText}
-          </Link>
-        )}
+                md:py-5
+              "
+            >
+              {homepage.secondaryButtonText}
+            </Link>
+          )}
 
-      {homepage.secondaryButtonText &&
-        homepage.secondaryButtonLink && (
-          <Link
-            href={homepage.secondaryButtonLink}
-            className="
-              flex
-              w-full
-              items-center
-              justify-center
-              border
-              border-[#FAC800]
-              bg-black/50
-              px-7
-              py-4
-              text-xs
-              font-black
-              uppercase
-              tracking-[0.16em]
-              text-white
-              backdrop-blur
-              transition
-
-              hover:bg-[#FAC800]
-              hover:text-black
-
-              sm:w-auto
-              sm:px-8
-              sm:py-5
-            "
-          >
-            {homepage.secondaryButtonText}
-          </Link>
-        )}
+      </div>
 
     </div>
+
+  </div>
+
+  {/* =========================
+      BOTTOM LABEL
+  ========================= */}
+  <div className="absolute bottom-5 right-5 hidden items-center gap-4 md:flex md:right-10">
+
+    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">
+      Burgare
+    </span>
+
+    <span className="h-px w-8 bg-[#FAC800]" />
+
+    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">
+      Gård
+    </span>
+
+    <span className="h-px w-8 bg-[#FAC800]" />
+
+    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">
+      Saloon
+    </span>
 
   </div>
 
