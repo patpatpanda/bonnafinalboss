@@ -51,8 +51,9 @@ export default async function LocationPage({
       {/* =========================
           HERO
       ========================= */}
-      <section className="relative min-h-[60vh] overflow-hidden border-b border-[#242424]">
+      <section className="relative min-h-[70vh] overflow-hidden border-b border-[#242424]">
 
+        {/* HERO-BILD */}
         {heroImage?.url && (
           <Image
             src={heroImage.url}
@@ -67,10 +68,13 @@ export default async function LocationPage({
         {/* TONING */}
         <div className="absolute inset-0 bg-black/25" />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-transparent" />
+
+        {/* LÄTT VÄNSTER-TONING */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent" />
 
         {/* HERO CONTENT */}
-        <div className="relative mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-end px-5 pb-16 pt-32 md:px-10 md:pb-24">
+        <div className="relative mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-end px-5 pb-12 pt-32 md:px-10 md:pb-20">
 
           {/* EYEBROW */}
           <div className="mb-5 flex items-center gap-4">
@@ -97,6 +101,9 @@ export default async function LocationPage({
               md:text-8xl
               lg:text-[9rem]
             "
+            style={{
+              fontFamily: 'Georgia, Times New Roman, serif',
+            }}
           >
             {location.name}
           </h1>
@@ -107,15 +114,77 @@ export default async function LocationPage({
               className="
                 mt-7
                 max-w-2xl
-                text-lg
-                leading-8
+                text-base
+                leading-7
                 text-white
                 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
                 md:text-xl
+                md:leading-8
               "
             >
               {location.shortDescription}
             </p>
+          )}
+
+          {/* =========================
+              VÄGBESKRIVNING
+          ========================= */}
+          {location.address && (
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+
+              {/* KNAPP */}
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                  location.address,
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  group
+                  inline-flex
+                  w-fit
+                  items-center
+                  justify-center
+                  gap-4
+                  border-2
+                  border-[#FAC800]
+                  bg-[#FAC800]
+                  px-6
+                  py-4
+                  text-xs
+                  font-black
+                  uppercase
+                  tracking-[0.18em]
+                  text-black
+                  transition
+                  hover:bg-transparent
+                  hover:text-[#FAC800]
+                "
+              >
+                Vägbeskrivning
+
+                <span
+                  aria-hidden="true"
+                  className="text-base transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
+                >
+                  ↗
+                </span>
+              </a>
+
+              {/* ADRESS */}
+              <div className="border-l border-white/25 pl-4">
+
+                <p className="text-[9px] font-black uppercase tracking-[0.28em] text-[#FAC800]">
+                  Hitta hit
+                </p>
+
+                <p className="mt-1 max-w-[320px] text-sm font-semibold leading-5 text-white md:text-base">
+                  {location.address}
+                </p>
+
+              </div>
+
+            </div>
           )}
 
         </div>
@@ -123,244 +192,180 @@ export default async function LocationPage({
       </section>
 
       {/* =========================
-    OM PLATSEN
-========================= */}
-<section className="px-5 py-20 md:px-10 md:py-28">
-  <div className="mx-auto max-w-7xl">
-
-    <div
-      className={`
-        grid
-        gap-12
-        ${
-          slug === 'ladan' || slug === 'saloon'
-            ? 'lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-20'
-            : ''
-        }
-      `}
-    >
-
-      {/* =========================
-          TEXT
+          OM PLATSEN
       ========================= */}
-      <div>
+      <section className="px-5 py-20 md:px-10 md:py-28">
 
-        <div
-          className="
-            prose
-            prose-invert
-            max-w-none
-            text-white
+        <div className="mx-auto max-w-7xl">
 
-            prose-headings:text-white
-            prose-p:text-white
-            prose-strong:text-white
-            prose-li:text-white
-            prose-blockquote:text-white
+          <div
+            className={`
+              grid
+              gap-12
+              ${
+                slug === 'ladan' || slug === 'saloon'
+                  ? 'lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-20'
+                  : ''
+              }
+            `}
+          >
 
-            prose-a:text-white
-            prose-a:decoration-[#FAC800]
-            hover:prose-a:text-white
-          "
-        >
-          {location.description ? (
-            <RichText
-              data={location.description}
-              enableGutter={false}
-            />
-          ) : (
-            <p className="text-base leading-8 text-white md:text-lg">
-              {location.shortDescription}
-            </p>
-          )}
-        </div>
+            {/* =========================
+                TEXT
+            ========================= */}
+            <div>
 
-      </div>
+              <div
+                className="
+                  prose
+                  prose-invert
+                  max-w-none
+                  text-white
 
-      {/* =========================
-          WANTED POSTER
-          Endast Ladan & Saloonen
-      ========================= */}
-      {(slug === 'ladan' || slug === 'saloon') && (
-  <div className="mx-auto w-full max-w-[430px] lg:mx-0 lg:ml-auto">
+                  prose-headings:text-white
+                  prose-p:text-white
+                  prose-strong:text-white
+                  prose-li:text-white
+                  prose-blockquote:text-white
 
-    <div className="relative aspect-[3/4] w-full">
-
-      <Image
-        src={
-          slug === 'saloon'
-            ? '/images/mrwant.png'
-            : '/images/mswant.png'
-        }
-        alt={
-          slug === 'saloon'
-            ? 'Bonnatösen Wanted Saloon'
-            : 'Bonnatösen Wanted Ladan'
-        }
-        fill
-        sizes="(max-width: 1024px) 90vw, 430px"
-        className="object-contain"
-      />
-
-    </div>
-
-  </div>
-      )}
-
-    </div>
-
-  </div>
-</section>
-
-      {/* =========================
-          ADRESS
-      ========================= */}
-      {location.address && (
-        <section className="border-y border-[#242424]">
-
-          <div className="mx-auto max-w-7xl px-6 py-10 md:px-10 md:py-14">
-
-            <div className="mb-4 flex items-center gap-4">
-
-              <span className="h-px w-10 bg-[#FAC800]" />
-
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-white">
-                Hitta hit
-              </p>
+                  prose-a:text-white
+                  prose-a:decoration-[#FAC800]
+                  hover:prose-a:text-white
+                "
+              >
+                {location.description ? (
+                  <RichText
+                    data={location.description}
+                    enableGutter={false}
+                  />
+                ) : (
+                  <p className="text-base leading-8 text-white md:text-lg">
+                    {location.shortDescription}
+                  </p>
+                )}
+              </div>
 
             </div>
 
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                location.address,
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                group
-                mt-4
-                inline-flex
-                items-center
-                gap-3
-                text-xl
-                font-bold
-                text-white
-                transition-colors
-                hover:text-white
-                md:text-2xl
-              "
-            >
-              <span className="border-b border-transparent transition group-hover:border-[#FAC800]">
-                {location.address}
-              </span>
+            {/* =========================
+                WANTED POSTER
+                Endast Ladan & Saloonen
+            ========================= */}
+            {(slug === 'ladan' || slug === 'saloon') && (
+              <div className="mx-auto w-full max-w-[430px] lg:mx-0 lg:ml-auto">
 
-              <span
-                aria-hidden="true"
-                className="
-                  text-white
-                  transition-transform
-                  duration-200
-                  group-hover:translate-x-1
-                "
-              >
-                ↗
-              </span>
-            </a>
+                <div className="relative aspect-[3/4] w-full">
 
-            <p className="mt-3 text-sm text-white">
-              Öppna i Google Maps
-            </p>
+                  <Image
+                    src={
+                      slug === 'saloon'
+                        ? '/images/mrwant.png'
+                        : '/images/mswant.png'
+                    }
+                    alt={
+                      slug === 'saloon'
+                        ? 'Bonnatösen Wanted Saloon'
+                        : 'Bonnatösen Wanted Ladan'
+                    }
+                    fill
+                    sizes="(max-width: 1024px) 90vw, 430px"
+                    className="object-contain"
+                  />
+
+                </div>
+
+              </div>
+            )}
 
           </div>
 
-        </section>
-      )}
-
-    {/* =========================
-    GALLERI
-========================= */}
-{location.gallery &&
-  location.gallery.length > 0 && (
-    <section className="px-5 py-20 md:px-10 md:py-28">
-
-      <div className="mx-auto max-w-7xl">
-
-        {/* RUBRIK */}
-        <div className="mb-10 flex items-center gap-4">
-
-          <span className="text-xs font-bold uppercase tracking-[0.3em] text-white">
-            Bilder
-          </span>
-
-          <span className="h-px flex-1 bg-[#FAC800]/40" />
-
         </div>
 
-        {/* BILDER */}
-        <div className="grid items-start gap-4 md:grid-cols-2">
+      </section>
 
-          {location.gallery.map((item, index) => {
-            const image =
-              typeof item.image === 'object'
-                ? item.image
-                : null
+      {/* =========================
+          GALLERI
+      ========================= */}
+      {location.gallery &&
+        location.gallery.length > 0 && (
+          <section className="px-5 py-20 md:px-10 md:py-28">
 
-            if (!image?.url) {
-              return null
-            }
+            <div className="mx-auto max-w-7xl">
 
-            return (
-              <div
-                key={item.id || index}
-                className="
-                  group
-                  relative
-                  overflow-hidden
-                  border
-                  border-[#242424]
-                  bg-[#111111]
-                  transition
-                  hover:border-[#FAC800]
-                "
-              >
-                <Image
-                  src={image.url}
-                  alt={image.alt || location.name}
-                  width={image.width || 1600}
-                  height={image.height || 1200}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="
-                    h-auto
-                    w-full
-                    object-contain
-                  "
-                />
+              {/* RUBRIK */}
+              <div className="mb-10 flex items-center gap-4">
 
-                {/* INNER BORDER */}
-                <div
-                  className="
-                    pointer-events-none
-                    absolute
-                    inset-3
-                    border
-                    border-transparent
-                    transition
-                    group-hover:border-[#FAC800]/40
-                  "
-                />
+                <span className="text-xs font-bold uppercase tracking-[0.3em] text-white">
+                  Bilder
+                </span>
+
+                <span className="h-px flex-1 bg-[#FAC800]/40" />
 
               </div>
-            )
-          })}
 
-        </div>
+              {/* BILDER */}
+              <div className="grid items-start gap-4 md:grid-cols-2">
 
-      </div>
+                {location.gallery.map((item, index) => {
+                  const image =
+                    typeof item.image === 'object'
+                      ? item.image
+                      : null
 
-    </section>
-  )}
-  
-        
+                  if (!image?.url) {
+                    return null
+                  }
+
+                  return (
+                    <div
+                      key={item.id || index}
+                      className="
+                        group
+                        relative
+                        overflow-hidden
+                        border
+                        border-[#242424]
+                        bg-[#111111]
+                        transition
+                        hover:border-[#FAC800]
+                      "
+                    >
+                      <Image
+                        src={image.url}
+                        alt={image.alt || location.name}
+                        width={image.width || 1600}
+                        height={image.height || 1200}
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="
+                          h-auto
+                          w-full
+                          object-contain
+                        "
+                      />
+
+                      {/* INNER BORDER */}
+                      <div
+                        className="
+                          pointer-events-none
+                          absolute
+                          inset-3
+                          border
+                          border-transparent
+                          transition
+                          group-hover:border-[#FAC800]/40
+                        "
+                      />
+
+                    </div>
+                  )
+                })}
+
+              </div>
+
+            </div>
+
+          </section>
+        )}
 
       {/* =========================
           LEADER BERGSLAGEN / EU

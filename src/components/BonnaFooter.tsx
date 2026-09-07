@@ -377,9 +377,6 @@ export default async function BonnaFooter() {
             © {new Date().getFullYear()} Bonnatösen. Alla rättigheter förbehållna.
           </p>
 
-          <p className="uppercase tracking-[0.18em]">
-            Burgare • Ladan • Saloonen
-          </p>
 
         </div>
 
