@@ -14,10 +14,10 @@ export default function BonnaHeader() {
         {/* LOGGA */}
         <Link
           href="/"
-          className="relative block h-[90px] w-[120px] md:h-[70px] md:w-[200px]"
+          className="relative block h-[100px] w-[120px] md:h-[110px] md:w-[200px]"
         >
           <Image
-            src="/images/bonlogga.png"
+            src="/images/bonnatosen-logo.png"
             alt="Bonnatösens Burgare"
             fill
             priority

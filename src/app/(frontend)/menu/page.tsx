@@ -524,30 +524,7 @@ export default async function MenuPage() {
         </section>
       )}
 
-      {/* =========================
-          AVSLUTNING
-      ========================= */}
-      <section className="border-t border-[#292929] px-5 py-20 text-center md:py-28">
-
-        <div className="relative mx-auto h-[140px] w-[300px] md:h-[180px] md:w-[390px]">
-
-          <Image
-            src="/images/bonnatosen-logo.png"
-            alt="Bonnatösens Burgare"
-            fill
-            sizes="390px"
-            className="object-contain"
-          />
-
-        </div>
-
-        <div className="mx-auto mt-5 h-px max-w-sm bg-[#FAC800]/25" />
-
-        <p className="mx-auto mt-5 max-w-md text-xs font-black uppercase tracking-[0.25em] text-[#FAC800]">
-          En burgare i taget. Som det ska vara.
-        </p>
-
-      </section>
+     
 
     </main>
   )
