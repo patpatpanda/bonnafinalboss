@@ -831,6 +831,10 @@ export interface Location {
   slug: string;
   active?: boolean | null;
   shortDescription: string;
+  /**
+   * Valfri stor text som visas i heron, t.ex. "Stängt för säsongen". Lämna tomt för att inte visa något.
+   */
+  heroNotice?: string | null;
   description?: {
     root: {
       type: string;
@@ -1637,6 +1641,7 @@ export interface LocationsSelect<T extends boolean = true> {
   slug?: T;
   active?: T;
   shortDescription?: T;
+  heroNotice?: T;
   description?: T;
   heroImage?: T;
   gallery?:

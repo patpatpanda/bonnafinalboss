@@ -108,6 +108,49 @@ export default async function LocationPage({
             {location.name}
           </h1>
 
+          {/* =========================
+              STORT HERO-MEDDELANDE
+          ========================= */}
+          {location.heroNotice && (
+            <div className="mt-6 md:mt-8">
+
+              <div
+                className="
+                  inline-flex
+                  -rotate-1
+                  border-2
+                  border-[#FAC800]
+                  bg-[#FAC800]
+                  px-5
+                  py-3
+                  shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+                  md:px-7
+                  md:py-4
+                "
+              >
+                <p
+                  className="
+                    text-2xl
+                    font-black
+                    uppercase
+                    leading-none
+                    tracking-[-0.03em]
+                    text-black
+                    sm:text-3xl
+                    md:text-4xl
+                    lg:text-5xl
+                  "
+                  style={{
+                    fontFamily: 'Georgia, Times New Roman, serif',
+                  }}
+                >
+                  {location.heroNotice}
+                </p>
+              </div>
+
+            </div>
+          )}
+
           {/* KORT BESKRIVNING */}
           {location.shortDescription && (
             <p

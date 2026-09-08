@@ -20,6 +20,7 @@ export const Locations: CollectionConfig = {
       type: 'text',
       required: true,
     },
+
     {
       name: 'slug',
       label: 'URL-namn',
@@ -31,29 +32,48 @@ export const Locations: CollectionConfig = {
           'Exempel: ladan eller saloonen. Använd små bokstäver och inga mellanslag.',
       },
     },
+
     {
       name: 'active',
       label: 'Visa platsen på hemsidan',
       type: 'checkbox',
       defaultValue: true,
     },
+
     {
       name: 'shortDescription',
       label: 'Kort beskrivning',
       type: 'textarea',
       required: true,
     },
+
+    // =========================
+    // VALFRITT HERO-MEDDELANDE
+    // =========================
+    {
+      name: 'heroNotice',
+      label: 'Stort meddelande i hero',
+      type: 'text',
+      required: false,
+      admin: {
+        description:
+          'Valfri stor text som visas i heron, t.ex. "Stängt för säsongen". Lämna tomt för att inte visa något.',
+      },
+    },
+
     {
       name: 'description',
       label: 'Längre beskrivning',
       type: 'richText',
     },
+
     {
       name: 'heroImage',
       label: 'Huvudbild',
       type: 'upload',
       relationTo: 'media',
     },
+
     {
       name: 'gallery',
       label: 'Bildgalleri',
@@ -68,21 +88,25 @@ export const Locations: CollectionConfig = {
         },
       ],
     },
+
     {
       name: 'address',
       label: 'Adress',
       type: 'text',
     },
+
     {
       name: 'phone',
       label: 'Telefon',
       type: 'text',
     },
+
     {
       name: 'email',
       label: 'E-post',
       type: 'email',
     },
+
     {
       name: 'ctaText',
       label: 'Knapptext',
