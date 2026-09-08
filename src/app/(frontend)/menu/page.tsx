@@ -65,7 +65,7 @@ export default async function MenuPage() {
       {/* =========================
           HERO
       ========================= */}
-      <section className="relative min-h-[60vh] overflow-hidden border-b border-[#292929]">
+      <section className="relative min-h-[60vh] overflow-hidden border-b border-[#242424]">
 
         {heroImage?.url && (
           <Image
@@ -82,6 +82,8 @@ export default async function MenuPage() {
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-transparent to-black/30" />
 
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+
         <div className="relative mx-auto flex min-h-[60vh] max-w-7xl flex-col justify-end px-5 pb-16 pt-32 md:px-10 md:pb-20">
 
           {menu.eyebrow && (
@@ -92,8 +94,6 @@ export default async function MenuPage() {
               <span className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800] md:text-xs">
                 {menu.eyebrow}
               </span>
-
-              <span className="h-px w-12 bg-[#FAC800]" />
 
             </div>
           )}
@@ -109,7 +109,7 @@ export default async function MenuPage() {
           </h1>
 
           {menu.intro && (
-            <p className="mt-7 max-w-xl text-base leading-7 text-white md:text-lg">
+            <p className="mt-7 max-w-xl text-base leading-7 text-white/85 md:text-lg">
               {menu.intro}
             </p>
           )}
@@ -126,8 +126,20 @@ export default async function MenuPage() {
 
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
 
-            {/* BILD */}
-            <div className="relative min-h-[500px] overflow-hidden border border-[#FAC800]/30 bg-[#111111] md:min-h-[650px]">
+            {/* =========================
+                BILD
+            ========================= */}
+            <div
+              className="
+                group
+                relative
+                min-h-[500px]
+                overflow-hidden
+                bg-[#111111]
+                shadow-[0_24px_70px_rgba(0,0,0,0.35)]
+                md:min-h-[650px]
+              "
+            >
 
               {burgerImage?.url ? (
                 <Image
@@ -139,33 +151,72 @@ export default async function MenuPage() {
                   }
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover transition duration-700 hover:scale-105"
+                  className="
+                    object-cover
+                    transition-transform
+                    duration-700
+                    group-hover:scale-[1.03]
+                  "
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-black uppercase tracking-[0.2em] text-[#FAC800]">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-black uppercase tracking-[0.2em] text-white/40">
                   Lägg till burgarbild i Payload
                 </div>
               )}
 
-              <div className="pointer-events-none absolute inset-4 border border-[#FAC800]/20" />
+              {/* MÖRKNING */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
 
-              <div className="absolute left-7 top-7 border border-[#FAC800] bg-black/90 px-5 py-3 text-[10px] font-black uppercase tracking-[0.28em] text-[#FAC800]">
+              {/* GUL ACCENT */}
+              <div
+                className="
+                  absolute
+                  left-0
+                  top-0
+                  h-[4px]
+                  w-24
+                  bg-[#FAC800]
+                  transition-all
+                  duration-500
+                  group-hover:w-40
+                "
+              />
+
+              {/* LABEL */}
+              <div
+                className="
+                  absolute
+                  left-7
+                  top-7
+                  bg-black/85
+                  px-5
+                  py-3
+                  text-[10px]
+                  font-black
+                  uppercase
+                  tracking-[0.28em]
+                  text-white
+                  backdrop-blur
+                "
+              >
                 Veckans burgare
               </div>
 
             </div>
 
-            {/* TEXT */}
+            {/* =========================
+                TEXT
+            ========================= */}
             <div>
 
               <div className="flex items-center gap-4">
+
+                <span className="h-px w-10 bg-[#FAC800]" />
 
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FAC800]">
                   {menu.burgerEyebrow ||
                     'Veckans burgare'}
                 </span>
-
-                <span className="h-px flex-1 bg-[#FAC800]/25" />
 
               </div>
 
@@ -182,16 +233,22 @@ export default async function MenuPage() {
               )}
 
               {menu.burgerDescription && (
-                <p className="mt-8 max-w-xl text-base leading-8 text-white/75 md:text-lg">
+                <p className="mt-8 max-w-xl text-base leading-8 text-white/70 md:text-lg">
                   {menu.burgerDescription}
                 </p>
               )}
 
-              <div className="mt-10 h-px w-full bg-[#FAC800]/25" />
+              <div className="mt-10 h-px w-full bg-white/10" />
 
-              <p className="mt-5 text-[10px] font-black uppercase tracking-[0.28em] text-[#FAC800]">
-                Ny burgare varje vecka
-              </p>
+              <div className="mt-5 flex items-center gap-4">
+
+                <span className="text-[10px] font-black uppercase tracking-[0.28em] text-white/60">
+                  Ny burgare varje vecka
+                </span>
+
+                <span className="h-px w-10 bg-[#FAC800]" />
+
+              </div>
 
             </div>
 
@@ -207,7 +264,7 @@ export default async function MenuPage() {
         activeDesserts.length > 0 ||
         activeDrinks.length > 0 ||
         menu.burgerActive !== false) && (
-        <section className="px-4 py-16 md:px-10 md:py-28">
+        <section className="bg-[#0d0d0d] px-4 py-16 md:px-10 md:py-28">
 
           <div
             className="
@@ -226,12 +283,15 @@ export default async function MenuPage() {
             "
           >
 
-            {/* PAPPERSKÄNSLA */}
+            {/* =========================
+                PAPPERSKÄNSLA
+            ========================= */}
             <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_15%_20%,rgba(90,60,24,.18)_0,transparent_24%),radial-gradient(circle_at_85%_75%,rgba(90,60,24,.14)_0,transparent_28%),linear-gradient(rgba(255,255,255,.10),rgba(80,50,20,.08))]" />
 
-            {/* RAMAR */}
-            <div className="pointer-events-none absolute inset-3 border border-[#735630]/80" />
-            <div className="pointer-events-none absolute inset-5 border border-[#735630]/40" />
+            {/* =========================
+                DISKRET WESTERN-RAM
+            ========================= */}
+            <div className="pointer-events-none absolute inset-4 border border-[#735630]/50" />
 
             <div className="relative z-10">
 
@@ -254,7 +314,7 @@ export default async function MenuPage() {
                   Meny
                 </h2>
 
-                <div className="mx-auto mt-6 h-px max-w-2xl bg-[#75562c]" />
+                <div className="mx-auto mt-6 h-[2px] max-w-24 bg-[#75562c]" />
 
               </div>
 
@@ -270,7 +330,9 @@ export default async function MenuPage() {
                     </WesternHeading>
 
                     {menu.burgerName && (
-                      <div className="mb-8 border-l-2 border-[#75562c] pl-4">
+                      <div className="mb-8">
+
+                        <div className="mb-3 h-[3px] w-8 bg-[#75562c]" />
 
                         <p className="text-[9px] font-black uppercase tracking-[0.25em] text-[#75562c]">
                           Veckans burgare
@@ -311,7 +373,7 @@ export default async function MenuPage() {
 
                   </section>
 
-                  <div className="mx-auto my-12 h-px max-w-2xl bg-[#75562c]/50" />
+                  <div className="mx-auto my-12 h-px max-w-2xl bg-[#75562c]/40" />
                 </>
               )}
 
@@ -322,9 +384,8 @@ export default async function MenuPage() {
 
                 {/* =====================
                     VÄNSTER
-                    TILLBEHÖR + DESSERT
                 ===================== */}
-                <div className="md:border-r md:border-[#765a35]/50 md:pr-10">
+                <div className="md:border-r md:border-[#765a35]/35 md:pr-10">
 
                   {/* TILLBEHÖR */}
                   {activeSides.length > 0 && (
@@ -364,7 +425,7 @@ export default async function MenuPage() {
                     <section
                       className={
                         activeSides.length > 0
-                          ? 'mt-14 border-t border-[#75562c]/40 pt-12'
+                          ? 'mt-14 border-t border-[#75562c]/30 pt-12'
                           : ''
                       }
                     >
@@ -509,7 +570,7 @@ export default async function MenuPage() {
               ========================= */}
               <div className="mt-16 text-center">
 
-                <div className="h-px w-full bg-[#75562c]/50" />
+                <div className="mx-auto h-[2px] w-16 bg-[#75562c]" />
 
                 <p className="mt-5 text-[9px] font-black uppercase tracking-[0.35em]">
                   Bonnatösens Burgare
@@ -523,8 +584,6 @@ export default async function MenuPage() {
 
         </section>
       )}
-
-     
 
     </main>
   )
@@ -558,7 +617,7 @@ function WesternItem({
           {name}
         </h4>
 
-        <span className="mb-[3px] flex-1 border-b border-dotted border-[#75562c]/60" />
+        <span className="mb-[3px] flex-1 border-b border-dotted border-[#75562c]/45" />
 
         <span
           className="shrink-0 text-base font-black"
@@ -604,7 +663,7 @@ function WesternHeading({
         {children}
       </h2>
 
-      <div className="mt-3 h-[2px] w-16 bg-[#75562c]" />
+      <div className="mt-3 h-[3px] w-12 bg-[#75562c]" />
 
     </div>
   )
