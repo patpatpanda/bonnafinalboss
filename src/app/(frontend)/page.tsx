@@ -4,15 +4,15 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import HeroTitleReveal from '@/components/HeroTitleReveal'
 import RichText from '@/components/RichText'
-import YeehawReveal from '@/components/shop/YeehawReveal'
+
 export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   const payload = await getPayload({ config })
 
   // =========================
   // STARTSIDA
   // =========================
-
   const homepage = await payload.findGlobal({
     slug: 'homepage',
   })
@@ -20,7 +20,6 @@ export default async function HomePage() {
   // =========================
   // PLATSER
   // =========================
-
   const locationsResult = await payload.find({
     collection: 'locations',
     where: {
@@ -37,7 +36,6 @@ export default async function HomePage() {
   // =========================
   // ÖPPETTIDER
   // =========================
-
   const openingHoursResult = await payload.find({
     collection: 'opening-hours',
     limit: 100,
@@ -55,7 +53,6 @@ export default async function HomePage() {
   // =========================
   // BILDER
   // =========================
-
   const heroImage =
     typeof homepage.heroImage === 'object'
       ? homepage.heroImage
@@ -78,8 +75,7 @@ export default async function HomePage() {
 
   return (
     <main className="bg-[#090909] text-white">
-
-    {/* =========================
+ {/* =========================
     HERO — WESTERN EDITORIAL
 ========================= */}
 <section className="relative min-h-[88svh] overflow-hidden border-b border-[#2d2d2d] md:min-h-[90vh]">
@@ -309,30 +305,7 @@ export default async function HomePage() {
 
   </div>
 
-  {/* =========================
-      BOTTOM LABEL
-  ========================= */}
-  <div className="absolute bottom-5 right-5 hidden items-center gap-4 md:flex md:right-10">
-
-    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">
-      Burgare
-    </span>
-
-    <span className="h-px w-8 bg-[#FAC800]" />
-
-    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">
-      Gård
-    </span>
-
-    <span className="h-px w-8 bg-[#FAC800]" />
-
-    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">
-      Saloon
-    </span>
-
-  </div>
-
-</section>
+      </section>
 
       {/* =========================
           OM BONNATÖSEN
@@ -347,7 +320,7 @@ export default async function HomePage() {
             {homepage.aboutEyebrow && (
               <div className="flex items-center gap-4">
 
-                <span className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF]">
+                <span className="text-[10px] font-black uppercase tracking-[0.35em] text-white">
                   {homepage.aboutEyebrow}
                 </span>
 
@@ -368,7 +341,7 @@ export default async function HomePage() {
             )}
 
             {homepage.aboutText && (
-              <div className="mt-8 text-base leading-8 text-[#FFF] md:text-lg">
+              <div className="mt-8 text-base leading-8 text-white md:text-lg">
 
                 <RichText
                   data={homepage.aboutText}
@@ -380,37 +353,78 @@ export default async function HomePage() {
 
           </div>
 
-          {/* YOUTUBE */}
+          {/* =========================
+              YOUTUBE
+          ========================= */}
           <a
-            href="https://www.youtube.com/@Bonnalife"
+            href="DIN-YOUTUBE-LÄNK-HÄR"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex min-h-[420px] overflow-hidden border border-[#FAC800]/35 bg-[#111111] md:min-h-[580px]"
+            className="
+              group
+              relative
+              flex
+              min-h-[420px]
+              overflow-hidden
+              bg-[#111111]
+              shadow-[0_25px_80px_rgba(0,0,0,0.45)]
+              md:min-h-[580px]
+            "
           >
 
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#1b1b1b_0%,#111111_55%,#090909_100%)]" />
+            {/* BAKGRUND */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#202020_0%,#111111_55%,#090909_100%)]" />
 
-            <div className="pointer-events-none absolute inset-4 border border-[#FAC800]/20" />
+            {/* GUL TOPPLINJE */}
+            <div
+              className="
+                absolute
+                left-0
+                top-0
+                h-[4px]
+                w-24
+                bg-[#FAC800]
+                transition-all
+                duration-500
+                group-hover:w-full
+              "
+            />
 
-            <div className="absolute left-0 top-0 h-1 w-full origin-left scale-x-0 bg-[#FAC800] transition-transform duration-500 group-hover:scale-x-100" />
-
+            {/* CONTENT */}
             <div className="relative z-10 flex w-full flex-col items-center justify-center px-8 py-16 text-center">
 
-              {/* PLAY-KNAPP */}
-              <div className="mt-7 flex h-24 w-24 items-center justify-center rounded-full border-2 border-[#FAC800] transition-all duration-500 group-hover:scale-110 group-hover:bg-[#FAC800] md:h-28 md:w-28">
-
+              {/* PLAY */}
+              <div
+                className="
+                  flex
+                  h-24
+                  w-24
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-white/[0.04]
+                  ring-1
+                  ring-white/20
+                  transition-all
+                  duration-500
+                  group-hover:scale-110
+                  group-hover:bg-[#FAC800]
+                  group-hover:ring-[#FAC800]
+                  md:h-28
+                  md:w-28
+                "
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="ml-1 h-9 w-9 text-[#FFF] transition-colors duration-500 group-hover:text-black md:h-11 md:w-11"
+                  className="ml-1 h-9 w-9 text-white transition-colors duration-500 group-hover:text-black md:h-11 md:w-11"
                   aria-hidden="true"
                 >
                   <path d="M8 5v14l11-7z" />
                 </svg>
-
               </div>
 
-              <p className="mt-10 text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF]">
+              <p className="mt-10 text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
                 Bonnatösen på YouTube
               </p>
 
@@ -425,13 +439,19 @@ export default async function HomePage() {
                 bakom kulisserna
               </h3>
 
-              <p className="mt-6 max-w-sm text-sm leading-7 text-[#FFF] md:text-base">
+              <p className="mt-6 max-w-sm text-sm leading-7 text-white/75 md:text-base">
                 Följ med till Bonnatösen och se vad som händer bakom
                 burgarna, Ladan och Saloonen.
               </p>
 
-              <div className="mt-10 border-b border-[#FAC800] pb-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#FFF]">
-                Besök vår kanal
+              <div className="mt-10 flex items-center gap-4">
+
+                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
+                  Besök vår kanal
+                </span>
+
+                <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
+
               </div>
 
             </div>
@@ -447,39 +467,51 @@ export default async function HomePage() {
       ========================= */}
       <section
         id="locations"
-        className="border-y border-[#2d2d2d] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
+        className="border-y border-[#242424] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
       >
 
         <div className="mx-auto max-w-7xl">
 
-          <div className="mb-12 text-center md:mb-16">
+          {/* RUBRIK */}
+          <div className="mb-12 md:mb-16">
 
-            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF]">
-              {homepage.locationsEyebrow}
-            </p>
+            <div className="mb-5 flex items-center gap-4">
 
-            <h2
-              className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl"
-              style={{
-                fontFamily: 'Georgia, Times New Roman, serif',
-              }}
-            >
-              {homepage.locationsTitle}
-            </h2>
+              {homepage.locationsEyebrow && (
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+                  {homepage.locationsEyebrow}
+                </p>
+              )}
 
-            {homepage.locationsText && (
-              <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#FFF]">
-                {homepage.locationsText}
-              </p>
-            )}
+              <span className="h-px flex-1 bg-white/15" />
 
-            <div className="mx-auto mt-8 h-px max-w-md bg-[#FAC800]/35" />
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
+
+              <h2
+                className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl lg:text-7xl"
+                style={{
+                  fontFamily: 'Georgia, Times New Roman, serif',
+                }}
+              >
+                {homepage.locationsTitle}
+              </h2>
+
+              {homepage.locationsText && (
+                <p className="max-w-xl text-base leading-7 text-white/70 lg:justify-self-end">
+                  {homepage.locationsText}
+                </p>
+              )}
+
+            </div>
 
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          {/* PLATSKORT */}
+          <div className="grid gap-8 lg:grid-cols-2">
 
-            {locations.map((location, index) => {
+            {locations.map((location) => {
               const image =
                 typeof location.heroImage === 'object'
                   ? location.heroImage
@@ -489,28 +521,57 @@ export default async function HomePage() {
                 <Link
                   key={location.id}
                   href={`/platser/${location.slug}`}
-                  className="group relative min-h-[580px] overflow-hidden border border-[#FAC800]/30"
+                  className="
+                    group
+                    relative
+                    min-h-[520px]
+                    overflow-hidden
+                    bg-[#111111]
+                    shadow-[0_24px_70px_rgba(0,0,0,0.35)]
+                    md:min-h-[620px]
+                  "
                 >
 
+                  {/* BILD */}
                   {image?.url && (
                     <Image
                       src={image.url}
                       alt={image.alt || location.name}
                       fill
-                      className="object-cover transition duration-700 group-hover:scale-105"
+                      className="
+                        object-cover
+                        transition-transform
+                        duration-700
+                        group-hover:scale-[1.04]
+                      "
                     />
                   )}
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                  {/* OVERLAY */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent" />
 
-                  <div className="pointer-events-none absolute inset-4 border border-[#FAC800]/25" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
 
-                 
+                  {/* GUL ACCENT */}
+                  <div
+                    className="
+                      absolute
+                      left-0
+                      top-0
+                      h-[4px]
+                      w-24
+                      bg-[#FAC800]
+                      transition-all
+                      duration-500
+                      group-hover:w-40
+                    "
+                  />
 
+                  {/* TEXT */}
                   <div className="absolute inset-x-0 bottom-0 p-7 md:p-10">
 
                     <h3
-                      className="text-5xl font-black uppercase leading-[0.9] tracking-[-0.05em] md:text-7xl"
+                      className="text-5xl font-black uppercase leading-[0.88] tracking-[-0.05em] text-white md:text-7xl"
                       style={{
                         fontFamily: 'Georgia, Times New Roman, serif',
                       }}
@@ -519,13 +580,19 @@ export default async function HomePage() {
                     </h3>
 
                     {location.shortDescription && (
-                      <p className="mt-5 max-w-lg leading-7 text-[#FFF]">
+                      <p className="mt-5 max-w-lg text-base leading-7 text-white/80">
                         {location.shortDescription}
                       </p>
                     )}
 
-                    <div className="mt-7 inline-flex border-b border-[#FAC800] pb-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#FFF]">
-                      {location.ctaText || 'Läs mer'}
+                    <div className="mt-8 flex items-center gap-4">
+
+                      <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
+                        {location.ctaText || 'Läs mer'}
+                      </span>
+
+                      <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
+
                     </div>
 
                   </div>
@@ -547,31 +614,49 @@ export default async function HomePage() {
 
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
 
-          <div className="relative min-h-[520px] overflow-hidden border border-[#FAC800]/30">
+          {/* BILD */}
+          <div
+            className="
+              group
+              relative
+              min-h-[520px]
+              overflow-hidden
+              bg-[#111111]
+              shadow-[0_24px_70px_rgba(0,0,0,0.35)]
+            "
+          >
 
             {menuImage?.url ? (
               <Image
                 src={menuImage.url}
                 alt={menuImage.alt || 'Bonnatösens meny'}
                 fill
-                className="object-cover transition duration-700 hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center bg-[#111111] text-sm uppercase tracking-[0.2em] text-[#FFF]">
+              <div className="absolute inset-0 flex items-center justify-center bg-[#111111] text-sm uppercase tracking-[0.2em] text-white/40">
                 Lägg till menybild i Payload
               </div>
             )}
 
-            <div className="pointer-events-none absolute inset-4 border border-[#FAC800]/25" />
+            {/* GUL ACCENT */}
+            <div className="absolute bottom-0 left-0 h-[4px] w-28 bg-[#FAC800] transition-all duration-500 group-hover:w-1/2" />
 
           </div>
 
+          {/* TEXT */}
           <div className="lg:pl-4">
 
             {homepage.menuEyebrow && (
-              <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF]">
-                {homepage.menuEyebrow}
-              </p>
+              <div className="flex items-center gap-4">
+
+                <span className="h-px w-10 bg-[#FAC800]" />
+
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+                  {homepage.menuEyebrow}
+                </p>
+
+              </div>
             )}
 
             {homepage.menuTitle && (
@@ -586,17 +671,17 @@ export default async function HomePage() {
             )}
 
             {homepage.menuText && (
-              <p className="mt-7 max-w-lg text-base leading-8 text-[#FFF]">
+              <p className="mt-7 max-w-lg text-base leading-8 text-white/75">
                 {homepage.menuText}
               </p>
             )}
 
-            <div className="mt-8 h-px max-w-xs bg-[#FAC800]/35" />
+            <div className="mt-8 h-px max-w-xs bg-white/15" />
 
             {homepage.menuButtonLink && (
               <Link
                 href={homepage.menuButtonLink}
-                className="mt-9 inline-flex border-2 border-[#FAC800] bg-[#FAC800] px-7 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-transparent hover:text-[#FFF]"
+                className="mt-9 inline-flex bg-[#FAC800] px-7 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-white"
               >
                 {homepage.menuButtonText || 'Se menyn'}
               </Link>
@@ -614,19 +699,26 @@ export default async function HomePage() {
       {openingHours.length > 0 && (
         <section
           id="opening-hours"
-          className="scroll-mt-24 border-y border-[#2d2d2d] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
+          className="scroll-mt-24 border-y border-[#242424] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
         >
 
           <div className="mx-auto max-w-7xl">
 
-            <div className="mb-12 text-center">
+            {/* RUBRIK */}
+            <div className="mb-12">
 
-              <span className="block text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF]">
-                När ses vi?
-              </span>
+              <div className="mb-5 flex items-center gap-4">
+
+                <span className="h-px w-10 bg-[#FAC800]" />
+
+                <span className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+                  När ses vi?
+                </span>
+
+              </div>
 
               <h2
-                className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl"
+                className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl"
                 style={{
                   fontFamily: 'Georgia, Times New Roman, serif',
                 }}
@@ -634,11 +726,10 @@ export default async function HomePage() {
                 Öppettider
               </h2>
 
-              <div className="mx-auto mt-7 h-px max-w-md bg-[#FAC800]/35" />
-
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
+            {/* ÖPPETTIDSKORT */}
+            <div className="grid gap-5 md:grid-cols-2">
 
               {openingHours.map((item) => {
                 const location =
@@ -649,21 +740,45 @@ export default async function HomePage() {
                 return (
                   <article
                     key={item.id}
-                    className="relative overflow-hidden border border-[#FAC800]/40 bg-[#111111] p-7 text-white md:p-9"
+                    className="
+                      group
+                      relative
+                      overflow-hidden
+                      bg-[#151515]
+                      p-7
+                      shadow-[0_18px_50px_rgba(0,0,0,0.25)]
+                      transition
+                      duration-300
+                      hover:bg-[#181818]
+                      md:p-9
+                    "
                   >
 
-                    <div className="pointer-events-none absolute inset-3 border border-[#FAC800]/15" />
+                    {/* VÄNSTER ACCENT */}
+                    <div
+                      className="
+                        absolute
+                        bottom-0
+                        left-0
+                        top-0
+                        w-[3px]
+                        bg-[#FAC800]
+                        transition-all
+                        duration-300
+                        group-hover:w-[6px]
+                      "
+                    />
 
-                    <div className="relative z-10">
+                    <div className="relative pl-2">
 
                       {location?.name && (
-                        <p className="text-[20px] font-black uppercase tracking-[0.3em] text-[#FFF]">
+                        <p className="text-xs font-black uppercase tracking-[0.3em] text-[#FAC800] md:text-sm">
                           {location.name}
                         </p>
                       )}
 
                       <h3
-                        className="mt-3 text-2xl font-black uppercase tracking-[-0.03em] md:text-3xl"
+                        className="mt-4 text-2xl font-black uppercase leading-tight tracking-[-0.03em] md:text-3xl"
                         style={{
                           fontFamily: 'Georgia, Times New Roman, serif',
                         }}
@@ -672,7 +787,7 @@ export default async function HomePage() {
                       </h3>
 
                       {(item.startDate || item.endDate) && (
-                        <p className="mt-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#FFF]">
+                        <p className="mt-4 text-[10px] font-black uppercase tracking-[0.18em] text-white/50">
                           {formatDateRange(
                             item.startDate,
                             item.endDate,
@@ -680,21 +795,32 @@ export default async function HomePage() {
                         </p>
                       )}
 
-                      <div className="mt-7 space-y-3">
+                      {item.information && (
+                        <div className="mt-7 space-y-0">
 
-                        {item.information
-                          ?.split('\n')
-                          .filter(Boolean)
-                          .map((line, index) => (
-                            <div
-                              key={index}
-                              className="border-t border-[#FAC800]/20 pt-3 font-bold text-[#FFF]"
-                            >
-                              {line}
-                            </div>
-                          ))}
+                          {item.information
+                            .split('\n')
+                            .filter(Boolean)
+                            .map((line, index) => (
+                              <div
+                                key={index}
+                                className="
+                                  border-t
+                                  border-white/10
+                                  py-3
+                                  text-sm
+                                  font-bold
+                                  leading-6
+                                  text-white/85
+                                  first:border-t-0
+                                "
+                              >
+                                {line}
+                              </div>
+                            ))}
 
-                      </div>
+                        </div>
+                      )}
 
                     </div>
 
@@ -716,12 +842,19 @@ export default async function HomePage() {
 
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
 
+          {/* TEXT */}
           <div>
 
             {homepage.shopEyebrow && (
-              <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FFF]">
-                {homepage.shopEyebrow}
-              </p>
+              <div className="flex items-center gap-4">
+
+                <span className="h-px w-10 bg-[#FAC800]" />
+
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+                  {homepage.shopEyebrow}
+                </p>
+
+              </div>
             )}
 
             {homepage.shopTitle && (
@@ -736,17 +869,17 @@ export default async function HomePage() {
             )}
 
             {homepage.shopText && (
-              <p className="mt-7 max-w-lg text-base leading-8 text-[#FFF]">
+              <p className="mt-7 max-w-lg text-base leading-8 text-white/75">
                 {homepage.shopText}
               </p>
             )}
 
-            <div className="mt-8 h-px max-w-xs bg-[#FAC800]/35" />
+            <div className="mt-8 h-px max-w-xs bg-white/15" />
 
             {homepage.shopButtonLink && (
               <Link
                 href={homepage.shopButtonLink}
-                className="mt-9 inline-flex border-2 border-[#FAC800] bg-[#FAC800] px-7 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-transparent hover:text-[#FFF]"
+                className="mt-9 inline-flex bg-[#FAC800] px-7 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-white"
               >
                 {homepage.shopButtonText || 'Till shoppen'}
               </Link>
@@ -754,22 +887,33 @@ export default async function HomePage() {
 
           </div>
 
-          <div className="relative min-h-[500px] overflow-hidden border border-[#FAC800]/30">
+          {/* BILD */}
+          <div
+            className="
+              group
+              relative
+              min-h-[500px]
+              overflow-hidden
+              bg-[#111111]
+              shadow-[0_24px_70px_rgba(0,0,0,0.35)]
+            "
+          >
 
             {shopImage?.url ? (
               <Image
                 src={shopImage.url}
                 alt={shopImage.alt || 'Bonnatösen shop'}
                 fill
-                className="object-cover transition duration-700 hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center bg-[#111111] text-sm uppercase tracking-[0.2em] text-[#FAC800]">
+              <div className="absolute inset-0 flex items-center justify-center bg-[#111111] text-sm uppercase tracking-[0.2em] text-white/40">
                 Lägg till shopbild i Payload
               </div>
             )}
 
-            <div className="pointer-events-none absolute inset-4 border border-[#FAC800]/25" />
+            {/* GUL ACCENT */}
+            <div className="absolute bottom-0 right-0 h-[4px] w-28 bg-[#FAC800] transition-all duration-500 group-hover:w-1/2" />
 
           </div>
 
@@ -784,7 +928,6 @@ export default async function HomePage() {
 // =========================
 // DATUMFORMATERING
 // =========================
-
 function formatDateRange(
   startDate?: string | null,
   endDate?: string | null,
