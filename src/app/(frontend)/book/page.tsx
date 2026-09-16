@@ -26,51 +26,11 @@ export default async function BookPage() {
 
         <div className="relative mx-auto flex min-h-[58vh] max-w-7xl flex-col items-center justify-center px-5 py-24 text-center md:px-10">
 
-          {/* LITEN RUBRIK */}
-          <div className="mb-6 flex items-center gap-4">
+          
 
-            <span className="h-px w-12 bg-[#FAC800] md:w-24" />
+         
 
-            <span className="text-[10px] font-black uppercase tracking-[0.35em] text-white md:text-xs">
-              Bonnatösens Saloon
-            </span>
-
-            <span className="h-px w-12 bg-[#FAC800] md:w-24" />
-
-          </div>
-
-          {/* HUVUDRUBRIK */}
-          <h1
-            className="text-6xl font-black uppercase leading-[0.82] tracking-[-0.05em] text-white sm:text-7xl md:text-8xl lg:text-[8.5rem]"
-            style={{
-              fontFamily:
-                'Georgia, Times New Roman, serif',
-            }}
-          >
-            Boka
-            <br />
-            bord
-          </h1>
-
-          {/* ACCENT */}
-          <div className="mt-8 flex items-center gap-3">
-
-            <span className="h-px w-16 bg-[#FAC800]" />
-
-            <span className="h-[4px] w-[4px] rotate-45 bg-[#FAC800]" />
-
-            <span className="h-px w-16 bg-[#FAC800]" />
-
-          </div>
-
-          {/* BESKRIVNING */}
-          <p className="mt-7 max-w-xl text-base leading-7 text-white md:text-lg">
-            Här bokar du bord på{' '}
-            <strong className="font-bold text-white">
-              Bonnatösens Saloon
-            </strong>{' '}
-            inne på bryggeriområdet i Nora.
-          </p>
+         
 
           {/* PLATS */}
           <div className="mt-7 border border-[#FAC800] bg-black/40 px-6 py-3">
