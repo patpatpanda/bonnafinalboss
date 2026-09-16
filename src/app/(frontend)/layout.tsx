@@ -7,7 +7,6 @@ import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
 import { Providers } from '@/providers'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
 import BonnaHeader from '@/components/BonnaHeader'
@@ -68,10 +67,27 @@ export default async function RootLayout({
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
 
-  openGraph: mergeOpenGraph(),
+  title: {
+    default: 'Bonnatösen',
+    template: '%s | Bonnatösen',
+  },
+
+  description:
+    'Bonnatösen – burgare, Ladan, Saloonen och en jäkla massa gött.',
+
+  openGraph: {
+    title: 'Bonnatösen',
+    description:
+      'Burgare, Ladan, Saloonen och en jäkla massa gött.',
+    siteName: 'Bonnatösen',
+    locale: 'sv_SE',
+    type: 'website',
+  },
 
   twitter: {
-    card: 'summary_large_image',
-    creator: '@payloadcms',
+    card: 'summary',
+    title: 'Bonnatösen',
+    description:
+      'Burgare, Ladan, Saloonen och en jäkla massa gött.',
   },
 }
