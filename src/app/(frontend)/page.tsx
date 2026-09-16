@@ -357,7 +357,7 @@ export default async function HomePage() {
               YOUTUBE
           ========================= */}
           <a
-            href="DIN-YOUTUBE-LÄNK-HÄR"
+            href="https://www.youtube.com/@Bonnalife"
             target="_blank"
             rel="noopener noreferrer"
             className="
