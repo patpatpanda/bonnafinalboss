@@ -462,150 +462,155 @@ export default async function HomePage() {
 
       </section>
 
-      {/* =========================
-          PLATSER
-      ========================= */}
-      <section
-        id="locations"
-        className="border-y border-[#242424] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
-      >
+     {/* =========================
+    PLATSER
+========================= */}
+<section
+  id="locations"
+  className="border-y border-[#242424] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
+>
+  <div className="mx-auto max-w-7xl">
 
-        <div className="mx-auto max-w-7xl">
+    {/* RUBRIK */}
+    <div className="mb-12 md:mb-16">
 
-          {/* RUBRIK */}
-          <div className="mb-12 md:mb-16">
+      <div className="mb-5 flex items-center gap-4">
 
-            <div className="mb-5 flex items-center gap-4">
+        {homepage.locationsEyebrow && (
+          <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+            {homepage.locationsEyebrow}
+          </p>
+        )}
 
-              {homepage.locationsEyebrow && (
-                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
-                  {homepage.locationsEyebrow}
-                </p>
-              )}
+        <span className="h-px flex-1 bg-white/15" />
 
-              <span className="h-px flex-1 bg-white/15" />
+      </div>
 
-            </div>
+      <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
 
-            <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
+        <h2
+          className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl lg:text-7xl"
+          style={{
+            fontFamily: 'Georgia, Times New Roman, serif',
+          }}
+        >
+          {homepage.locationsTitle}
+        </h2>
 
-              <h2
-                className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl lg:text-7xl"
-                style={{
-                  fontFamily: 'Georgia, Times New Roman, serif',
-                }}
-              >
-                {homepage.locationsTitle}
-              </h2>
+        {homepage.locationsText && (
+          <p className="max-w-xl text-base leading-7 text-white/70 lg:justify-self-end">
+            {homepage.locationsText}
+          </p>
+        )}
 
-              {homepage.locationsText && (
-                <p className="max-w-xl text-base leading-7 text-white/70 lg:justify-self-end">
-                  {homepage.locationsText}
-                </p>
-              )}
+      </div>
+
+    </div>
+
+    {/* PLATSKORT */}
+    <div className="grid gap-6 lg:grid-cols-2">
+
+      {locations.map((location) => (
+        <Link
+          key={location.id}
+          href={`/platser/${location.slug}`}
+          className="
+            group
+            relative
+            flex
+            min-h-[380px]
+            flex-col
+            justify-between
+            overflow-hidden
+            bg-[#141414]
+            p-8
+            shadow-[0_24px_70px_rgba(0,0,0,0.3)]
+            transition
+            duration-300
+            hover:bg-[#181818]
+
+            md:min-h-[450px]
+            md:p-10
+          "
+        >
+
+          {/* GUL ACCENT */}
+          <div
+            className="
+              absolute
+              left-0
+              top-0
+              h-[4px]
+              w-20
+              bg-[#FAC800]
+              transition-all
+              duration-500
+              group-hover:w-40
+            "
+          />
+
+          {/* ÖVERDEL */}
+          <div>
+
+            <p className="text-[9px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+              Bonnatösen
+            </p>
+
+          </div>
+
+          {/* NEDERDEL */}
+          <div>
+
+            <h3
+              className="
+                text-5xl
+                font-black
+                uppercase
+                leading-[0.85]
+                tracking-[-0.055em]
+                text-white
+                transition-colors
+                duration-300
+
+                group-hover:text-[#FAC800]
+
+                sm:text-6xl
+                md:text-7xl
+                lg:text-8xl
+              "
+              style={{
+                fontFamily:
+                  'Georgia, Times New Roman, serif',
+              }}
+            >
+              {location.name}
+            </h3>
+
+            {location.shortDescription && (
+              <p className="mt-6 max-w-lg text-base leading-7 text-white/65">
+                {location.shortDescription}
+              </p>
+            )}
+
+            <div className="mt-8 flex items-center gap-4">
+
+              <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
+                {location.ctaText || 'Läs mer'}
+              </span>
+
+              <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
 
             </div>
 
           </div>
 
-          {/* PLATSKORT */}
-          <div className="grid gap-8 lg:grid-cols-2">
+        </Link>
+      ))}
 
-            {locations.map((location) => {
-              const image =
-                typeof location.heroImage === 'object'
-                  ? location.heroImage
-                  : null
+    </div>
 
-              return (
-                <Link
-                  key={location.id}
-                  href={`/platser/${location.slug}`}
-                  className="
-                    group
-                    relative
-                    min-h-[520px]
-                    overflow-hidden
-                    bg-[#111111]
-                    shadow-[0_24px_70px_rgba(0,0,0,0.35)]
-                    md:min-h-[620px]
-                  "
-                >
-
-                  {/* BILD */}
-                  {image?.url && (
-                    <Image
-                      src={image.url}
-                      alt={image.alt || location.name}
-                      fill
-                      className="
-                        object-cover
-                        transition-transform
-                        duration-700
-                        group-hover:scale-[1.04]
-                      "
-                    />
-                  )}
-
-                  {/* OVERLAY */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent" />
-
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
-
-                  {/* GUL ACCENT */}
-                  <div
-                    className="
-                      absolute
-                      left-0
-                      top-0
-                      h-[4px]
-                      w-24
-                      bg-[#FAC800]
-                      transition-all
-                      duration-500
-                      group-hover:w-40
-                    "
-                  />
-
-                  {/* TEXT */}
-                  <div className="absolute inset-x-0 bottom-0 p-7 md:p-10">
-
-                    <h3
-                      className="text-5xl font-black uppercase leading-[0.88] tracking-[-0.05em] text-white md:text-7xl"
-                      style={{
-                        fontFamily: 'Georgia, Times New Roman, serif',
-                      }}
-                    >
-                      {location.name}
-                    </h3>
-
-                    {location.shortDescription && (
-                      <p className="mt-5 max-w-lg text-base leading-7 text-white/80">
-                        {location.shortDescription}
-                      </p>
-                    )}
-
-                    <div className="mt-8 flex items-center gap-4">
-
-                      <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
-                        {location.ctaText || 'Läs mer'}
-                      </span>
-
-                      <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
-
-                    </div>
-
-                  </div>
-
-                </Link>
-              )
-            })}
-
-          </div>
-
-        </div>
-
-      </section>
+  </div>
+</section>
 
       {/* =========================
           MENY
