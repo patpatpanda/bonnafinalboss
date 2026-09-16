@@ -2,7 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import HeroTitleReveal from '@/components/HeroTitleReveal'
 import RichText from '@/components/RichText'
 
 export const dynamic = 'force-dynamic'
@@ -75,235 +74,224 @@ export default async function HomePage() {
 
   return (
     <main className="bg-[#090909] text-white">
- {/* =========================
-    HERO — WESTERN EDITORIAL
-========================= */}
-<section className="relative min-h-[88svh] overflow-hidden border-b border-[#2d2d2d] md:min-h-[90vh]">
-
-  {/* MOBIL HERO */}
-  {heroImageMobile?.url && (
-    <Image
-      src={heroImageMobile.url}
-      alt={heroImageMobile.alt || 'Bonnatösen'}
-      fill
-      priority
-      sizes="100vw"
-      className="object-cover object-center md:hidden"
-    />
-  )}
-
-  {/* DESKTOP HERO */}
-  {heroImage?.url && (
-    <Image
-      src={heroImage.url}
-      alt={heroImage.alt || 'Bonnatösen'}
-      fill
-      priority
-      sizes="100vw"
-      className={
-        heroImageMobile?.url
-          ? 'hidden object-cover md:block'
-          : 'object-cover'
-      }
-    />
-  )}
-
-  {/* MÖRKNING */}
-  <div className="absolute inset-0 bg-black/35" />
-
-  {/* MÖRKARE PÅ VÄNSTER SIDA */}
-  <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
-
-  {/* MÖRK NEDERKANT */}
-  <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-transparent to-black/20" />
-
-  {/* =========================
-      CONTENT
-  ========================= */}
-  <div
-    className="
-      relative
-      mx-auto
-      flex
-      min-h-[88svh]
-      max-w-7xl
-      items-center
-      px-5
-      py-16
-
-      md:min-h-[90vh]
-      md:px-10
-      md:py-24
-    "
-  >
-
-    <div className="w-full max-w-[760px]">
-
-      {/* TOP LINE */}
-      
-      {/* YEEHAW */}
-      <div className="mb-3 flex items-center">
-        <span
-          className="
-            -rotate-3
-            border
-            border-[#FAC800]
-            bg-[#FAC800]
-            px-4
-            py-2
-            text-xs
-            font-black
-            uppercase
-            tracking-[0.2em]
-            text-black
-            md:px-5
-            md:text-sm
-          "
-        >
-          Yeehaw!
-        </span>
-      </div>
 
       {/* =========================
-          STOR RUBRIK
+          HERO
       ========================= */}
-      {homepage.heroTitle && (
-        <h1
+      <section className="relative min-h-[88svh] overflow-hidden border-b border-[#2d2d2d] md:min-h-[90vh]">
+
+        {/* MOBIL HERO */}
+        {heroImageMobile?.url && (
+          <Image
+            src={heroImageMobile.url}
+            alt={heroImageMobile.alt || 'Bonnatösen'}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center md:hidden"
+          />
+        )}
+
+        {/* DESKTOP HERO */}
+        {heroImage?.url && (
+          <Image
+            src={heroImage.url}
+            alt={heroImage.alt || 'Bonnatösen'}
+            fill
+            priority
+            sizes="100vw"
+            className={
+              heroImageMobile?.url
+                ? 'hidden object-cover md:block'
+                : 'object-cover'
+            }
+          />
+        )}
+
+        {/* MÖRKNING */}
+        <div className="absolute inset-0 bg-black/35" />
+
+        {/* MÖRKARE VÄNSTER */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
+
+        {/* MÖRK NEDERKANT */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-transparent to-black/20" />
+
+        {/* CONTENT */}
+        <div
           className="
-            max-w-[900px]
-            text-[3.6rem]
-            font-black
-            uppercase
-            leading-[0.82]
-            tracking-[-0.065em]
-            text-white
+            relative
+            mx-auto
+            flex
+            min-h-[88svh]
+            max-w-7xl
+            items-center
+            px-5
+            py-16
 
-            sm:text-[4.8rem]
-
-            md:text-[6.5rem]
-
-            lg:text-[8rem]
-          "
-          style={{
-            fontFamily:
-              'Georgia, Times New Roman, serif',
-          }}
-        >
-          {homepage.heroTitle}
-        </h1>
-      )}
-
-      {/* GUL LINJE */}
-      <div className="my-7 flex items-center gap-3 md:my-9">
-
-        <span className="h-[3px] w-20 bg-[#FAC800]" />
-
-        <span className="h-[3px] w-3 bg-[#FAC800]" />
-
-      </div>
-
-      {/* TEXT */}
-      {homepage.heroText && (
-        <p
-          className="
-            max-w-[520px]
-            text-[15px]
-            font-medium
-            leading-7
-            text-white/90
-
-            sm:text-base
-
-            md:text-lg
-            md:leading-8
+            md:min-h-[90vh]
+            md:px-10
+            md:py-24
           "
         >
-          {homepage.heroText}
-        </p>
-      )}
+          <div className="w-full max-w-[760px]">
 
-      {/* KNAPPAR */}
-      <div
-        className="
-          mt-8
-          flex
-          max-w-[420px]
-          flex-col
-          gap-3
+            {/* YEEHAW */}
+            <div className="mb-3 flex items-center">
 
-          sm:max-w-none
-          sm:flex-row
+              <span
+                className="
+                  -rotate-3
+                  border
+                  border-[#FAC800]
+                  bg-[#FAC800]
+                  px-4
+                  py-2
+                  text-xs
+                  font-black
+                  uppercase
+                  tracking-[0.2em]
+                  text-black
 
-          md:mt-10
-        "
-      >
+                  md:px-5
+                  md:text-sm
+                "
+              >
+                Yeehaw!
+              </span>
 
-        {homepage.primaryButtonText &&
-          homepage.primaryButtonLink && (
-            <Link
-              href={homepage.primaryButtonLink}
+            </div>
+
+          {homepage.heroTitle && (
+  <h1
+    className="
+      max-w-[780px]
+      text-5xl
+      font-extrabold
+      uppercase
+      leading-[0.95]
+      tracking-[-0.04em]
+      text-white
+
+      sm:text-6xl
+      md:text-7xl
+      lg:text-[5.5rem]
+    "
+  >
+    {homepage.heroTitle}
+  </h1>
+)}
+
+            {/* GUL LINJE */}
+            <div className="my-7 flex items-center gap-3 md:my-9">
+
+              <span className="h-[3px] w-20 bg-[#FAC800]" />
+
+              <span className="h-[3px] w-3 bg-[#FAC800]" />
+
+            </div>
+
+            {/* TEXT */}
+            {homepage.heroText && (
+              <p
+                className="
+                  max-w-[520px]
+                  text-[15px]
+                  font-medium
+                  leading-7
+                  text-white/90
+
+                  sm:text-base
+
+                  md:text-lg
+                  md:leading-8
+                "
+              >
+                {homepage.heroText}
+              </p>
+            )}
+
+            {/* KNAPPAR */}
+            <div
               className="
+                mt-8
                 flex
-                items-center
-                justify-center
-                border-2
-                border-[#FAC800]
-                bg-[#FAC800]
-                px-8
-                py-4
-                text-xs
-                font-black
-                uppercase
-                tracking-[0.17em]
-                text-black
-                transition
+                max-w-[420px]
+                flex-col
+                gap-3
 
-                hover:bg-transparent
-                hover:text-[#FAC800]
+                sm:max-w-none
+                sm:flex-row
 
-                md:py-5
+                md:mt-10
               "
             >
-              {homepage.primaryButtonText}
-            </Link>
-          )}
 
-        {homepage.secondaryButtonText &&
-          homepage.secondaryButtonLink && (
-            <Link
-              href={homepage.secondaryButtonLink}
-              className="
-                flex
-                items-center
-                justify-center
-                border
-                border-white/50
-                bg-black/30
-                px-8
-                py-4
-                text-xs
-                font-black
-                uppercase
-                tracking-[0.17em]
-                text-white
-                backdrop-blur-sm
-                transition
+              {homepage.primaryButtonText &&
+                homepage.primaryButtonLink && (
+                  <Link
+                    href={homepage.primaryButtonLink}
+                    className="
+                      flex
+                      items-center
+                      justify-center
+                      border-2
+                      border-[#FAC800]
+                      bg-[#FAC800]
+                      px-8
+                      py-4
+                      text-xs
+                      font-black
+                      uppercase
+                      tracking-[0.17em]
+                      text-black
+                      transition
 
-                hover:border-[#FAC800]
-                hover:text-[#FAC800]
+                      hover:bg-transparent
+                      hover:text-[#FAC800]
 
-                md:py-5
-              "
-            >
-              {homepage.secondaryButtonText}
-            </Link>
-          )}
+                      md:py-5
+                    "
+                  >
+                    {homepage.primaryButtonText}
+                  </Link>
+                )}
 
-      </div>
+              {homepage.secondaryButtonText &&
+                homepage.secondaryButtonLink && (
+                  <Link
+                    href={homepage.secondaryButtonLink}
+                    className="
+                      flex
+                      items-center
+                      justify-center
+                      border
+                      border-white/50
+                      bg-black/30
+                      px-8
+                      py-4
+                      text-xs
+                      font-black
+                      uppercase
+                      tracking-[0.17em]
+                      text-white
+                      backdrop-blur-sm
+                      transition
 
-    </div>
+                      hover:border-[#FAC800]
+                      hover:text-[#FAC800]
 
-  </div>
+                      md:py-5
+                    "
+                  >
+                    {homepage.secondaryButtonText}
+                  </Link>
+                )}
+
+            </div>
+
+          </div>
+        </div>
 
       </section>
 
@@ -330,12 +318,7 @@ export default async function HomePage() {
             )}
 
             {homepage.aboutTitle && (
-              <h2
-                className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl"
-                style={{
-                  fontFamily: 'Georgia, Times New Roman, serif',
-                }}
-              >
+              <h2 className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl">
                 {homepage.aboutTitle}
               </h2>
             )}
@@ -368,6 +351,7 @@ export default async function HomePage() {
               overflow-hidden
               bg-[#111111]
               shadow-[0_25px_80px_rgba(0,0,0,0.45)]
+
               md:min-h-[580px]
             "
           >
@@ -407,9 +391,11 @@ export default async function HomePage() {
                   ring-white/20
                   transition-all
                   duration-500
+
                   group-hover:scale-110
                   group-hover:bg-[#FAC800]
                   group-hover:ring-[#FAC800]
+
                   md:h-28
                   md:w-28
                 "
@@ -428,12 +414,7 @@ export default async function HomePage() {
                 Bonnatösen på YouTube
               </p>
 
-              <h3
-                className="mt-4 text-3xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-5xl"
-                style={{
-                  fontFamily: 'Georgia, Times New Roman, serif',
-                }}
-              >
+              <h3 className="mt-4 text-3xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-5xl">
                 Häng med
                 <br />
                 bakom kulisserna
@@ -462,155 +443,150 @@ export default async function HomePage() {
 
       </section>
 
-     {/* =========================
-    PLATSER
-========================= */}
-<section
-  id="locations"
-  className="border-y border-[#242424] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
->
-  <div className="mx-auto max-w-7xl">
+      {/* =========================
+          PLATSER
+      ========================= */}
+      <section
+        id="locations"
+        className="border-y border-[#242424] bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-32"
+      >
 
-    {/* RUBRIK */}
-    <div className="mb-12 md:mb-16">
+        <div className="mx-auto max-w-7xl">
 
-      <div className="mb-5 flex items-center gap-4">
+          {/* RUBRIK */}
+          <div className="mb-12 md:mb-16">
 
-        {homepage.locationsEyebrow && (
-          <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
-            {homepage.locationsEyebrow}
-          </p>
-        )}
+            <div className="mb-5 flex items-center gap-4">
 
-        <span className="h-px flex-1 bg-white/15" />
+              {homepage.locationsEyebrow && (
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+                  {homepage.locationsEyebrow}
+                </p>
+              )}
 
-      </div>
+              <span className="h-px flex-1 bg-white/15" />
 
-      <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
+            </div>
 
-        <h2
-          className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl lg:text-7xl"
-          style={{
-            fontFamily: 'Georgia, Times New Roman, serif',
-          }}
-        >
-          {homepage.locationsTitle}
-        </h2>
+            <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
 
-        {homepage.locationsText && (
-          <p className="max-w-xl text-base leading-7 text-white/70 lg:justify-self-end">
-            {homepage.locationsText}
-          </p>
-        )}
+              <h2 className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl lg:text-7xl">
+                {homepage.locationsTitle}
+              </h2>
 
-      </div>
-
-    </div>
-
-    {/* PLATSKORT */}
-    <div className="grid gap-6 lg:grid-cols-2">
-
-      {locations.map((location) => (
-        <Link
-          key={location.id}
-          href={`/platser/${location.slug}`}
-          className="
-            group
-            relative
-            flex
-            min-h-[380px]
-            flex-col
-            justify-between
-            overflow-hidden
-            bg-[#141414]
-            p-8
-            shadow-[0_24px_70px_rgba(0,0,0,0.3)]
-            transition
-            duration-300
-            hover:bg-[#181818]
-
-            md:min-h-[450px]
-            md:p-10
-          "
-        >
-
-          {/* GUL ACCENT */}
-          <div
-            className="
-              absolute
-              left-0
-              top-0
-              h-[4px]
-              w-20
-              bg-[#FAC800]
-              transition-all
-              duration-500
-              group-hover:w-40
-            "
-          />
-
-          {/* ÖVERDEL */}
-          <div>
-
-            <p className="text-[9px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
-              Bonnatösen
-            </p>
-
-          </div>
-
-          {/* NEDERDEL */}
-          <div>
-
-            <h3
-              className="
-                text-5xl
-                font-black
-                uppercase
-                leading-[0.85]
-                tracking-[-0.055em]
-                text-white
-                transition-colors
-                duration-300
-
-                group-hover:text-[#FAC800]
-
-                sm:text-6xl
-                md:text-7xl
-                lg:text-8xl
-              "
-              style={{
-                fontFamily:
-                  'Georgia, Times New Roman, serif',
-              }}
-            >
-              {location.name}
-            </h3>
-
-            {location.shortDescription && (
-              <p className="mt-6 max-w-lg text-base leading-7 text-white/65">
-                {location.shortDescription}
-              </p>
-            )}
-
-            <div className="mt-8 flex items-center gap-4">
-
-              <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
-                {location.ctaText || 'Läs mer'}
-              </span>
-
-              <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
+              {homepage.locationsText && (
+                <p className="max-w-xl text-base leading-7 text-white/70 lg:justify-self-end">
+                  {homepage.locationsText}
+                </p>
+              )}
 
             </div>
 
           </div>
 
-        </Link>
-      ))}
+          {/* PLATSKORT */}
+          <div className="grid gap-6 lg:grid-cols-2">
 
-    </div>
+            {locations.map((location) => (
+              <Link
+                key={location.id}
+                href={`/platser/${location.slug}`}
+                className="
+                  group
+                  relative
+                  flex
+                  min-h-[380px]
+                  flex-col
+                  justify-between
+                  overflow-hidden
+                  bg-[#141414]
+                  p-8
+                  shadow-[0_24px_70px_rgba(0,0,0,0.3)]
+                  transition
+                  duration-300
 
-  </div>
-</section>
+                  hover:bg-[#181818]
+
+                  md:min-h-[450px]
+                  md:p-10
+                "
+              >
+
+                {/* GUL ACCENT */}
+                <div
+                  className="
+                    absolute
+                    left-0
+                    top-0
+                    h-[4px]
+                    w-20
+                    bg-[#FAC800]
+                    transition-all
+                    duration-500
+
+                    group-hover:w-40
+                  "
+                />
+
+                {/* ÖVERDEL */}
+                <div>
+
+                  <p className="text-[9px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+                    Bonnatösen
+                  </p>
+
+                </div>
+
+                {/* NEDERDEL */}
+                <div>
+
+                  <h3
+                    className="
+                      text-5xl
+                      font-black
+                      uppercase
+                      leading-[0.85]
+                      tracking-[-0.055em]
+                      text-white
+                      transition-colors
+                      duration-300
+
+                      group-hover:text-[#FAC800]
+
+                      sm:text-6xl
+                      md:text-7xl
+                      lg:text-8xl
+                    "
+                  >
+                    {location.name}
+                  </h3>
+
+                  {location.shortDescription && (
+                    <p className="mt-6 max-w-lg text-base leading-7 text-white/65">
+                      {location.shortDescription}
+                    </p>
+                  )}
+
+                  <div className="mt-8 flex items-center gap-4">
+
+                    <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
+                      {location.ctaText || 'Läs mer'}
+                    </span>
+
+                    <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
+
+                  </div>
+
+                </div>
+
+              </Link>
+            ))}
+
+          </div>
+
+        </div>
+
+      </section>
 
       {/* =========================
           MENY
@@ -644,7 +620,6 @@ export default async function HomePage() {
               </div>
             )}
 
-            {/* GUL ACCENT */}
             <div className="absolute bottom-0 left-0 h-[4px] w-28 bg-[#FAC800] transition-all duration-500 group-hover:w-1/2" />
 
           </div>
@@ -665,12 +640,7 @@ export default async function HomePage() {
             )}
 
             {homepage.menuTitle && (
-              <h2
-                className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl"
-                style={{
-                  fontFamily: 'Georgia, Times New Roman, serif',
-                }}
-              >
+              <h2 className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl">
                 {homepage.menuTitle}
               </h2>
             )}
@@ -722,12 +692,7 @@ export default async function HomePage() {
 
               </div>
 
-              <h2
-                className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl"
-                style={{
-                  fontFamily: 'Georgia, Times New Roman, serif',
-                }}
-              >
+              <h2 className="text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl">
                 Öppettider
               </h2>
 
@@ -754,7 +719,9 @@ export default async function HomePage() {
                       shadow-[0_18px_50px_rgba(0,0,0,0.25)]
                       transition
                       duration-300
+
                       hover:bg-[#181818]
+
                       md:p-9
                     "
                   >
@@ -770,6 +737,7 @@ export default async function HomePage() {
                         bg-[#FAC800]
                         transition-all
                         duration-300
+
                         group-hover:w-[6px]
                       "
                     />
@@ -782,12 +750,7 @@ export default async function HomePage() {
                         </p>
                       )}
 
-                      <h3
-                        className="mt-4 text-2xl font-black uppercase leading-tight tracking-[-0.03em] md:text-3xl"
-                        style={{
-                          fontFamily: 'Georgia, Times New Roman, serif',
-                        }}
-                      >
+                      <h3 className="mt-4 text-2xl font-black uppercase leading-tight tracking-[-0.03em] md:text-3xl">
                         {item.title}
                       </h3>
 
@@ -817,6 +780,7 @@ export default async function HomePage() {
                                   font-bold
                                   leading-6
                                   text-white/85
+
                                   first:border-t-0
                                 "
                               >
@@ -863,12 +827,7 @@ export default async function HomePage() {
             )}
 
             {homepage.shopTitle && (
-              <h2
-                className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl"
-                style={{
-                  fontFamily: 'Georgia, Times New Roman, serif',
-                }}
-              >
+              <h2 className="mt-5 text-4xl font-black uppercase leading-[0.93] tracking-[-0.04em] md:text-6xl">
                 {homepage.shopTitle}
               </h2>
             )}
@@ -917,7 +876,6 @@ export default async function HomePage() {
               </div>
             )}
 
-            {/* GUL ACCENT */}
             <div className="absolute bottom-0 right-0 h-[4px] w-28 bg-[#FAC800] transition-all duration-500 group-hover:w-1/2" />
 
           </div>
@@ -942,6 +900,7 @@ function formatDateRange(
       day: 'numeric',
       month: 'long',
       year: 'numeric',
+      
     }).format(new Date(value))
 
   if (startDate && endDate) {

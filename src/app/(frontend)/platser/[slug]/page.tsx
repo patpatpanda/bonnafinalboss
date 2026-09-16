@@ -101,55 +101,40 @@ export default async function LocationPage({
               md:text-8xl
               lg:text-[9rem]
             "
-            style={{
-              fontFamily: 'Georgia, Times New Roman, serif',
-            }}
+           
           >
             {location.name}
           </h1>
 
-          {/* =========================
-              STORT HERO-MEDDELANDE
-          ========================= */}
-          {location.heroNotice && (
-            <div className="mt-6 md:mt-8">
+         {/* =========================
+    HERO-MEDDELANDE
+========================= */}
+{location.heroNotice && (
+  <div className="mt-7 md:mt-9">
 
-              <div
-                className="
-                  inline-flex
-                  -rotate-1
-                  border-2
-                  border-[#FAC800]
-                  bg-[#FAC800]
-                  px-5
-                  py-3
-                  shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-                  md:px-7
-                  md:py-4
-                "
-              >
-                <p
-                  className="
-                    text-2xl
-                    font-black
-                    uppercase
-                    leading-none
-                    tracking-[-0.03em]
-                    text-black
-                    sm:text-3xl
-                    md:text-4xl
-                    lg:text-5xl
-                  "
-                  style={{
-                    fontFamily: 'Georgia, Times New Roman, serif',
-                  }}
-                >
-                  {location.heroNotice}
-                </p>
-              </div>
+    <div className="flex items-center gap-4">
 
-            </div>
-          )}
+      <span className="h-[3px] w-10 shrink-0 bg-[#FAC800]" />
+
+      <p
+        className="
+          text-lg
+          font-bold
+          uppercase
+          tracking-[0.08em]
+          text-white
+
+          sm:text-xl
+          md:text-2xl
+        "
+      >
+        {location.heroNotice}
+      </p>
+
+    </div>
+
+  </div>
+)}
 
           {/* KORT BESKRIVNING */}
           {location.shortDescription && (

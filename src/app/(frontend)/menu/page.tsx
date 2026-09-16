@@ -100,10 +100,7 @@ export default async function MenuPage() {
 
           <h1
             className="text-6xl font-black uppercase leading-[0.82] tracking-[-0.05em] sm:text-7xl md:text-8xl lg:text-[9rem]"
-            style={{
-              fontFamily:
-                'Georgia, Times New Roman, serif',
-            }}
+            
           >
             {menu.title}
           </h1>
@@ -223,10 +220,7 @@ export default async function MenuPage() {
               {menu.burgerName && (
                 <h2
                   className="mt-8 text-5xl font-black uppercase leading-[0.9] tracking-[-0.05em] md:text-7xl"
-                  style={{
-                    fontFamily:
-                      'Georgia, Times New Roman, serif',
-                  }}
+                 
                 >
                   {menu.burgerName}
                 </h2>
@@ -306,10 +300,7 @@ export default async function MenuPage() {
 
                 <h2
                   className="mt-3 text-5xl font-black uppercase leading-none tracking-[-0.05em] sm:text-6xl md:text-8xl"
-                  style={{
-                    fontFamily:
-                      'Georgia, Times New Roman, serif',
-                  }}
+                  
                 >
                   Meny
                 </h2>
@@ -340,10 +331,7 @@ export default async function MenuPage() {
 
                         <p
                           className="mt-2 text-xl font-black uppercase tracking-[-0.02em]"
-                          style={{
-                            fontFamily:
-                              'Georgia, Times New Roman, serif',
-                          }}
+                         
                         >
                           {menu.burgerName}
                         </p>
@@ -517,10 +505,7 @@ export default async function MenuPage() {
 
                                 <h3
                                   className="mb-5 text-xl font-black uppercase tracking-[-0.02em]"
-                                  style={{
-                                    fontFamily:
-                                      'Georgia, Times New Roman, serif',
-                                  }}
+                                  
                                 >
                                   {category.label}
                                 </h3>
@@ -609,10 +594,7 @@ function WesternItem({
 
         <h4
           className="shrink-0 text-base font-black uppercase tracking-[-0.015em] sm:text-lg"
-          style={{
-            fontFamily:
-              'Georgia, Times New Roman, serif',
-          }}
+         
         >
           {name}
         </h4>
@@ -621,10 +603,7 @@ function WesternItem({
 
         <span
           className="shrink-0 text-base font-black"
-          style={{
-            fontFamily:
-              'Georgia, Times New Roman, serif',
-          }}
+         
         >
           {price}
         </span>
@@ -655,10 +634,7 @@ function WesternHeading({
 
       <h2
         className="text-3xl font-black uppercase tracking-[-0.04em] md:text-4xl"
-        style={{
-          fontFamily:
-            'Georgia, Times New Roman, serif',
-        }}
+       
       >
         {children}
       </h2>
