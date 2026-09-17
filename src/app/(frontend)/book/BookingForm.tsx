@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type BookingFormProps = {
   times: string[]
@@ -18,7 +18,6 @@ export default function BookingForm({
     name: '',
     email: '',
     phone: '',
-    message: '',
   })
 
   const [availableTimes, setAvailableTimes] =
@@ -36,14 +35,15 @@ export default function BookingForm({
   const [success, setSuccess] =
     useState(false)
 
+  const successRef = useRef<HTMLDivElement>(null)
+
   const today =
     new Date().toLocaleDateString('sv-SE')
 
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement |
-      HTMLSelectElement |
-      HTMLTextAreaElement
+      HTMLSelectElement
     >,
   ) {
     setErrorMessage('')
@@ -63,6 +63,9 @@ export default function BookingForm({
     }))
   }
 
+  // =========================
+  // HÄMTA LEDIGA TIDER
+  // =========================
   useEffect(() => {
     async function loadAvailableTimes() {
       if (!formData.date || !formData.guests) {
@@ -121,6 +124,25 @@ export default function BookingForm({
     formData.guests,
   ])
 
+  // =========================
+  // SCROLLA TILL BEKRÄFTELSE
+  // =========================
+  useEffect(() => {
+    if (!success) {
+      return
+    }
+
+    requestAnimationFrame(() => {
+      successRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    })
+  }, [success])
+
+  // =========================
+  // SKICKA BOKNING
+  // =========================
   async function handleSubmit(
     e: React.FormEvent,
   ) {
@@ -180,13 +202,27 @@ export default function BookingForm({
     }
   }
 
-  /* =========================
-     BEKRÄFTELSE
-  ========================= */
-
+  // =========================
+  // BEKRÄFTELSE
+  // =========================
   if (success) {
     return (
-      <div className="relative overflow-hidden bg-[#d7bc84] px-6 py-14 text-center text-[#49371e] md:px-12 md:py-20">
+      <div
+        ref={successRef}
+        className="
+          relative
+          scroll-mt-32
+          overflow-hidden
+          bg-[#d7bc84]
+          px-6
+          py-14
+          text-center
+          text-[#49371e]
+
+          md:px-12
+          md:py-20
+        "
+      >
 
         {/* PAPPERSSTRUKTUR */}
         <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_20%_20%,rgba(90,60,24,.18)_0,transparent_24%),radial-gradient(circle_at_80%_75%,rgba(90,60,24,.14)_0,transparent_28%),linear-gradient(rgba(255,255,255,.10),rgba(80,50,20,.08))]" />
@@ -195,93 +231,130 @@ export default function BookingForm({
         <div className="pointer-events-none absolute inset-3 border border-[#735630]/80" />
         <div className="pointer-events-none absolute inset-5 border border-[#735630]/40" />
 
-        <WesternCorner className="left-7 top-7" />
-        <WesternCorner className="right-7 top-7 rotate-90" />
-        <WesternCorner className="bottom-7 right-7 rotate-180" />
-        <WesternCorner className="bottom-7 left-7 -rotate-90" />
-
         <div className="relative z-10 mx-auto max-w-xl">
 
-          <div className="text-3xl text-[#75562c]">
-            ❦
+          {/* CHECK */}
+          <div
+            className="
+              mx-auto
+              flex
+              h-16
+              w-16
+              items-center
+              justify-center
+              rounded-full
+              bg-[#49371e]
+              text-3xl
+              font-black
+              text-[#ead5a0]
+
+              md:h-20
+              md:w-20
+              md:text-4xl
+            "
+          >
+            ✓
           </div>
 
-          <div className="mt-5 flex items-center justify-center gap-4">
+          {/* STATUS */}
+          <div className="mt-7 flex items-center justify-center gap-4">
 
-            <span className="h-px w-14 bg-[#75562c]" />
+            <span className="h-px w-10 bg-[#75562c]" />
 
             <span className="text-[10px] font-black uppercase tracking-[0.35em]">
-              Bekräftad
+              Bokningen är bekräftad
             </span>
 
-            <span className="h-px w-14 bg-[#75562c]" />
+            <span className="h-px w-10 bg-[#75562c]" />
 
           </div>
 
+          {/* RUBRIK */}
           <h2
-            className="mt-7 text-4xl font-black uppercase leading-[0.9] tracking-[-0.04em] md:text-6xl"
-            style={{
-              fontFamily:
-                'Georgia, Times New Roman, serif',
-            }}
+            className="
+              mt-7
+              text-4xl
+              font-black
+              uppercase
+              leading-[0.9]
+              tracking-[-0.04em]
+
+              md:text-6xl
+            "
           >
             Bokat
             <br />
             & klart
           </h2>
 
-          <p className="mt-7 text-base leading-7 text-[#665033]">
-            Din bokning är bekräftad och ett
-            bekräftelsemejl har skickats till
-            din e-post.
+          {/* TEXT */}
+          <p className="mx-auto mt-7 max-w-md text-base leading-7 text-[#665033]">
+            Din bokning är bekräftad.
+            Ett bekräftelsemejl har skickats till{' '}
+            <strong className="font-black text-[#49371e]">
+              {formData.email}
+            </strong>
+            .
           </p>
 
+          {/* BOKNINGSDETALJER */}
           <div className="my-10 border-y border-[#75562c]/45 py-8">
 
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#75562c]">
               Din bokning
             </p>
 
-            <p
-              className="mt-4 text-2xl font-black"
-              style={{
-                fontFamily:
-                  'Georgia, Times New Roman, serif',
-              }}
-            >
-              {formData.date}
-            </p>
+            <div className="mt-6 grid gap-6 sm:grid-cols-3">
 
-            <p
-              className="mt-2 text-3xl font-black text-[#75562c]"
-              style={{
-                fontFamily:
-                  'Georgia, Times New Roman, serif',
-              }}
-            >
-              {formData.time}
-            </p>
+              {/* DATUM */}
+              <div>
 
-            <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-[#665033]">
-              {formData.guests}{' '}
-              {formData.guests === '1'
-                ? 'person'
-                : 'personer'}
-            </p>
+                <p className="text-[9px] font-black uppercase tracking-[0.22em] text-[#806948]">
+                  Datum
+                </p>
+
+                <p className="mt-2 text-lg font-black text-[#49371e]">
+                  {formatBookingDate(
+                    formData.date,
+                  )}
+                </p>
+
+              </div>
+
+              {/* TID */}
+              <div>
+
+                <p className="text-[9px] font-black uppercase tracking-[0.22em] text-[#806948]">
+                  Tid
+                </p>
+
+                <p className="mt-2 text-lg font-black text-[#49371e]">
+                  {formData.time}
+                </p>
+
+              </div>
+
+              {/* GÄSTER */}
+              <div>
+
+                <p className="text-[9px] font-black uppercase tracking-[0.22em] text-[#806948]">
+                  Gäster
+                </p>
+
+                <p className="mt-2 text-lg font-black text-[#49371e]">
+                  {formData.guests}{' '}
+                  {formData.guests === '1'
+                    ? 'person'
+                    : 'personer'}
+                </p>
+
+              </div>
+
+            </div>
 
           </div>
 
-          <div className="flex items-center justify-center gap-4">
-
-            <span className="h-px w-12 bg-[#75562c]" />
-
-            <span>✦</span>
-
-            <span className="h-px w-12 bg-[#75562c]" />
-
-          </div>
-
-          <p className="mt-5 text-[10px] font-black uppercase tracking-[0.28em] text-[#665033]">
+          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#665033]">
             Vi ses på Bonnatösens Saloon
           </p>
 
@@ -298,14 +371,11 @@ export default function BookingForm({
     >
 
       {/* =========================
-          01 DATUM + GÄSTER
+          DATUM + GÄSTER
       ========================= */}
       <section className="mb-14">
 
-        <StepHeading
-          number="01"
-          title="När kommer ni?"
-        />
+        <StepHeading title="När kommer ni?" />
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
 
@@ -362,14 +432,11 @@ export default function BookingForm({
       </section>
 
       {/* =========================
-          02 TID
+          TID
       ========================= */}
       <section className="mb-14">
 
-        <StepHeading
-          number="02"
-          title="Välj tid"
-        />
+        <StepHeading title="Välj tid" />
 
         <div className="mt-8">
 
@@ -443,14 +510,11 @@ export default function BookingForm({
       </section>
 
       {/* =========================
-          03 KONTAKT
+          KONTAKT
       ========================= */}
       <section className="mb-12">
 
-        <StepHeading
-          number="03"
-          title="Vem bokar?"
-        />
+        <StepHeading title="Vem bokar?" />
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
 
@@ -485,6 +549,7 @@ export default function BookingForm({
           </FieldWrapper>
 
           <div className="md:col-span-2">
+
             <FieldWrapper
               label="E-post"
               htmlFor="email"
@@ -499,29 +564,6 @@ export default function BookingForm({
                 className={inputClass}
               />
             </FieldWrapper>
-          </div>
-
-          <div className="md:col-span-2">
-
-            <label
-              htmlFor="message"
-              className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[#665033]"
-            >
-              Meddelande
-
-              <span className="ml-2 font-semibold normal-case tracking-normal text-[#806948]">
-                frivilligt
-              </span>
-            </label>
-
-            <textarea
-              id="message"
-              name="message"
-              rows={5}
-              value={formData.message}
-              onChange={handleChange}
-              className={`${inputClass} resize-none`}
-            />
 
           </div>
 
@@ -530,7 +572,7 @@ export default function BookingForm({
       </section>
 
       {/* =========================
-          ERROR
+          FELMEDDELANDE
       ========================= */}
       {errorMessage && (
         <div className="mb-7 border border-[#8b5543] bg-[#c29a72]/40 px-5 py-4 text-sm font-semibold text-[#6f3f30]">
@@ -538,18 +580,8 @@ export default function BookingForm({
         </div>
       )}
 
-      {/* ORNAMENT */}
-      <div className="mb-7 flex items-center gap-4">
-
-        <span className="h-px flex-1 bg-[#75562c]/60" />
-
-        <span className="text-[#75562c]">
-          ❦
-        </span>
-
-        <span className="h-px flex-1 bg-[#75562c]/60" />
-
-      </div>
+      {/* SEPARATOR */}
+      <div className="mb-7 h-px w-full bg-[#75562c]/40" />
 
       {/* =========================
           SUBMIT
@@ -578,8 +610,10 @@ export default function BookingForm({
           tracking-[0.2em]
           text-[#ead5a0]
           transition
+
           hover:bg-transparent
           hover:text-[#49371e]
+
           disabled:cursor-not-allowed
           disabled:border-[#8f7955]
           disabled:bg-[#bba26f]
@@ -627,10 +661,8 @@ const inputClass = `
 `
 
 function StepHeading({
-  number,
   title,
 }: {
-  number: string
   title: string
 }) {
   return (
@@ -638,25 +670,13 @@ function StepHeading({
 
       <div className="mb-4 flex items-center gap-4">
 
-        <span className="text-[10px] font-black tracking-[0.3em] text-[#75562c]">
-          {number}
-        </span>
+        <span className="h-[2px] w-12 bg-[#75562c]" />
 
-        <span className="h-px flex-1 bg-[#75562c]/50" />
-
-        <span className="text-[#75562c]">
-          ✦
-        </span>
+        <span className="h-px flex-1 bg-[#75562c]/30" />
 
       </div>
 
-      <h2
-        className="text-2xl font-black uppercase leading-none tracking-[-0.03em] text-[#49371e] md:text-3xl"
-        style={{
-          fontFamily:
-            'Georgia, Times New Roman, serif',
-        }}
-      >
+      <h2 className="text-2xl font-black uppercase leading-none tracking-[-0.03em] text-[#49371e] md:text-3xl">
         {title}
       </h2>
 
@@ -689,23 +709,25 @@ function FieldWrapper({
   )
 }
 
-function WesternCorner({
-  className = '',
-}: {
-  className?: string
-}) {
-  return (
-    <div
-      aria-hidden="true"
-      className={`pointer-events-none absolute h-16 w-16 text-[#75562c]/70 ${className}`}
-    >
-      <div className="absolute left-0 top-0 h-px w-14 bg-current" />
+function formatBookingDate(
+  date: string,
+) {
+  if (!date) {
+    return ''
+  }
 
-      <div className="absolute left-0 top-0 h-14 w-px bg-current" />
+  const [year, month, day] =
+    date.split('-').map(Number)
 
-      <div className="absolute left-2 top-2 text-2xl">
-        ❧
-      </div>
-    </div>
-  )
+  const value =
+    new Date(year, month - 1, day)
+
+  return new Intl.DateTimeFormat(
+    'sv-SE',
+    {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    },
+  ).format(value)
 }
