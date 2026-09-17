@@ -26,9 +26,16 @@ const nextConfig: NextConfig = {
 
   images: {
     localPatterns: [
+      // =========================
+      // PAYLOAD MEDIA
+      // =========================
       {
         pathname: '/api/media/file/**',
       },
+
+      // =========================
+      // LOKALA BILDER
+      // =========================
       {
         pathname: '/images/**',
         search: '',
@@ -71,18 +78,28 @@ const nextConfig: NextConfig = {
         hostname:
           'sqmxevrcieaknkpeythz.supabase.co',
       },
+
+      // =========================
+      // YOUTUBE THUMBNAILS
+      // =========================
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+      },
     ],
   },
 
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
+
       '.js': [
         '.ts',
         '.tsx',
         '.js',
         '.jsx',
       ],
+
       '.mjs': ['.mts', '.mjs'],
     }
 

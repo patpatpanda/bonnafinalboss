@@ -336,108 +336,158 @@ export default async function HomePage() {
 
           </div>
 
-          {/* =========================
-              YOUTUBE
-          ========================= */}
-          <a
-            href="https://www.youtube.com/@Bonnalife"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              group
-              relative
-              flex
-              min-h-[420px]
-              overflow-hidden
-              bg-[#111111]
-              shadow-[0_25px_80px_rgba(0,0,0,0.45)]
+         {/* =========================
+    YOUTUBE
+========================= */}
+<a
+  href="https://www.youtube.com/watch?v=bRsjPyEP8vo"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    group
+    relative
+    flex
+    min-h-[420px]
+    overflow-hidden
+    bg-[#111111]
+    shadow-[0_25px_80px_rgba(0,0,0,0.45)]
 
-              md:min-h-[580px]
-            "
-          >
+    md:min-h-[580px]
+  "
+>
+  {/* YOUTUBE THUMBNAIL */}
+  <Image
+    src="https://img.youtube.com/vi/bRsjPyEP8vo/maxresdefault.jpg"
+    alt="Bonnatösen Channel Trailer"
+    fill
+    sizes="(max-width: 1024px) 100vw, 50vw"
+    className="
+      object-cover
+      grayscale
+      transition-all
+      duration-700
+      ease-out
 
-            {/* BAKGRUND */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#202020_0%,#111111_55%,#090909_100%)]" />
+      group-hover:scale-[1.04]
+      group-hover:grayscale-0
+    "
+  />
 
-            {/* GUL TOPPLINJE */}
-            <div
-              className="
-                absolute
-                left-0
-                top-0
-                h-[4px]
-                w-24
-                bg-[#FAC800]
-                transition-all
-                duration-500
-                group-hover:w-full
-              "
-            />
+  {/* MÖRK OVERLAY */}
+  <div className="absolute inset-0 bg-black/50 transition-colors duration-500 group-hover:bg-black/40" />
 
-            {/* CONTENT */}
-            <div className="relative z-10 flex w-full flex-col items-center justify-center px-8 py-16 text-center">
+  {/* TONING */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/35" />
 
-              {/* PLAY */}
-              <div
-                className="
-                  flex
-                  h-24
-                  w-24
-                  items-center
-                  justify-center
-                  rounded-full
-                  bg-white/[0.04]
-                  ring-1
-                  ring-white/20
-                  transition-all
-                  duration-500
+  {/* GUL TOPPLINJE */}
+  <div
+    className="
+      absolute
+      left-0
+      top-0
+      z-10
+      h-[4px]
+      w-24
+      bg-[#FAC800]
+      transition-all
+      duration-500
 
-                  group-hover:scale-110
-                  group-hover:bg-[#FAC800]
-                  group-hover:ring-[#FAC800]
+      group-hover:w-40
+    "
+  />
 
-                  md:h-28
-                  md:w-28
-                "
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="ml-1 h-9 w-9 text-white transition-colors duration-500 group-hover:text-black md:h-11 md:w-11"
-                  aria-hidden="true"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
+  {/* CONTENT */}
+  <div className="relative z-10 flex w-full flex-col items-center justify-center px-8 py-16 text-center">
 
-              <p className="mt-10 text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
-                Bonnatösen på YouTube
-              </p>
+    {/* PLAY */}
+    <div
+      className="
+        flex
+        h-24
+        w-24
+        items-center
+        justify-center
+        rounded-full
+        bg-black/30
+        ring-1
+        ring-white/40
+        backdrop-blur-sm
+        transition-all
+        duration-500
 
-              <h3 className="mt-4 text-3xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-5xl">
-                Häng med
-                <br />
-                bakom kulisserna
-              </h3>
+        group-hover:scale-110
+        group-hover:bg-[#FAC800]
+        group-hover:ring-[#FAC800]
 
-              <p className="mt-6 max-w-sm text-sm leading-7 text-white/75 md:text-base">
-                Följ med till Bonnatösen och se vad som händer bakom
-                burgarna, Ladan och Saloonen.
-              </p>
+        md:h-28
+        md:w-28
+      "
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="
+          ml-1
+          h-9
+          w-9
+          text-white
+          transition-colors
+          duration-500
 
-              <div className="mt-10 flex items-center gap-4">
+          group-hover:text-black
 
-                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
-                  Besök vår kanal
-                </span>
+          md:h-11
+          md:w-11
+        "
+        aria-hidden="true"
+      >
+        <path d="M8 5v14l11-7z" />
+      </svg>
+    </div>
 
-                <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
+    {/* EYEBROW */}
+    <p className="mt-10 text-[10px] font-black uppercase tracking-[0.35em] text-[#FAC800]">
+      Bonnatösen på YouTube
+    </p>
 
-              </div>
+    {/* RUBRIK */}
+    <h3
+      className="
+        mt-4
+        text-3xl
+        font-black
+        uppercase
+        leading-[0.95]
+        tracking-[-0.04em]
+        text-white
 
-            </div>
+        md:text-5xl
+      "
+    >
+      Häng med
+      <br />
+      bakom kulisserna
+    </h3>
 
-          </a>
+    {/* TEXT */}
+    <p className="mt-6 max-w-sm text-sm leading-7 text-white/85 md:text-base">
+      Följ med till Bonnatösen och se vad som händer
+      bakom burgarna, Ladan och Saloonen.
+    </p>
+
+    {/* CTA */}
+    <div className="mt-10 flex items-center gap-4">
+
+      <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
+        Se videon
+      </span>
+
+      <span className="h-px w-10 bg-[#FAC800] transition-all duration-300 group-hover:w-16" />
+
+    </div>
+
+  </div>
+</a>
 
         </div>
 
