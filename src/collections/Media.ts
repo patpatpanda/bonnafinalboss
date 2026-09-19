@@ -54,14 +54,6 @@ export const Media: CollectionConfig = {
 
     focalPoint: true,
 
-    // Konvertera den uppladdade bilden till WebP
-    formatOptions: {
-      format: 'webp',
-      options: {
-        quality: 80,
-      },
-    },
-
     imageSizes: [
       {
         name: 'thumbnail',
