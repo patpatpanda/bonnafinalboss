@@ -7,6 +7,7 @@ import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
 import { Providers } from '@/providers'
+import { ThemeProvider } from '@/providers/ThemeProvider'
 import { draftMode } from 'next/headers'
 
 import BonnaHeader from '@/components/BonnaHeader'
@@ -29,6 +30,7 @@ export default async function RootLayout({
         GeistMono.variable,
       )}
       lang="sv"
+      data-theme="dark"
       suppressHydrationWarning
     >
       <head>
@@ -47,17 +49,19 @@ export default async function RootLayout({
 
       <body>
         <Providers>
-          <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          />
+          <ThemeProvider>
+            <AdminBar
+              adminBarProps={{
+                preview: isEnabled,
+              }}
+            />
 
-          <BonnaHeader />
+            <BonnaHeader />
 
-          {children}
+            {children}
 
-          <BonnaFooter />
+            <BonnaFooter />
+          </ThemeProvider>
         </Providers>
       </body>
     </html>
@@ -65,7 +69,9 @@ export default async function RootLayout({
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getServerSideURL()),
+  metadataBase: new URL(
+    getServerSideURL(),
+  ),
 
   title: {
     default: 'Bonnatösen',
