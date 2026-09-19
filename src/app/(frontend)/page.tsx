@@ -1012,17 +1012,7 @@ export default async function HomePage() {
           ========================= */}
           <div className="text-center">
 
-            <p
-              className="
-                text-[9px]
-                font-black
-                uppercase
-                tracking-[0.42em]
-                text-[#75562c]
-              "
-            >
-              Bonnatösen
-            </p>
+           
 
 
             {/* DEKORATION */}
@@ -1045,21 +1035,7 @@ export default async function HomePage() {
             </div>
 
 
-            <h3
-              className="
-                mt-6
-                text-4xl
-                font-black
-                uppercase
-                leading-none
-                tracking-[-0.05em]
-
-                sm:text-5xl
-                md:text-6xl
-              "
-            >
-              Välkommen
-            </h3>
+           
 
             <p
               className="
