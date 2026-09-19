@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
       },
     ],
 
-    qualities: [100],
+    qualities: [75],
 
     remotePatterns: [
       // =========================
