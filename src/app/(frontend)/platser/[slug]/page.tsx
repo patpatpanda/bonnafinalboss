@@ -10,6 +10,31 @@ type PageProps = {
   }>
 }
 
+/* =========================
+    FORMATERA DATUM
+========================= */
+function formatDate(date?: string | null) {
+  if (!date) return ''
+
+  return new Intl.DateTimeFormat('sv-SE', {
+    day: 'numeric',
+    month: 'short',
+  }).format(new Date(date))
+}
+
+function formatDateRange(
+  startDate?: string | null,
+  endDate?: string | null,
+) {
+  if (!startDate && !endDate) return ''
+
+  if (startDate && endDate) {
+    return `${formatDate(startDate)} – ${formatDate(endDate)}`
+  }
+
+  return formatDate(startDate || endDate)
+}
+
 export default async function LocationPage({
   params,
 }: PageProps) {
@@ -36,6 +61,35 @@ export default async function LocationPage({
   if (!location || !location.active) {
     notFound()
   }
+
+  // =========================
+  // HÄMTA ÖPPETTIDER
+  // Samma collection som startsidan
+  // =========================
+  const openingHoursResult = await payload.find({
+    collection: 'opening-hours',
+    limit: 100,
+    sort: '-priority',
+    where: {
+      active: {
+        equals: true,
+      },
+    },
+    depth: 1,
+  })
+
+  // =========================
+  // VISA ENDAST ÖPPETTIDER
+  // FÖR DEN AKTUELLA PLATSEN
+  // =========================
+  const openingHours = openingHoursResult.docs.filter((item) => {
+    const itemLocation =
+      typeof item.location === 'object'
+        ? item.location
+        : null
+
+    return itemLocation?.id === location.id
+  })
 
   // =========================
   // HERO-BILD
@@ -98,43 +152,43 @@ export default async function LocationPage({
               tracking-[-0.05em]
               text-white
               drop-shadow-[0_3px_10px_rgba(0,0,0,0.7)]
+
               md:text-8xl
               lg:text-[9rem]
             "
-           
           >
             {location.name}
           </h1>
 
-         {/* =========================
-    HERO-MEDDELANDE
-========================= */}
-{location.heroNotice && (
-  <div className="mt-7 md:mt-9">
+          {/* =========================
+              HERO-MEDDELANDE
+          ========================= */}
+          {location.heroNotice && (
+            <div className="mt-7 md:mt-9">
 
-    <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
 
-      <span className="h-[3px] w-10 shrink-0 bg-[#FAC800]" />
+                <span className="h-[3px] w-10 shrink-0 bg-[#FAC800]" />
 
-      <p
-        className="
-          text-lg
-          font-bold
-          uppercase
-          tracking-[0.08em]
-          text-white
+                <p
+                  className="
+                    text-lg
+                    font-bold
+                    uppercase
+                    tracking-[0.08em]
+                    text-white
 
-          sm:text-xl
-          md:text-2xl
-        "
-      >
-        {location.heroNotice}
-      </p>
+                    sm:text-xl
+                    md:text-2xl
+                  "
+                >
+                  {location.heroNotice}
+                </p>
 
-    </div>
+              </div>
 
-  </div>
-)}
+            </div>
+          )}
 
           {/* KORT BESKRIVNING */}
           {location.shortDescription && (
@@ -146,6 +200,7 @@ export default async function LocationPage({
                 leading-7
                 text-white
                 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
+
                 md:text-xl
                 md:leading-8
               "
@@ -185,6 +240,7 @@ export default async function LocationPage({
                   tracking-[0.18em]
                   text-black
                   transition
+
                   hover:bg-transparent
                   hover:text-[#FAC800]
                 "
@@ -197,6 +253,7 @@ export default async function LocationPage({
                 >
                   ↗
                 </span>
+
               </a>
 
               {/* ADRESS */}
@@ -219,6 +276,7 @@ export default async function LocationPage({
 
       </section>
 
+
       {/* =========================
           OM PLATSEN
       ========================= */}
@@ -230,6 +288,7 @@ export default async function LocationPage({
             className={`
               grid
               gap-12
+
               ${
                 slug === 'ladan' || slug === 'saloon'
                   ? 'lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-20'
@@ -275,41 +334,276 @@ export default async function LocationPage({
 
             </div>
 
+
             {/* =========================
-                WANTED POSTER
-                Endast Ladan & Saloonen
+                ÖPPETTIDER
+                Samma data som startsidan
             ========================= */}
-            {(slug === 'ladan' || slug === 'saloon') && (
-              <div className="mx-auto w-full max-w-[430px] lg:mx-0 lg:ml-auto">
+            {(slug === 'ladan' || slug === 'saloon') &&
+              openingHours.length > 0 && (
+                <div className="mx-auto w-full max-w-[430px] lg:mx-0 lg:ml-auto">
 
-                <div className="relative aspect-[3/4] w-full">
+                  <div
+                    className="
+                      overflow-hidden
+                      border
+                      border-white/20
+                      bg-[#111111]
+                      text-white
+                      shadow-[0_20px_60px_rgba(0,0,0,0.25)]
+                    "
+                  >
 
-                  <Image
-                    src={
-                      slug === 'saloon'
-                        ? '/images/mrwant.png'
-                        : '/images/mswant.png'
-                    }
-                    alt={
-                      slug === 'saloon'
-                        ? 'Bonnatösen Wanted Saloon'
-                        : 'Bonnatösen Wanted Ladan'
-                    }
-                    fill
-                    sizes="(max-width: 1024px) 90vw, 430px"
-                    className="object-contain"
-                  />
+                    {/* VIT TOPPLINJE */}
+                    <div className="h-[4px] w-full bg-white" />
+
+
+                    <div className="p-6 sm:p-8 md:p-9">
+
+                      {/* =========================
+                          HEADER
+                      ========================= */}
+                      <div className="border-b border-white/20 pb-6">
+
+                        <p
+                          className="
+                            mb-3
+                            text-[9px]
+                            font-black
+                            uppercase
+                            tracking-[0.3em]
+                            text-white/50
+                          "
+                        >
+                          När ses vi?
+                        </p>
+
+                        <h2
+                          className="
+                            text-3xl
+                            font-black
+                            uppercase
+                            leading-none
+                            tracking-[-0.04em]
+                            text-white
+
+                            sm:text-4xl
+                          "
+                        >
+                          Öppettider
+                        </h2>
+
+                        <p
+                          className="
+                            mt-3
+                            text-xs
+                            font-bold
+                            uppercase
+                            tracking-[0.18em]
+                            text-white/50
+                          "
+                        >
+                          {location.name}
+                        </p>
+
+                      </div>
+
+
+                      {/* =========================
+                          ÖPPETTIDSPERIODER
+                      ========================= */}
+                      <div>
+
+                        {openingHours.map((item, index) => (
+                          <div
+                            key={item.id}
+                            className={`
+                              py-6
+
+                              ${
+                                index !== 0
+                                  ? 'border-t border-white/20'
+                                  : ''
+                              }
+                            `}
+                          >
+
+                            {/* TITEL + DATUM */}
+                            <div
+                              className="
+                                gap-3
+
+                                sm:flex
+                                sm:items-start
+                                sm:justify-between
+                              "
+                            >
+
+                              <h3
+                                className="
+                                  text-lg
+                                  font-black
+                                  uppercase
+                                  leading-tight
+                                  tracking-[-0.02em]
+                                  text-white
+                                "
+                              >
+                                {item.title}
+                              </h3>
+
+
+                              {(item.startDate ||
+                                item.endDate) && (
+                                <p
+                                  className="
+                                    mt-2
+                                    shrink-0
+                                    text-[9px]
+                                    font-bold
+                                    uppercase
+                                    tracking-[0.14em]
+                                    text-white/40
+
+                                    sm:mt-1
+                                    sm:text-right
+                                  "
+                                >
+                                  {formatDateRange(
+                                    item.startDate,
+                                    item.endDate,
+                                  )}
+                                </p>
+                              )}
+
+                            </div>
+
+
+                            {/* =========================
+                                TIDER
+                            ========================= */}
+                            {item.information && (
+                              <div className="mt-5">
+
+                                {item.information
+                                  .split('\n')
+                                  .filter(Boolean)
+                                  .map(
+                                    (
+                                      line,
+                                      lineIndex,
+                                    ) => {
+
+                                      const firstSpace =
+                                        line.indexOf(' ')
+
+                                      const label =
+                                        firstSpace > -1
+                                          ? line.substring(
+                                              0,
+                                              firstSpace,
+                                            )
+                                          : line
+
+                                      const value =
+                                        firstSpace > -1
+                                          ? line.substring(
+                                              firstSpace +
+                                                1,
+                                            )
+                                          : ''
+
+                                      return (
+                                        <div
+                                          key={
+                                            lineIndex
+                                          }
+                                          className="
+                                            flex
+                                            min-h-[48px]
+                                            items-center
+                                            justify-between
+                                            gap-5
+                                            border-b
+                                            border-white/10
+                                            py-3
+
+                                            last:border-b-0
+                                          "
+                                        >
+
+                                          {/* DAG */}
+                                          <span
+                                            className="
+                                              text-sm
+                                              font-bold
+                                              uppercase
+                                              tracking-[0.05em]
+                                              text-white/55
+                                            "
+                                          >
+                                            {label}
+                                          </span>
+
+
+                                          {/* TID */}
+                                          {value && (
+                                            <span
+                                              className="
+                                                shrink-0
+                                                text-base
+                                                font-black
+                                                text-white
+                                              "
+                                            >
+                                              {value}
+                                            </span>
+                                          )}
+
+                                        </div>
+                                      )
+                                    },
+                                  )}
+
+                              </div>
+                            )}
+
+                          </div>
+                        ))}
+
+                      </div>
+
+
+                      {/* FOOTER */}
+                      <div className="border-t border-white/20 pt-5">
+
+                        <p
+                          className="
+                            text-[9px]
+                            font-bold
+                            uppercase
+                            tracking-[0.22em]
+                            text-white/40
+                          "
+                        >
+                          Bonnatösen · {location.name}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  </div>
 
                 </div>
-
-              </div>
-            )}
+              )}
 
           </div>
 
         </div>
 
       </section>
+
 
       {/* =========================
           GALLERI
@@ -330,6 +624,7 @@ export default async function LocationPage({
                 <span className="h-px flex-1 bg-[#FAC800]/40" />
 
               </div>
+
 
               {/* BILDER */}
               <div className="grid items-start gap-4 md:grid-cols-2">
@@ -355,6 +650,7 @@ export default async function LocationPage({
                         border-[#242424]
                         bg-[#111111]
                         transition
+
                         hover:border-[#FAC800]
                       "
                     >
@@ -380,6 +676,7 @@ export default async function LocationPage({
                           border
                           border-transparent
                           transition
+
                           group-hover:border-[#FAC800]/40
                         "
                       />
@@ -394,6 +691,7 @@ export default async function LocationPage({
 
           </section>
         )}
+
 
       {/* =========================
           LEADER BERGSLAGEN / EU
@@ -456,6 +754,7 @@ export default async function LocationPage({
                 </div>
 
               </div>
+
 
               {/* LEADER / EU LOGGA */}
               <div className="border border-[#FAC800] bg-white p-6 md:p-10">

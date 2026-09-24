@@ -473,342 +473,155 @@ export default async function HomePage() {
         </div>
 
       </section>
-{/* =========================
-    PLATSER
-========================= */}
-<section
-  id="locations"
-  className="relative overflow-hidden bg-[#0d0d0d] px-4 py-20 md:px-10 md:py-28"
->
-  <div className="mx-auto max-w-7xl">
-
-    {/* =========================
-        RUBRIK
-    ========================= */}
-    <div className="mx-auto mb-14 max-w-3xl text-center md:mb-20">
-
-      {homepage.locationsEyebrow && (
-        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#FAC800]">
-          {homepage.locationsEyebrow}
-        </p>
-      )}
-
-      <h2
-        className="
-          mt-4
-          text-5xl
-          font-black
-          uppercase
-          leading-[0.9]
-          tracking-[-0.05em]
-          text-white
-
-          sm:text-6xl
-          md:text-7xl
-        "
+      {/* =========================
+          PLATSER
+      ========================= */}
+      <section
+        id="locations"
+        className="relative overflow-hidden border-y border-white/10 bg-[#0d0d0d] px-5 py-20 md:px-10 md:py-28"
       >
-        {homepage.locationsTitle}
-      </h2>
+        <div className="mx-auto max-w-7xl">
 
-      <div className="mx-auto mt-6 h-[3px] w-16 bg-[#FAC800]" />
+          {/* RUBRIK */}
+          <div className="mb-12 md:mb-16">
 
-      {homepage.locationsText && (
-        <p className="mx-auto mt-7 max-w-2xl text-sm leading-7 text-white/60 md:text-base">
-          {homepage.locationsText}
-        </p>
-      )}
-
-    </div>
-
-
-    {/* =========================
-        WESTERN PLATSKORT
-    ========================= */}
-    <div className="grid gap-7 lg:grid-cols-2">
-
-      {locations.map((location) => (
-
-        <Link
-          key={location.id}
-          href={`/platser/${location.slug}`}
-          className="
-            group
-            relative
-            min-h-[420px]
-            overflow-hidden
-            bg-[#d7bc84]
-            px-7
-            py-8
-            text-[#4a3820]
-
-            shadow-[0_30px_80px_rgba(0,0,0,0.45)]
-
-            transition
-            duration-500
-
-            hover:-translate-y-1
-            hover:shadow-[0_35px_100px_rgba(0,0,0,0.65)]
-
-            sm:px-10
-            sm:py-10
-
-            md:min-h-[500px]
-            md:px-12
-            md:py-12
-          "
-        >
-
-          {/* =========================
-              PAPPERSKÄNSLA
-          ========================= */}
-          <div
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-              opacity-50
-
-              [background-image:
-              radial-gradient(circle_at_15%_20%,rgba(90,60,24,.18)_0,transparent_24%),
-              radial-gradient(circle_at_85%_75%,rgba(90,60,24,.14)_0,transparent_28%),
-              linear-gradient(rgba(255,255,255,.10),rgba(80,50,20,.08))]
-            "
-          />
-
-
-          {/* =========================
-              INRE RAM
-          ========================= */}
-          <div
-            className="
-              pointer-events-none
-              absolute
-              inset-4
-              border
-              border-[#735630]/50
-
-              transition-all
-              duration-500
-
-              group-hover:inset-3
-              group-hover:border-[#735630]/80
-            "
-          />
-
-
-          {/* =========================
-              HÖRNDEKORATIONER
-          ========================= */}
-          <span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-[#735630]" />
-
-          <span className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-[#735630]" />
-
-          <span className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-[#735630]" />
-
-          <span className="absolute bottom-4 right-4 h-5 w-5 border-b-2 border-r-2 border-[#735630]" />
-
-
-          {/* =========================
-              INNEHÅLL
-          ========================= */}
-          <div
-            className="
-              relative
-              z-10
-              flex
-              min-h-[350px]
-              flex-col
-              items-center
-              justify-between
-              text-center
-
-              md:min-h-[400px]
-            "
-          >
-
-            {/* TOPP */}
-            <div className="w-full">
-
-              <p
-                className="
-                  text-[9px]
-                  font-black
-                  uppercase
-                  tracking-[0.42em]
-                  text-[#75562c]
-                "
-              >
-                Bonnatösen
+            {homepage.locationsEyebrow && (
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.35em] text-white/45">
+                {homepage.locationsEyebrow}
               </p>
+            )}
 
-              {/* WESTERN-DEKORATION */}
-              <div className="mt-5 flex items-center justify-center gap-3">
+            <h2 className="text-4xl font-black uppercase leading-none tracking-[-0.04em] text-white sm:text-5xl md:text-6xl">
+              {homepage.locationsTitle}
+            </h2>
 
-                <span className="h-px w-12 bg-[#75562c]/60" />
-
-                <span
-                  className="
-                    h-2
-                    w-2
-                    rotate-45
-                    border
-                    border-[#75562c]
-                  "
-                />
-
-                <span className="h-px w-12 bg-[#75562c]/60" />
-
-              </div>
-
-            </div>
-
-
-            {/* MITTEN */}
-            <div className="my-12">
-
-              <p
-                className="
-                  mb-4
-                  text-[9px]
-                  font-black
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#75562c]
-                "
-              >
-                Välkommen till
+            {homepage.locationsText && (
+              <p className="mt-6 max-w-2xl text-sm leading-7 text-white/60 md:text-base">
+                {homepage.locationsText}
               </p>
-
-              <h3
-                className="
-                  text-5xl
-                  font-black
-                  uppercase
-                  leading-[0.85]
-                  tracking-[-0.055em]
-
-                  transition-transform
-                  duration-500
-
-                  group-hover:scale-[1.04]
-
-                  sm:text-6xl
-                  md:text-7xl
-                  xl:text-[82px]
-                "
-              >
-                {location.name}
-              </h3>
-
-
-              {/* LINJE */}
-              <div className="mx-auto mt-7 h-[3px] w-12 bg-[#75562c]" />
-
-
-              {location.shortDescription && (
-                <p
-                  className="
-                    mx-auto
-                    mt-7
-                    max-w-md
-                    text-[11px]
-                    font-semibold
-                    uppercase
-                    leading-[1.8]
-                    tracking-[0.055em]
-                    text-[#665033]
-
-                    sm:text-xs
-                  "
-                >
-                  {location.shortDescription}
-                </p>
-              )}
-
-            </div>
-
-
-            {/* NEDERDEL */}
-            <div className="w-full">
-
-              <div className="mb-5 flex items-center justify-center gap-3">
-
-                <span
-                  className="
-                    h-px
-                    w-10
-                    bg-[#75562c]/50
-
-                    transition-all
-                    duration-500
-
-                    group-hover:w-16
-                  "
-                />
-
-                <span className="text-[8px] text-[#75562c]">
-                  ◆
-                </span>
-
-                <span
-                  className="
-                    h-px
-                    w-10
-                    bg-[#75562c]/50
-
-                    transition-all
-                    duration-500
-
-                    group-hover:w-16
-                  "
-                />
-
-              </div>
-
-
-              {/* CTA */}
-              <div
-                className="
-                  inline-flex
-                  items-center
-                  gap-3
-
-                  text-[10px]
-                  font-black
-                  uppercase
-                  tracking-[0.3em]
-                "
-              >
-                <span>
-                  {location.ctaText || 'Besök platsen'}
-                </span>
-
-                <span
-                  className="
-                    text-lg
-                    transition-transform
-                    duration-300
-
-                    group-hover:translate-x-2
-                  "
-                >
-                  →
-                </span>
-
-              </div>
-
-            </div>
+            )}
 
           </div>
 
-        </Link>
+          {/* PLATSKORT */}
+          <div className="grid gap-6 lg:grid-cols-2">
 
-      ))}
+            {locations.map((location) => (
+              <Link
+                key={location.id}
+                href={`/platser/${location.slug}`}
+                className="
+                  group
+                  relative
+                  flex
+                  min-h-[360px]
+                  flex-col
+                  justify-between
+                  overflow-hidden
+                  border
+                  border-white/20
+                  bg-[#111111]
+                  p-7
+                  text-white
+                  shadow-[0_20px_60px_rgba(0,0,0,0.25)]
+                  transition
+                  duration-300
 
-    </div>
+                  hover:border-white/40
+                  hover:bg-[#151515]
 
-  </div>
-</section>
+                  sm:p-9
+                  md:min-h-[420px]
+                  md:p-10
+                "
+              >
+                {/* VIT TOPPLINJE */}
+                <div
+                  className="
+                    absolute
+                    left-0
+                    top-0
+                    h-[4px]
+                    w-full
+                    bg-white
+                    transition-all
+                    duration-300
+
+                    group-hover:h-[6px]
+                  "
+                />
+
+                {/* TOPP */}
+                <div className="relative pt-2">
+
+                  <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/45">
+                    Bonnatösen
+                  </p>
+
+                </div>
+
+                {/* MITTEN */}
+                <div className="relative my-12">
+
+                  <p className="mb-4 text-[9px] font-black uppercase tracking-[0.28em] text-white/45">
+                    Välkommen till
+                  </p>
+
+                  <h3
+                    className="
+                      text-5xl
+                      font-black
+                      uppercase
+                      leading-[0.88]
+                      tracking-[-0.055em]
+                      text-white
+                      transition-transform
+                      duration-300
+
+                      group-hover:translate-x-1
+
+                      sm:text-6xl
+                      md:text-7xl
+                    "
+                  >
+                    {location.name}
+                  </h3>
+
+                  {location.shortDescription && (
+                    <p className="mt-7 max-w-lg text-sm leading-7 text-white/60 md:text-base">
+                      {location.shortDescription}
+                    </p>
+                  )}
+
+                </div>
+
+                {/* CTA */}
+                <div className="relative border-t border-white/15 pt-6">
+
+                  <div className="flex items-center justify-between gap-5">
+
+                    <span className="text-[10px] font-black uppercase tracking-[0.22em] text-white">
+                      {location.ctaText || 'Besök platsen'}
+                    </span>
+
+                    <span
+                      aria-hidden="true"
+                      className="text-xl text-white transition-transform duration-300 group-hover:translate-x-2"
+                    >
+                      →
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </Link>
+            ))}
+
+          </div>
+
+        </div>
+      </section>
 
       {/* =========================
           MENY
@@ -890,405 +703,181 @@ export default async function HomePage() {
 
       </section>
 
-     {/* =========================
-    ÖPPETTIDER
-========================= */}
-{openingHours.length > 0 && (
-  <section
-    id="opening-hours"
-    className="
-      scroll-mt-24
-      border-y
-      border-[#242424]
-      bg-[#0d0d0d]
-      px-4
-      py-20
-      md:px-10
-      md:py-28
-    "
-  >
-    <div className="mx-auto max-w-7xl">
-
       {/* =========================
-          RUBRIK
+          ÖPPETTIDER
       ========================= */}
-     
-
-
-      {/* =========================
-          WESTERN ÖPPETTIDSSKYLT
-      ========================= */}
-      <div
-        className="
-          relative
-          mx-auto
-          max-w-5xl
-          overflow-hidden
-          bg-[#d7bc84]
-          px-7
-          py-10
-          text-[#4a3820]
-
-          shadow-[0_30px_100px_rgba(0,0,0,0.55)]
-
-          sm:px-10
-          sm:py-12
-
-          md:px-16
-          md:py-16
-        "
-      >
-
-        {/* =========================
-            PAPPERSKÄNSLA
-        ========================= */}
-        <div
+      {openingHours.length > 0 && (
+        <section
+          id="opening-hours"
           className="
-            pointer-events-none
-            absolute
-            inset-0
-            opacity-50
+            scroll-mt-24
+            border-y
+            border-white/10
+            bg-[#0b0b0b]
+            px-5
+            py-20
 
-            [background-image:
-            radial-gradient(circle_at_15%_20%,rgba(90,60,24,.18)_0,transparent_24%),
-            radial-gradient(circle_at_85%_75%,rgba(90,60,24,.14)_0,transparent_28%),
-            linear-gradient(rgba(255,255,255,.10),rgba(80,50,20,.08))]
+            md:px-10
+            md:py-28
           "
-        />
+        >
+          <div className="mx-auto max-w-7xl">
 
+            {/* RUBRIK */}
+            <div className="mb-12 md:mb-16">
 
-        {/* =========================
-            INRE RAM
-        ========================= */}
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-4
-            border
-            border-[#735630]/50
-          "
-        />
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/45">
+                När ses vi?
+              </p>
 
-
-        {/* =========================
-            HÖRNDEKORATIONER
-        ========================= */}
-        <span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-[#735630]" />
-
-        <span className="absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-[#735630]" />
-
-        <span className="absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-[#735630]" />
-
-        <span className="absolute bottom-4 right-4 h-5 w-5 border-b-2 border-r-2 border-[#735630]" />
-
-
-        {/* =========================
-            INNEHÅLL
-        ========================= */}
-        <div className="relative z-10">
-
-          {/* =========================
-              SKYLT HEADER
-          ========================= */}
-          <div className="text-center">
-
-           
-
-
-            {/* DEKORATION */}
-            <div className="mt-5 flex items-center justify-center gap-3">
-
-              <span className="h-px w-12 bg-[#75562c]/60" />
-
-              <span
-                className="
-                  h-2
-                  w-2
-                  rotate-45
-                  border
-                  border-[#75562c]
-                "
-              />
-
-              <span className="h-px w-12 bg-[#75562c]/60" />
+              <h2 className="text-4xl font-black uppercase leading-none tracking-[-0.04em] text-white sm:text-5xl md:text-6xl">
+                Öppettider
+              </h2>
 
             </div>
 
+            {/* ÖPPETTIDSKORT */}
+            <div className="grid items-start gap-6 lg:grid-cols-2">
 
-           
+              {openingHours.map((item) => {
+                const location =
+                  typeof item.location === 'object'
+                    ? item.location
+                    : null
 
-            <p
-              className="
-                mt-4
-                text-[9px]
-                font-black
-                uppercase
-                tracking-[0.28em]
-                text-[#75562c]
-              "
-            >
-              Se våra aktuella öppettider
-            </p>
-
-          </div>
-
-
-          {/* =========================
-              ÖPPETTIDER
-          ========================= */}
-          <div className="mx-auto mt-12 max-w-3xl md:mt-16">
-
-            {openingHours.map((item, index) => {
-
-              const location =
-                typeof item.location === 'object'
-                  ? item.location
-                  : null
-
-              return (
-                <div
-                  key={item.id}
-                  className={`
-                    py-10
-                    first:pt-0
-                    last:pb-0
-
-                    ${
-                      index !== 0
-                        ? 'border-t border-[#75562c]/35'
-                        : ''
-                    }
-                  `}
-                >
-
-                  {/* =========================
-                      PLATS
-                  ========================= */}
-                  {location?.name && (
-                    <div className="mb-5 flex items-center gap-4">
-
-                      <span className="h-[3px] w-8 bg-[#75562c]" />
-
-                      <p
-                        className="
-                          text-[15px]
-                          font-black
-                          uppercase
-                          tracking-[0.3em]
-                          text-[#75562c]
-                        "
-                      >
-                        {location.name}
-                      </p>
-
-                    </div>
-                  )}
-
-
-                  {/* =========================
-                      TITEL + DATUM
-                  ========================= */}
-                  <div
+                return (
+                  <article
+                    key={item.id}
                     className="
-                      gap-5
-
-                      md:flex
-                      md:items-end
-                      md:justify-between
+                      overflow-hidden
+                      border
+                      border-white/20
+                      bg-[#111111]
+                      text-white
+                      shadow-[0_20px_60px_rgba(0,0,0,0.25)]
                     "
                   >
+                    {/* VIT TOPPLINJE */}
+                    <div className="h-[4px] w-full bg-white" />
 
-                    <h4
-                      className="
-                        text-1xl
-                        font-black
-                        uppercase
-                        leading-tight
-                        tracking-[-0.035em]
+                    <div className="p-6 sm:p-8 md:p-9">
 
-                        sm:text-3xl
-                        md:text-4xl
-                      "
-                    >
-                      {item.title}
-                    </h4>
+                      {/* HEADER */}
+                      <div className="border-b border-white/20 pb-6">
 
+                        <p className="mb-3 text-[9px] font-black uppercase tracking-[0.3em] text-white/45">
+                          När ses vi?
+                        </p>
 
-                    {(item.startDate || item.endDate) && (
-                      <p
-                        className="
-                          mt-3
-                          shrink-0
-                          text-[9px]
-                          font-black
-                          uppercase
-                          tracking-[0.2em]
-                          text-[#75562c]
-
-                          md:mt-0
-                          md:text-right
-                        "
-                      >
-                        {formatDateRange(
-                          item.startDate,
-                          item.endDate,
+                        {location?.name && (
+                          <h3 className="text-3xl font-black uppercase leading-none tracking-[-0.04em] text-white sm:text-4xl">
+                            {location.name}
+                          </h3>
                         )}
-                      </p>
-                    )}
 
-                  </div>
+                        <p className="mt-3 text-xs font-bold uppercase tracking-[0.18em] text-white/50">
+                          {item.title}
+                        </p>
 
+                      </div>
 
-                  {/* =========================
-                      TIDER
-                  ========================= */}
-                  {item.information && (
-                    <div className="mt-7">
+                      {/* DATUM */}
+                      {(item.startDate || item.endDate) && (
+                        <div className="border-b border-white/10 py-5">
 
-                      {item.information
-                        .split('\n')
-                        .filter(Boolean)
-                        .map((line, lineIndex) => {
+                          <div className="flex items-center justify-between gap-5">
 
-                          /*
-                           * Om raden exempelvis är:
-                           *
-                           * "Torsdag 11–16"
-                           *
-                           * försöker vi separera första ordet
-                           * från resten för att få meny-känslan.
-                           */
-                          const firstSpace =
-                            line.indexOf(' ')
+                            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">
+                              Period
+                            </span>
 
-                          const label =
-                            firstSpace > -1
-                              ? line.substring(
-                                  0,
-                                  firstSpace,
-                                )
-                              : line
-
-                          const value =
-                            firstSpace > -1
-                              ? line.substring(
-                                  firstSpace + 1,
-                                )
-                              : ''
-
-                          return (
-                            <div
-                              key={lineIndex}
-                              className="
-                                flex
-                                items-baseline
-                                gap-3
-                                py-2
-                              "
-                            >
-
-                              {/* DAG / LABEL */}
-                              <span
-                                className="
-                                  shrink-0
-                                  text-sm
-                                  font-black
-                                  uppercase
-                                  tracking-[-0.015em]
-
-                                  sm:text-base
-                                  md:text-lg
-                                "
-                              >
-                                {label}
-                              </span>
-
-
-                              {/* PRICKAD LINJE */}
-                              {value && (
-                                <span
-                                  className="
-                                    mb-[3px]
-                                    flex-1
-                                    border-b
-                                    border-dotted
-                                    border-[#75562c]/45
-                                  "
-                                />
+                            <span className="text-right text-[10px] font-black uppercase tracking-[0.12em] text-white">
+                              {formatDateRange(
+                                item.startDate,
+                                item.endDate,
                               )}
+                            </span>
 
+                          </div>
 
-                              {/* TID */}
-                              {value && (
-                                <span
+                        </div>
+                      )}
+
+                      {/* TIDER */}
+                      {item.information && (
+                        <div>
+
+                          {item.information
+                            .split('\n')
+                            .filter(Boolean)
+                            .map((line, lineIndex) => {
+                              const firstSpace = line.indexOf(' ')
+
+                              const label =
+                                firstSpace > -1
+                                  ? line.substring(0, firstSpace)
+                                  : line
+
+                              const value =
+                                firstSpace > -1
+                                  ? line.substring(firstSpace + 1)
+                                  : ''
+
+                              return (
+                                <div
+                                  key={lineIndex}
                                   className="
-                                    shrink-0
-                                    text-sm
-                                    font-black
-                                    uppercase
+                                    flex
+                                    min-h-[52px]
+                                    items-center
+                                    justify-between
+                                    gap-5
+                                    border-b
+                                    border-white/10
+                                    py-3
 
-                                    sm:text-base
-                                    md:text-lg
+                                    last:border-b-0
                                   "
                                 >
-                                  {value}
-                                </span>
-                              )}
+                                  <span className="text-sm font-bold uppercase tracking-[0.05em] text-white/55 sm:text-base">
+                                    {label}
+                                  </span>
 
-                            </div>
-                          )
-                        })}
+                                  {value && (
+                                    <span className="shrink-0 text-base font-black text-white sm:text-lg">
+                                      {value}
+                                    </span>
+                                  )}
+                                </div>
+                              )
+                            })}
+
+                        </div>
+                      )}
+
+                      {/* FOOTER */}
+                      {location?.name && (
+                        <div className="border-t border-white/20 pt-5">
+
+                          <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-white/40">
+                            Bonnatösen · {location.name}
+                          </p>
+
+                        </div>
+                      )}
 
                     </div>
-                  )}
 
-                </div>
-              )
-            })}
-
-          </div>
-
-
-          {/* =========================
-              FOOTER DEKORATION
-          ========================= */}
-          <div className="mt-14 text-center md:mt-16">
-
-            <div className="flex items-center justify-center gap-3">
-
-              <span className="h-px w-10 bg-[#75562c]/50" />
-
-              <span className="text-[8px] text-[#75562c]">
-                ◆
-              </span>
-
-              <span className="h-px w-10 bg-[#75562c]/50" />
+                  </article>
+                )
+              })}
 
             </div>
 
-            <p
-              className="
-                mt-5
-                text-[9px]
-                font-black
-                uppercase
-                tracking-[0.35em]
-                text-[#75562c]
-              "
-            >
-              Bonnatösens Burgare
-            </p>
-
           </div>
+        </section>
+      )}
 
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-)}
       {/* =========================
           SHOP
       ========================= */}
