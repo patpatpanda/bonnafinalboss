@@ -109,10 +109,10 @@ export default async function HomePage() {
         )}
 
         {/* MÖRKNING */}
-        <div className="absolute inset-0 bg-black/35" />
+        <div />
 
         {/* MÖRKARE VÄNSTER */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/25 to-transparent" />
 
         {/* MÖRK NEDERKANT */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-transparent to-black/20" />
@@ -162,20 +162,20 @@ export default async function HomePage() {
 
             </div>
 
-          {homepage.heroTitle && (
+        {homepage.heroTitle && (
   <h1
     className="
-      max-w-[780px]
-      text-5xl
+      max-w-[250px]
+      text-4xl
       font-extrabold
       uppercase
       leading-[0.95]
       tracking-[-0.04em]
       text-white
 
-      sm:text-6xl
-      md:text-7xl
-      lg:text-[5.5rem]
+      sm:text-5xl
+      md:text-6xl
+      lg:text-[3rem]
     "
   >
     {homepage.heroTitle}
@@ -191,25 +191,6 @@ export default async function HomePage() {
 
             </div>
 
-            {/* TEXT */}
-            {homepage.heroText && (
-              <p
-                className="
-                  max-w-[520px]
-                  text-[15px]
-                  font-medium
-                  leading-7
-                  text-white/90
-
-                  sm:text-base
-
-                  md:text-lg
-                  md:leading-8
-                "
-              >
-                {homepage.heroText}
-              </p>
-            )}
 
             {/* KNAPPAR */}
             <div
@@ -1091,7 +1072,7 @@ export default async function HomePage() {
 
                       <p
                         className="
-                          text-[9px]
+                          text-[15px]
                           font-black
                           uppercase
                           tracking-[0.3em]
@@ -1120,7 +1101,7 @@ export default async function HomePage() {
 
                     <h4
                       className="
-                        text-2xl
+                        text-1xl
                         font-black
                         uppercase
                         leading-tight

@@ -8,7 +8,22 @@ export default function BonnaHeader() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#242424] bg-[#0b0b0b]/95 backdrop-blur">
+    <header
+      className="
+        sticky
+        top-0
+        z-50
+        border-b
+        border-white/10
+        bg-black/55
+        shadow-[0_8px_32px_rgba(0,0,0,0.18)]
+        backdrop-blur-xl
+        backdrop-saturate-150
+      "
+    >
+      {/* SUBTIL GLAS-HIGHLIGHT */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10" />
+
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
 
         {/* LOGGA */}
@@ -87,7 +102,9 @@ export default function BonnaHeader() {
               uppercase
               tracking-[0.18em]
               text-[#111111]
+              shadow-[0_8px_25px_rgba(250,200,0,0.12)]
               transition
+
               hover:bg-transparent
               hover:text-[#FAC800]
             "
@@ -102,36 +119,42 @@ export default function BonnaHeader() {
         ========================= */}
         <button
           type="button"
-          onClick={() =>
-            setOpen((current) => !current)
-          }
-          className="flex flex-col gap-1.5 md:hidden"
-          aria-label={
-            open
-              ? 'Stäng meny'
-              : 'Öppna meny'
-          }
+          onClick={() => setOpen((current) => !current)}
+          className="
+            flex
+            flex-col
+            gap-1.5
+            rounded-sm
+            border
+            border-white/10
+            bg-white/5
+            p-3
+            backdrop-blur-md
+            transition
+
+            hover:border-[#FAC800]/50
+            hover:bg-white/10
+
+            md:hidden
+          "
+          aria-label={open ? 'Stäng meny' : 'Öppna meny'}
           aria-expanded={open}
         >
           <span
-            className={`h-px w-7 bg-[#FAC800] transition ${
-              open
-                ? 'translate-y-[7px] rotate-45'
-                : ''
+            className={`h-px w-6 bg-[#FAC800] transition ${
+              open ? 'translate-y-[7px] rotate-45' : ''
             }`}
           />
 
           <span
-            className={`h-px w-7 bg-[#FAC800] transition ${
+            className={`h-px w-6 bg-[#FAC800] transition ${
               open ? 'opacity-0' : ''
             }`}
           />
 
           <span
-            className={`h-px w-7 bg-[#FAC800] transition ${
-              open
-                ? '-translate-y-[7px] -rotate-45'
-                : ''
+            className={`h-px w-6 bg-[#FAC800] transition ${
+              open ? '-translate-y-[7px] -rotate-45' : ''
             }`}
           />
         </button>
@@ -142,66 +165,144 @@ export default function BonnaHeader() {
           MOBILMENY
       ========================= */}
       {open && (
-        <div className="border-t border-[#242424] bg-[#0b0b0b] px-5 py-6 md:hidden">
+        <div
+          className="
+            border-t
+            border-white/10
+            bg-black/70
+            px-5
+            py-6
+            shadow-[0_20px_50px_rgba(0,0,0,0.35)]
+            backdrop-blur-2xl
+            backdrop-saturate-150
 
+            md:hidden
+          "
+        >
           <nav className="flex flex-col">
 
             <Link
               href="/"
-              onClick={() =>
-                setOpen(false)
-              }
-              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+              onClick={() => setOpen(false)}
+              className="
+                border-b
+                border-white/10
+                py-4
+                text-sm
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-white
+                transition
+
+                hover:border-[#FAC800]/30
+                hover:text-[#FAC800]
+              "
             >
               Hem
             </Link>
 
             <Link
               href="/menu"
-              onClick={() =>
-                setOpen(false)
-              }
-              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+              onClick={() => setOpen(false)}
+              className="
+                border-b
+                border-white/10
+                py-4
+                text-sm
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-white
+                transition
+
+                hover:border-[#FAC800]/30
+                hover:text-[#FAC800]
+              "
             >
               Meny
             </Link>
 
             <Link
               href="/platser/ladan"
-              onClick={() =>
-                setOpen(false)
-              }
-              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+              onClick={() => setOpen(false)}
+              className="
+                border-b
+                border-white/10
+                py-4
+                text-sm
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-white
+                transition
+
+                hover:border-[#FAC800]/30
+                hover:text-[#FAC800]
+              "
             >
               Ladan
             </Link>
 
             <Link
               href="/platser/saloon"
-              onClick={() =>
-                setOpen(false)
-              }
-              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+              onClick={() => setOpen(false)}
+              className="
+                border-b
+                border-white/10
+                py-4
+                text-sm
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-white
+                transition
+
+                hover:border-[#FAC800]/30
+                hover:text-[#FAC800]
+              "
             >
               Saloonen
             </Link>
 
             <Link
               href="/shop"
-              onClick={() =>
-                setOpen(false)
-              }
-              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+              onClick={() => setOpen(false)}
+              className="
+                border-b
+                border-white/10
+                py-4
+                text-sm
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-white
+                transition
+
+                hover:border-[#FAC800]/30
+                hover:text-[#FAC800]
+              "
             >
               Shop
             </Link>
 
             <Link
               href="/#opening-hours"
-              onClick={() =>
-                setOpen(false)
-              }
-              className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
+              onClick={() => setOpen(false)}
+              className="
+                border-b
+                border-white/10
+                py-4
+                text-sm
+                font-bold
+                uppercase
+                tracking-[0.18em]
+                text-white
+                transition
+
+                hover:border-[#FAC800]/30
+                hover:text-[#FAC800]
+              "
             >
               Öppettider
             </Link>
@@ -209,9 +310,7 @@ export default function BonnaHeader() {
             {/* BOKA BORD */}
             <Link
               href="/book"
-              onClick={() =>
-                setOpen(false)
-              }
+              onClick={() => setOpen(false)}
               className="
                 mt-6
                 border
@@ -225,7 +324,9 @@ export default function BonnaHeader() {
                 uppercase
                 tracking-[0.18em]
                 text-[#111111]
+                shadow-[0_8px_30px_rgba(250,200,0,0.12)]
                 transition
+
                 hover:bg-transparent
                 hover:text-[#FAC800]
               "
@@ -234,7 +335,6 @@ export default function BonnaHeader() {
             </Link>
 
           </nav>
-
         </div>
       )}
 
