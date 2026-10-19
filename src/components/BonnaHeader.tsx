@@ -186,7 +186,7 @@ export default function BonnaHeader() {
               Saloonen
             </Link>
 
-            <Link
+            {/* <Link
               href="/shop"
               onClick={() =>
                 setOpen(false)
@@ -194,7 +194,7 @@ export default function BonnaHeader() {
               className="border-b border-[#242424] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:text-[#FAC800]"
             >
               Shop
-            </Link>
+            </Link> */}
 
             <Link
               href="/#opening-hours"

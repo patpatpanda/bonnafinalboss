@@ -132,7 +132,7 @@ export default async function BonnaFooter() {
               >
                 Öppettider
               </Link>
-
+{/* 
               <Link
                 href="/shop"
                 className="
@@ -151,7 +151,7 @@ export default async function BonnaFooter() {
                 "
               >
                 Shop
-              </Link>
+              </Link> */}
 
             </div>
 
