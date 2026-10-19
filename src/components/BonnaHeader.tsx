@@ -59,12 +59,12 @@ export default function BonnaHeader() {
             Saloonen
           </Link>
 
-          <Link
+          {/* <Link
             href="/shop"
             className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4f0e8] transition hover:text-[#FAC800]"
           >
             Shop
-          </Link>
+          </Link> */}
 
           <Link
             href="/#opening-hours"
