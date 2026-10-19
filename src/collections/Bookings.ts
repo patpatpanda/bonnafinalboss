@@ -1,3 +1,4 @@
+
 import type { CollectionConfig } from 'payload'
 
 export const Bookings: CollectionConfig = {
@@ -8,8 +9,12 @@ export const Bookings: CollectionConfig = {
     plural: 'Bokningar',
   },
 
+  // =========================
+  // ADMIN
+  // =========================
   admin: {
     useAsTitle: 'name',
+
     defaultColumns: [
       'date',
       'time',
@@ -20,7 +25,13 @@ export const Bookings: CollectionConfig = {
     ],
   },
 
+  // =========================
+  // FÄLT
+  // =========================
   fields: [
+    // =========================
+    // NAMN
+    // =========================
     {
       name: 'name',
       label: 'Namn',
@@ -28,6 +39,9 @@ export const Bookings: CollectionConfig = {
       required: true,
     },
 
+    // =========================
+    // E-POST
+    // =========================
     {
       name: 'email',
       label: 'E-post',
@@ -35,6 +49,9 @@ export const Bookings: CollectionConfig = {
       required: true,
     },
 
+    // =========================
+    // TELEFONNUMMER
+    // =========================
     {
       name: 'phone',
       label: 'Telefonnummer',
@@ -42,18 +59,26 @@ export const Bookings: CollectionConfig = {
       required: true,
     },
 
+    // =========================
+    // DATUM
+    // =========================
     {
       name: 'date',
       label: 'Datum',
       type: 'date',
       required: true,
+
       admin: {
         date: {
           pickerAppearance: 'dayOnly',
+          displayFormat: 'dd/MM/yyyy',
         },
       },
     },
 
+    // =========================
+    // BOKNINGSTID
+    // =========================
     {
       name: 'time',
       label: 'Tid',
@@ -61,6 +86,9 @@ export const Bookings: CollectionConfig = {
       required: true,
     },
 
+    // =========================
+    // ANTAL PERSONER
+    // =========================
     {
       name: 'guests',
       label: 'Antal personer',
@@ -72,7 +100,6 @@ export const Bookings: CollectionConfig = {
     // =========================
     // BOKNINGSLÄNGD
     // =========================
-
     {
       name: 'durationMinutes',
       label: 'Bokningslängd',
@@ -80,24 +107,32 @@ export const Bookings: CollectionConfig = {
       required: true,
       defaultValue: 90,
       min: 30,
+
       admin: {
         description:
           'Hur många minuter bordet är reserverat för den här bokningen.',
       },
     },
 
+    // =========================
+    // MEDDELANDE
+    // =========================
     {
       name: 'message',
       label: 'Meddelande',
       type: 'textarea',
     },
 
+    // =========================
+    // STATUS
+    // =========================
     {
       name: 'status',
       label: 'Status',
       type: 'select',
       required: true,
       defaultValue: 'pending',
+
       options: [
         {
           label: 'Ny',
