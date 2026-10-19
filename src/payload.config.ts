@@ -1,6 +1,8 @@
+
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { sv } from '@payloadcms/translations/languages/sv'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -31,6 +33,14 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  // =========================
+  // SPRÅK - SVENSKA
+  // =========================
+  i18n: {
+    supportedLanguages: { sv },
+    fallbackLanguage: 'sv',
+  },
+
   // =========================
   // ADMIN
   // =========================
