@@ -355,3 +355,6 @@
 //     maximumFractionDigits: 0,
 //   }).format(price)
 // }
+export default function ProductPage() {
+  return null
+}

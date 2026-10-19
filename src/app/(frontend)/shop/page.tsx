@@ -538,3 +538,6 @@
 //     maximumFractionDigits: 0,
 //   }).format(price)
 // }
+export default function ShopPage() {
+  return null
+}
