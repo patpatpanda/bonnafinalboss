@@ -74,42 +74,44 @@ export default async function MenuPage() {
           )}
         </div>
       </section>
-
       {/* VECKANS BURGARE */}
       {menu.burgerActive !== false && (
         <section className="px-4 py-10 sm:px-6 sm:py-14 md:px-10 md:py-20 lg:py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-7 sm:gap-9 lg:grid-cols-2 lg:gap-14 xl:gap-16">
-            {/* BILD */}
-            <div className="group relative min-h-[260px] overflow-hidden bg-[#111111] shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:min-h-[380px] md:min-h-[460px] lg:min-h-[520px] xl:min-h-[580px]">
-              {burgerImage?.url ? (
-                <Image
-                  src={burgerImage.url}
-                  alt={
-                    burgerImage.alt ||
-                    menu.burgerName ||
-                    'Veckans burgare'
-                  }
-                  fill
-                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 90vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-[9px] font-black uppercase tracking-[0.12em] text-white/40 sm:text-xs sm:tracking-[0.2em]">
-                  Lägg till burgarbild i Payload
-                </div>
-              )}
 
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          {/* BILD */}
+<div className="group relative aspect-[4/5] w-full overflow-hidden bg-[#111111] shadow-[0_24px_70px_rgba(0,0,0,0.35)]">
 
-              <div className="absolute left-0 top-0 h-1 w-14 bg-[#FAC800] transition-all duration-500 group-hover:w-32 sm:w-20" />
+  {burgerImage?.url ? (
+    <Image
+      src={burgerImage.url}
+      alt={
+        burgerImage.alt ||
+        menu.burgerName ||
+        'Veckans burgare'
+      }
+      fill
+      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 90vw, 50vw"
+      className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+    />
+  ) : (
+    <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-[9px] font-black uppercase tracking-[0.12em] text-white/40 sm:text-xs sm:tracking-[0.2em]">
+      Lägg till burgarbild i Payload
+    </div>
+  )}
 
-              <div className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] bg-black/85 px-3 py-2 text-[8px] font-black uppercase tracking-[0.12em] text-white backdrop-blur sm:left-5 sm:top-5 sm:px-4 sm:py-2.5 sm:text-[9px] sm:tracking-[0.22em]">
-                Veckans burgare
-              </div>
-            </div>
+  {/* GUL DEKORATION */}
+  <div className="absolute left-0 top-0 z-20 h-1 w-14 bg-[#FAC800] transition-all duration-500 group-hover:w-32 sm:w-20" />
 
+  {/* ETIKETT */}
+  <div className="absolute left-3 top-3 z-20 max-w-[calc(100%-1.5rem)] bg-black/85 px-3 py-2 text-[8px] font-black uppercase tracking-[0.12em] text-white backdrop-blur sm:left-5 sm:top-5 sm:px-4 sm:py-2.5 sm:text-[9px] sm:tracking-[0.22em]">
+    Veckans burgare
+  </div>
+
+</div>
             {/* TEXT */}
             <div className="min-w-0 py-1 sm:py-0">
+
               <div className="flex items-center gap-3 sm:gap-4">
                 <span className="h-px w-7 shrink-0 bg-[#FAC800] sm:w-9" />
 
@@ -139,6 +141,7 @@ export default async function MenuPage() {
 
                 <span className="h-px w-7 shrink-0 bg-[#FAC800] sm:w-9" />
               </div>
+
             </div>
           </div>
         </section>
