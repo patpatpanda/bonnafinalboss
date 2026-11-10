@@ -502,7 +502,7 @@ export default async function MenuPage() {
                 <span className="h-px w-8 bg-[#FAC800] sm:w-12" />
 
                 <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FAC800]">
-                  Från vårt kök
+                  Bilder från menyn
                 </span>
 
                 <span className="h-px w-8 bg-[#FAC800] sm:w-12" />

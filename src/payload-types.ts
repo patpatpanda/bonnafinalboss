@@ -2531,11 +2531,7 @@ export interface Menu {
       }[]
     | null;
   /**
-   * Rubriken som visas ovanför bilderna längst ner på menysidan.
-   */
-  galleryTitle?: string | null;
-  /**
-   * Lägg till bilder och dra dem i önskad ordning. Bilderna visas längst ner på menysidan.
+   * Lägg till bilder och dra dem i önskad ordning.
    */
   gallery?:
     | {
@@ -2788,7 +2784,6 @@ export interface MenuSelect<T extends boolean = true> {
         active?: T;
         id?: T;
       };
-  galleryTitle?: T;
   gallery?:
     | T
     | {
