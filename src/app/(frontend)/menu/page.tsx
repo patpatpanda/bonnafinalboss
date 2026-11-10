@@ -1,3 +1,4 @@
+
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -26,18 +27,46 @@ export default async function MenuPage() {
   const activeDrinks =
     menu.drinks?.filter((drink) => drink.active !== false) || []
 
+  // DRYCKESKATEGORIER
   const drinkCategories = [
-    { value: 'beer', label: 'Öl' },
-    { value: 'wine', label: 'Vin' },
-    { value: 'alcohol-free', label: 'Alkoholfritt' },
-    { value: 'soft-drinks', label: 'Läsk' },
-    { value: 'other', label: 'Övrigt' },
+    {
+      value: 'draft-beer',
+      aliases: ['draft-beer', 'fatol', 'fatöl', 'draft'],
+      label: 'Fatöl',
+    },
+    {
+      value: 'canned-beer',
+      aliases: ['canned-beer', 'ol-burk', 'öl-på-burk', 'canned'],
+      label: 'Öl på burk',
+    },
+    {
+      value: 'wine',
+      aliases: ['wine'],
+      label: 'Vin',
+    },
+    {
+      value: 'alcohol-free',
+      aliases: ['alcohol-free'],
+      label: 'Alkoholfritt',
+    },
+    {
+      value: 'soft-drinks',
+      aliases: ['soft-drinks'],
+      label: 'Läsk',
+    },
+    {
+      value: 'other',
+      aliases: ['other'],
+      label: 'Övrigt',
+    },
   ]
 
   return (
     <main className="min-h-screen overflow-x-clip bg-[#090909] text-white">
+
       {/* HERO */}
       <section className="relative isolate min-h-[48svh] overflow-hidden border-b border-[#242424] sm:min-h-[60svh]">
+
         {heroImage?.url && (
           <Image
             src={heroImage.url}
@@ -54,9 +83,11 @@ export default async function MenuPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" />
 
         <div className="relative mx-auto flex min-h-[48svh] max-w-7xl flex-col justify-end px-5 pb-9 pt-24 sm:min-h-[60svh] sm:px-8 sm:pb-16 sm:pt-32 md:px-10 md:pb-20">
+
           {menu.eyebrow && (
             <div className="mb-4 flex items-center gap-3 sm:mb-5 sm:gap-4">
               <span className="h-px w-7 shrink-0 bg-[#FAC800] sm:w-12" />
+
               <span className="text-[8px] font-black uppercase tracking-[0.18em] text-[#FAC800] sm:text-[10px] sm:tracking-[0.3em] md:text-[11px]">
                 {menu.eyebrow}
               </span>
@@ -72,43 +103,47 @@ export default async function MenuPage() {
               {menu.intro}
             </p>
           )}
+
         </div>
       </section>
+
       {/* VECKANS BURGARE */}
       {menu.burgerActive !== false && (
         <section className="px-4 py-10 sm:px-6 sm:py-14 md:px-10 md:py-20 lg:py-24">
+
           <div className="mx-auto grid max-w-7xl items-center gap-7 sm:gap-9 lg:grid-cols-2 lg:gap-14 xl:gap-16">
 
-          {/* BILD */}
-<div className="group relative aspect-[4/5] w-full overflow-hidden bg-[#111111] shadow-[0_24px_70px_rgba(0,0,0,0.35)]">
+            {/* BILD */}
+            <div className="group relative aspect-[4/5] w-full overflow-hidden bg-[#111111] shadow-[0_24px_70px_rgba(0,0,0,0.35)]">
 
-  {burgerImage?.url ? (
-    <Image
-      src={burgerImage.url}
-      alt={
-        burgerImage.alt ||
-        menu.burgerName ||
-        'Veckans burgare'
-      }
-      fill
-      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 90vw, 50vw"
-      className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
-    />
-  ) : (
-    <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-[9px] font-black uppercase tracking-[0.12em] text-white/40 sm:text-xs sm:tracking-[0.2em]">
-      Lägg till burgarbild i Payload
-    </div>
-  )}
+              {burgerImage?.url ? (
+                <Image
+                  src={burgerImage.url}
+                  alt={
+                    burgerImage.alt ||
+                    menu.burgerName ||
+                    'Veckans burgare'
+                  }
+                  fill
+                  sizes="(max-width: 639px) 100vw, (max-width: 1023px) 90vw, 50vw"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-[9px] font-black uppercase tracking-[0.12em] text-white/40 sm:text-xs sm:tracking-[0.2em]">
+                  Lägg till burgarbild i Payload
+                </div>
+              )}
 
-  {/* GUL DEKORATION */}
-  <div className="absolute left-0 top-0 z-20 h-1 w-14 bg-[#FAC800] transition-all duration-500 group-hover:w-32 sm:w-20" />
+              {/* GUL DEKORATION */}
+              <div className="absolute left-0 top-0 z-20 h-1 w-14 bg-[#FAC800] transition-all duration-500 group-hover:w-32 sm:w-20" />
 
-  {/* ETIKETT */}
-  <div className="absolute left-3 top-3 z-20 max-w-[calc(100%-1.5rem)] bg-black/85 px-3 py-2 text-[8px] font-black uppercase tracking-[0.12em] text-white backdrop-blur sm:left-5 sm:top-5 sm:px-4 sm:py-2.5 sm:text-[9px] sm:tracking-[0.22em]">
-    Veckans burgare
-  </div>
+              {/* ETIKETT */}
+              <div className="absolute left-3 top-3 z-20 max-w-[calc(100%-1.5rem)] bg-black/85 px-3 py-2 text-[8px] font-black uppercase tracking-[0.12em] text-white backdrop-blur sm:left-5 sm:top-5 sm:px-4 sm:py-2.5 sm:text-[9px] sm:tracking-[0.22em]">
+                Veckans burgare
+              </div>
 
-</div>
+            </div>
+
             {/* TEXT */}
             <div className="min-w-0 py-1 sm:py-0">
 
@@ -152,8 +187,11 @@ export default async function MenuPage() {
         activeDesserts.length > 0 ||
         activeDrinks.length > 0 ||
         menu.burgerActive !== false) && (
+
         <section className="bg-[#0d0d0d] px-3 py-9 sm:px-5 sm:py-14 md:px-10 md:py-20 lg:py-24">
+
           <div className="relative mx-auto max-w-6xl overflow-hidden bg-[#d7bc84] px-5 py-8 text-[#4a3820] shadow-[0_30px_100px_rgba(0,0,0,0.6)] sm:px-8 sm:py-10 md:px-12 md:py-12 lg:px-14">
+
             {/* PAPPERSKÄNSLA */}
             <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_15%_20%,rgba(90,60,24,.18)_0,transparent_24%),radial-gradient(circle_at_85%_75%,rgba(90,60,24,.14)_0,transparent_28%),linear-gradient(rgba(255,255,255,.10),rgba(80,50,20,.08))]" />
 
@@ -161,6 +199,7 @@ export default async function MenuPage() {
             <div className="pointer-events-none absolute inset-2 border border-[#735630]/50 sm:inset-3 md:inset-4" />
 
             <div className="relative z-10 min-w-0">
+
               {/* HEADER */}
               <div className="text-center">
                 <p className="text-[8px] font-black uppercase tracking-[0.16em] sm:text-[9px] sm:tracking-[0.3em]">
@@ -178,10 +217,12 @@ export default async function MenuPage() {
               {menu.burgerActive !== false && (
                 <>
                   <section className="mx-auto mt-9 max-w-2xl sm:mt-10">
+
                     <WesternHeading>Burgare</WesternHeading>
 
                     {menu.burgerName && (
                       <div className="mb-6 sm:mb-7">
+
                         <div className="mb-3 h-[3px] w-8 bg-[#75562c]" />
 
                         <p className="text-[8px] font-black uppercase tracking-[0.12em] text-[#75562c] sm:text-[9px] sm:tracking-[0.2em]">
@@ -197,10 +238,12 @@ export default async function MenuPage() {
                             {menu.burgerDescription}
                           </p>
                         )}
+
                       </div>
                     )}
 
                     <div className="space-y-5 sm:space-y-6">
+
                       <WesternItem
                         name="Enkel"
                         price={`${menu.singleBurgerPrice ?? 135}:-`}
@@ -210,6 +253,14 @@ export default async function MenuPage() {
                         name="Dubbel"
                         price={`${menu.doubleBurgerPrice ?? 165}:-`}
                       />
+
+                      {/* VEGETARISK BURGARE */}
+                      <WesternItem
+                        name="Grillostburgare från Väddö"
+                        description="Vegetariskt alternativ med grillost"
+                        price="145:-"
+                      />
+
                     </div>
                   </section>
 
@@ -219,11 +270,14 @@ export default async function MenuPage() {
 
               {/* TILLBEHÖR, DESSERT OCH DRYCK */}
               <div className="grid min-w-0 gap-9 sm:gap-10 md:grid-cols-2 md:gap-0">
+
                 {/* VÄNSTER KOLUMN */}
                 <div className="min-w-0 md:border-r md:border-[#765a35]/35 md:pr-6 lg:pr-9">
+
                   {/* TILLBEHÖR */}
                   {activeSides.length > 0 && (
                     <section>
+
                       <WesternHeading>
                         {menu.sidesTitle || 'Tillbehör'}
                       </WesternHeading>
@@ -238,6 +292,7 @@ export default async function MenuPage() {
                           />
                         ))}
                       </div>
+
                     </section>
                   )}
 
@@ -250,6 +305,7 @@ export default async function MenuPage() {
                           : ''
                       }
                     >
+
                       <WesternHeading>
                         {menu.dessertsTitle || 'Dessert'}
                       </WesternHeading>
@@ -270,14 +326,18 @@ export default async function MenuPage() {
                           />
                         ))}
                       </div>
+
                     </section>
                   )}
+
                 </div>
 
                 {/* HÖGER KOLUMN – DRYCK */}
                 <div className="min-w-0 md:pl-6 lg:pl-9">
+
                   {activeDrinks.length > 0 && (
                     <>
+
                       <WesternHeading>
                         {menu.drinksTitle || 'Dryck'}
                       </WesternHeading>
@@ -289,9 +349,13 @@ export default async function MenuPage() {
                       )}
 
                       <div className="space-y-7 sm:space-y-9">
+
                         {drinkCategories.map((category) => {
-                          const drinks = activeDrinks.filter(
-                            (drink) => drink.category === category.value,
+
+                          const drinks = activeDrinks.filter((drink) =>
+                            category.aliases.includes(
+                              String(drink.category || '').toLowerCase()
+                            )
                           )
 
                           if (drinks.length === 0) {
@@ -300,6 +364,7 @@ export default async function MenuPage() {
 
                           return (
                             <section key={category.value}>
+
                               <h3 className="mb-4 break-words text-base font-black uppercase tracking-[-0.02em] sm:mb-5 sm:text-lg md:text-xl">
                                 {category.label}
                               </h3>
@@ -314,12 +379,15 @@ export default async function MenuPage() {
                                   />
                                 ))}
                               </div>
+
                             </section>
                           )
                         })}
+
                       </div>
                     </>
                   )}
+
                 </div>
               </div>
 
@@ -331,10 +399,12 @@ export default async function MenuPage() {
                   Bonnatösens Burgare
                 </p>
               </div>
+
             </div>
           </div>
         </section>
       )}
+
     </main>
   )
 }
@@ -352,7 +422,9 @@ function WesternItem({
 }) {
   return (
     <div className="min-w-0">
+
       <div className="flex min-w-0 items-baseline gap-2 sm:gap-3">
+
         <h4 className="min-w-0 break-words text-xs font-black uppercase leading-snug tracking-[-0.015em] [overflow-wrap:anywhere] sm:text-sm md:text-base">
           {name}
         </h4>
@@ -365,6 +437,7 @@ function WesternItem({
         <span className="shrink-0 whitespace-nowrap text-xs font-black tabular-nums sm:text-sm md:text-base">
           {price}
         </span>
+
       </div>
 
       {description && (
@@ -372,6 +445,7 @@ function WesternItem({
           {description}
         </p>
       )}
+
     </div>
   )
 }
@@ -385,11 +459,13 @@ function WesternHeading({
 }) {
   return (
     <div className="mb-5 sm:mb-7">
+
       <h2 className="break-words text-xl font-black uppercase tracking-[-0.04em] sm:text-2xl md:text-3xl">
         {children}
       </h2>
 
       <div className="mt-2.5 h-[3px] w-9 bg-[#75562c] sm:mt-3 sm:w-11" />
+
     </div>
   )
 }

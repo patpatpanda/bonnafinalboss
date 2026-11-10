@@ -2476,7 +2476,7 @@ export interface Menu {
   drinksText?: string | null;
   drinks?:
     | {
-        category: 'beer' | 'wine' | 'alcohol-free' | 'soft-drinks' | 'other';
+        category: 'beer' | 'draft-beer' | 'canned-beer' | 'wine' | 'alcohol-free' | 'soft-drinks' | 'other';
         name: string;
         description?: string | null;
         price: number;

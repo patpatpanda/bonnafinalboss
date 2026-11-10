@@ -1,3 +1,4 @@
+
 import type { GlobalConfig } from 'payload'
 
 export const Menu: GlobalConfig = {
@@ -233,28 +234,38 @@ export const Menu: GlobalConfig = {
                   required: true,
                   defaultValue: 'soft-drinks',
 
-                  options: [
-                    {
-                      label: 'Öl',
-                      value: 'beer',
-                    },
-                    {
-                      label: 'Vin',
-                      value: 'wine',
-                    },
-                    {
-                      label: 'Alkoholfritt',
-                      value: 'alcohol-free',
-                    },
-                    {
-                      label: 'Läsk',
-                      value: 'soft-drinks',
-                    },
-                    {
-                      label: 'Övrigt',
-                      value: 'other',
-                    },
-                  ],
+                 
+options: [
+  {
+    label: 'Öl',
+    value: 'beer',
+  },
+  {
+    label: 'Fatöl',
+    value: 'draft-beer',
+  },
+  {
+    label: 'Öl på burk',
+    value: 'canned-beer',
+  },
+  {
+    label: 'Vin',
+    value: 'wine',
+  },
+  {
+    label: 'Alkoholfritt',
+    value: 'alcohol-free',
+  },
+  {
+    label: 'Läsk',
+    value: 'soft-drinks',
+  },
+  {
+    label: 'Övrigt',
+    value: 'other',
+  },
+],
+
                 },
                 {
                   name: 'name',
