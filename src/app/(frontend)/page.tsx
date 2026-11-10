@@ -631,6 +631,131 @@ export default async function HomePage() {
 
 
       {/* =========================
+          MENY
+      ========================= */}
+      <section className="px-5 py-16 sm:py-20 md:px-10 md:py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="group relative aspect-[4/5] w-full overflow-hidden bg-[#111111] shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:aspect-[5/4] lg:aspect-[4/5]">
+            {menuImage?.url ? (
+              <Image
+                src={menuImage.url}
+                alt={menuImage.alt || 'Bonnatösens meny'}
+                fill
+                sizes="(max-width: 1023px) 100vw, 50vw"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center px-4 text-center text-xs uppercase tracking-[0.15em] text-white/40">Lägg till menybild i Payload</div>
+            )}
+            <div className="absolute bottom-0 left-0 h-1 w-20 bg-[#FAC800] transition-all duration-500 group-hover:w-1/2" />
+          </div>
+
+          <div className="min-w-0 lg:pl-4">
+            {homepage.menuEyebrow && (
+              <div className="flex items-center gap-4">
+                <span className="h-px w-10 bg-[#FAC800]" />
+                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FAC800]">{homepage.menuEyebrow}</p>
+              </div>
+            )}
+            {homepage.menuTitle && (
+              <h2 className="mt-5 break-words text-3xl font-black uppercase leading-tight tracking-[-0.04em] sm:text-4xl md:text-5xl">{homepage.menuTitle}</h2>
+            )}
+            {homepage.menuText && (
+              <p className="mt-6 max-w-lg text-sm leading-7 text-white/75 md:text-base md:leading-8">{homepage.menuText}</p>
+            )}
+            <div className="mt-8 h-px max-w-sm bg-white/15" />
+            {homepage.menuButtonLink && (
+              <Link href={homepage.menuButtonLink} className="mt-8 inline-flex items-center justify-center bg-[#FAC800] px-7 py-4 text-[11px] font-black uppercase tracking-[0.15em] text-black transition-colors hover:bg-white">
+                {homepage.menuButtonText || 'Se menyn'}
+              </Link>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================
+          ÖPPETTIDER
+      ========================= */}
+      {openingHours.length > 0 && (
+        <section id="opening-hours" className="scroll-mt-24 border-y border-white/10 bg-[#0b0b0b] px-5 py-16 sm:py-20 md:px-10 md:py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-10 md:mb-14">
+              <div className="flex items-center gap-4">
+                <span className="h-px w-10 bg-[#FAC800]" />
+                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FAC800]">När ses vi?</p>
+              </div>
+              <h2 className="mt-5 text-3xl font-black uppercase leading-tight tracking-[-0.04em] sm:text-4xl md:text-5xl">Öppettider</h2>
+            </div>
+
+            <div className="grid items-start gap-5 lg:grid-cols-2 lg:gap-7">
+              {openingHours.map((item) => {
+                const location = typeof item.location === 'object' ? item.location : null
+                const isSeasonClosed = item.seasonClosed === true
+
+                return (
+                  <article key={item.id} className="overflow-hidden border border-white/15 bg-[#151515] text-white">
+                    <div className={`h-1 w-full ${isSeasonClosed ? 'bg-white/35' : 'bg-[#FAC800]'}`} />
+                    <div className="p-6 sm:p-8 md:p-10">
+                      <div className="border-b border-white/15 pb-6">
+                        <p className="mb-3 text-[10px] font-black uppercase tracking-[0.2em] text-[#FAC800]">Bonnatösen</p>
+                        {location?.name && (
+                          <h3 className="break-words text-2xl font-black uppercase leading-tight tracking-[-0.035em] sm:text-3xl md:text-4xl">{location.name}</h3>
+                        )}
+                        <p className="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-white/65">{item.title}</p>
+                      </div>
+
+                      {(item.startDate || item.endDate) && (
+                        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 py-5">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/55">Period</span>
+                          <span className="text-right text-xs font-bold text-white">{formatDateRange(item.startDate, item.endDate)}</span>
+                        </div>
+                      )}
+
+                      {isSeasonClosed ? (
+                        <div className="flex min-h-[180px] flex-col items-center justify-center py-8 text-center">
+                          <p className="text-xl font-black uppercase leading-tight tracking-[-0.03em] sm:text-2xl">{item.seasonMessage || 'Stängt för säsongen'}</p>
+                          {item.reopeningText && (
+                            <>
+                              <div className="my-5 h-px w-12 bg-[#FAC800]" />
+                              <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#FAC800]">Öppnar igen</p>
+                              <p className="text-sm font-medium leading-6 text-white/75">{item.reopeningText}</p>
+                            </>
+                          )}
+                        </div>
+                      ) : (
+                        item.information && (
+                          <div>
+                            {item.information.split('\n').filter(Boolean).map((line, lineIndex) => {
+                              const firstSpace = line.indexOf(' ')
+                              const label = firstSpace > -1 ? line.substring(0, firstSpace) : line
+                              const value = firstSpace > -1 ? line.substring(firstSpace + 1) : ''
+
+                              return (
+                                <div key={lineIndex} className="flex min-h-[52px] items-center justify-between gap-4 border-b border-white/10 py-3 last:border-b-0">
+                                  <span className="text-sm font-medium text-white/75 sm:text-base">{label}</span>
+                                  {value && <span className="text-right text-sm font-black text-white sm:text-base">{value}</span>}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        )
+                      )}
+
+                      {location?.name && (
+                        <div className="mt-5 border-t border-white/15 pt-5">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/50">Bonnatösen · {location.name}</p>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* =========================
           SHOP
       ========================= */}
       <section className="px-5 py-20 md:px-10 md:py-32">
