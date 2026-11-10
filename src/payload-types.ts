@@ -767,30 +767,50 @@ export interface Form {
   createdAt: string;
 }
 /**
+ * Hantera öppettider och säsongsinformation för Bonnatösens olika platser.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "opening-hours".
  */
 export interface OpeningHour {
   id: number;
   /**
-   * Exempel: Ordinarie öppettider, Vecka 35–37 eller Semesterstängt.
+   * Namnet på denna öppettidsperiod.
    */
   title: string;
   /**
-   * Välj om öppettiderna gäller Ladan eller Saloonen.
+   * Välj vilken plats informationen gäller.
    */
   location?: (number | null) | Location;
+  /**
+   * Avaktivera för att tillfälligt dölja informationen på hemsidan.
+   */
   active?: boolean | null;
+  /**
+   * Använd högre nummer för att prioritera information.
+   */
+  priority?: number | null;
   startDate?: string | null;
   endDate?: string | null;
   /**
-   * Skriv fritt. Exempel: "Lördag–söndag 11:00–16:00" eller "Semesterstängt vecka 32–34".
+   * Ange öppettider. Skriv en rad per dag eller information. Exempel:
+   * Torsdag 10:30–15:00
+   * Fredag 10:30–20:00
+   * Lördag 11:00–20:00
    */
   information?: string | null;
   /**
-   * Högre nummer kan användas för att visa viktigare information först.
+   * Aktivera om platsen är stängd för säsongen. Då visas ett särskilt meddelande istället för vanliga öppettider.
    */
-  priority?: number | null;
+  seasonClosed?: boolean | null;
+  /**
+   * Huvudmeddelandet som visas på hemsidan.
+   */
+  seasonMessage?: string | null;
+  /**
+   * Ange när verksamheten öppnar igen. Exempelvis Våren 2027 eller 1 maj 2027.
+   */
+  reopeningText?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1542,10 +1562,13 @@ export interface OpeningHoursSelect<T extends boolean = true> {
   title?: T;
   location?: T;
   active?: T;
+  priority?: T;
   startDate?: T;
   endDate?: T;
   information?: T;
-  priority?: T;
+  seasonClosed?: T;
+  seasonMessage?: T;
+  reopeningText?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2451,6 +2474,29 @@ export interface Menu {
   singleBurgerPrice: number;
   doubleBurgerPrice: number;
   burgerImage?: (number | null) | Media;
+  /**
+   * Lägg till kategorier och sortera dem med dra och släpp. Nya kategorier visas tillsammans med befintliga kategorier under övergången.
+   */
+  categories?:
+    | {
+        name: string;
+        description?: string | null;
+        active?: boolean | null;
+        /**
+         * Lägg till produkter och dra dem i önskad ordning.
+         */
+        items?:
+          | {
+              name: string;
+              description?: string | null;
+              price: number;
+              active?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   sidesTitle?: string | null;
   sides?:
     | {
@@ -2480,6 +2526,21 @@ export interface Menu {
         name: string;
         description?: string | null;
         price: number;
+        active?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Rubriken som visas ovanför bilderna längst ner på menysidan.
+   */
+  galleryTitle?: string | null;
+  /**
+   * Lägg till bilder och dra dem i önskad ordning. Bilderna visas längst ner på menysidan.
+   */
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
         active?: boolean | null;
         id?: string | null;
       }[]
@@ -2677,6 +2738,23 @@ export interface MenuSelect<T extends boolean = true> {
   singleBurgerPrice?: T;
   doubleBurgerPrice?: T;
   burgerImage?: T;
+  categories?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        active?: T;
+        items?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              price?: T;
+              active?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   sidesTitle?: T;
   sides?:
     | T
@@ -2707,6 +2785,15 @@ export interface MenuSelect<T extends boolean = true> {
         name?: T;
         description?: T;
         price?: T;
+        active?: T;
+        id?: T;
+      };
+  galleryTitle?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
         active?: T;
         id?: T;
       };

@@ -1,3 +1,4 @@
+
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { getPayload } from 'payload'
@@ -57,14 +58,12 @@ export default async function LocationPage({
 
   const location = result.docs[0]
 
-  // Visa 404 om platsen inte finns eller är inaktiv
   if (!location || !location.active) {
     notFound()
   }
 
   // =========================
   // HÄMTA ÖPPETTIDER
-  // Samma collection som startsidan
   // =========================
   const openingHoursResult = await payload.find({
     collection: 'opening-hours',
@@ -79,34 +78,35 @@ export default async function LocationPage({
   })
 
   // =========================
-  // VISA ENDAST ÖPPETTIDER
-  // FÖR DEN AKTUELLA PLATSEN
+  // FILTRERA PÅ AKTUELL PLATS
   // =========================
-  const openingHours = openingHoursResult.docs.filter((item) => {
-    const itemLocation =
-      typeof item.location === 'object'
-        ? item.location
-        : null
+  const openingHours = openingHoursResult.docs.filter(
+    (item) => {
+      const itemLocation =
+        item.location &&
+        typeof item.location === 'object'
+          ? item.location
+          : null
 
-    return itemLocation?.id === location.id
-  })
+      return itemLocation?.id === location.id
+    },
+  )
 
   // =========================
   // HERO-BILD
   // =========================
   const heroImage =
+    location.heroImage &&
     typeof location.heroImage === 'object'
       ? location.heroImage
       : null
 
   return (
     <main className="min-h-screen bg-[#0b0b0b] text-white">
-
       {/* =========================
           HERO
       ========================= */}
       <section className="relative min-h-[70vh] overflow-hidden border-b border-[#242424]">
-
         {/* HERO-BILD */}
         {heroImage?.url && (
           <Image
@@ -124,21 +124,17 @@ export default async function LocationPage({
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-transparent" />
 
-        {/* LÄTT VÄNSTER-TONING */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent" />
 
         {/* HERO CONTENT */}
         <div className="relative mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-end px-5 pb-12 pt-32 md:px-10 md:pb-20">
-
           {/* EYEBROW */}
           <div className="mb-5 flex items-center gap-4">
-
             <span className="h-px w-14 bg-[#FAC800]" />
 
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-white drop-shadow-md">
               Bonnatösen
             </span>
-
           </div>
 
           {/* TITEL */}
@@ -152,7 +148,6 @@ export default async function LocationPage({
               tracking-[-0.05em]
               text-white
               drop-shadow-[0_3px_10px_rgba(0,0,0,0.7)]
-
               md:text-8xl
               lg:text-[9rem]
             "
@@ -160,14 +155,10 @@ export default async function LocationPage({
             {location.name}
           </h1>
 
-          {/* =========================
-              HERO-MEDDELANDE
-          ========================= */}
+          {/* HERO-MEDDELANDE */}
           {location.heroNotice && (
             <div className="mt-7 md:mt-9">
-
               <div className="flex items-center gap-4">
-
                 <span className="h-[3px] w-10 shrink-0 bg-[#FAC800]" />
 
                 <p
@@ -177,16 +168,13 @@ export default async function LocationPage({
                     uppercase
                     tracking-[0.08em]
                     text-white
-
                     sm:text-xl
                     md:text-2xl
                   "
                 >
                   {location.heroNotice}
                 </p>
-
               </div>
-
             </div>
           )}
 
@@ -200,7 +188,6 @@ export default async function LocationPage({
                 leading-7
                 text-white
                 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
-
                 md:text-xl
                 md:leading-8
               "
@@ -209,13 +196,9 @@ export default async function LocationPage({
             </p>
           )}
 
-          {/* =========================
-              VÄGBESKRIVNING
-          ========================= */}
+          {/* VÄGBESKRIVNING */}
           {location.address && (
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-
-              {/* KNAPP */}
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
                   location.address,
@@ -240,7 +223,6 @@ export default async function LocationPage({
                   tracking-[0.18em]
                   text-black
                   transition
-
                   hover:bg-transparent
                   hover:text-[#FAC800]
                 "
@@ -253,12 +235,10 @@ export default async function LocationPage({
                 >
                   ↗
                 </span>
-
               </a>
 
               {/* ADRESS */}
               <div className="border-l border-white/25 pl-4">
-
                 <p className="text-[9px] font-black uppercase tracking-[0.28em] text-[#FAC800]">
                   Hitta hit
                 </p>
@@ -266,29 +246,21 @@ export default async function LocationPage({
                 <p className="mt-1 max-w-[320px] text-sm font-semibold leading-5 text-white md:text-base">
                   {location.address}
                 </p>
-
               </div>
-
             </div>
           )}
-
         </div>
-
       </section>
-
 
       {/* =========================
           OM PLATSEN
       ========================= */}
       <section className="px-5 py-20 md:px-10 md:py-28">
-
         <div className="mx-auto max-w-7xl">
-
           <div
             className={`
               grid
               gap-12
-
               ${
                 slug === 'ladan' || slug === 'saloon'
                   ? 'lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-20'
@@ -296,25 +268,21 @@ export default async function LocationPage({
               }
             `}
           >
-
             {/* =========================
                 TEXT
             ========================= */}
             <div>
-
               <div
                 className="
                   prose
                   prose-invert
                   max-w-none
                   text-white
-
                   prose-headings:text-white
                   prose-p:text-white
                   prose-strong:text-white
                   prose-li:text-white
                   prose-blockquote:text-white
-
                   prose-a:text-white
                   prose-a:decoration-[#FAC800]
                   hover:prose-a:text-white
@@ -331,18 +299,15 @@ export default async function LocationPage({
                   </p>
                 )}
               </div>
-
             </div>
-
 
             {/* =========================
                 ÖPPETTIDER
-                Samma data som startsidan
+                MED SÄSONGSSTÖD
             ========================= */}
             {(slug === 'ladan' || slug === 'saloon') &&
               openingHours.length > 0 && (
                 <div className="mx-auto w-full max-w-[430px] lg:mx-0 lg:ml-auto">
-
                   <div
                     className="
                       overflow-hidden
@@ -353,30 +318,13 @@ export default async function LocationPage({
                       shadow-[0_20px_60px_rgba(0,0,0,0.25)]
                     "
                   >
-
-                    {/* VIT TOPPLINJE */}
+                    {/* TOPPLINJE */}
                     <div className="h-[4px] w-full bg-white" />
 
-
                     <div className="p-6 sm:p-8 md:p-9">
-
-                      {/* =========================
-                          HEADER
-                      ========================= */}
+                      {/* HEADER */}
                       <div className="border-b border-white/20 pb-6">
-
-                        <p
-                          className="
-                            mb-3
-                            text-[9px]
-                            font-black
-                            uppercase
-                            tracking-[0.3em]
-                            text-white/50
-                          "
-                        >
-                          När ses vi?
-                        </p>
+                        
 
                         <h2
                           className="
@@ -386,197 +334,242 @@ export default async function LocationPage({
                             leading-none
                             tracking-[-0.04em]
                             text-white
-
                             sm:text-4xl
                           "
                         >
                           Öppettider
                         </h2>
 
-                        <p
-                          className="
-                            mt-3
-                            text-xs
-                            font-bold
-                            uppercase
-                            tracking-[0.18em]
-                            text-white/50
-                          "
-                        >
+                        <p className="mt-3 text-xs font-bold uppercase tracking-[0.18em] text-white/50">
                           {location.name}
                         </p>
-
                       </div>
-
 
                       {/* =========================
                           ÖPPETTIDSPERIODER
                       ========================= */}
                       <div>
+                        {openingHours.map((item, index) => {
+                          const isSeasonClosed =
+                            item.seasonClosed === true
 
-                        {openingHours.map((item, index) => (
-                          <div
-                            key={item.id}
-                            className={`
-                              py-6
+                          const seasonMessage =
+                            item.seasonMessage?.trim()
 
-                              ${
-                                index !== 0
-                                  ? 'border-t border-white/20'
-                                  : ''
-                              }
-                            `}
-                          >
+                          const reopeningText =
+                            item.reopeningText?.trim()
 
-                            {/* TITEL + DATUM */}
+                          return (
                             <div
-                              className="
-                                gap-3
-
-                                sm:flex
-                                sm:items-start
-                                sm:justify-between
-                              "
+                              key={item.id}
+                              className={`
+                                py-6
+                                ${
+                                  index !== 0
+                                    ? 'border-t border-white/20'
+                                    : ''
+                                }
+                              `}
                             >
-
-                              <h3
-                                className="
-                                  text-lg
-                                  font-black
-                                  uppercase
-                                  leading-tight
-                                  tracking-[-0.02em]
-                                  text-white
-                                "
-                              >
-                                {item.title}
-                              </h3>
-
-
-                              {(item.startDate ||
-                                item.endDate) && (
-                                <p
+                              {/* TITEL + DATUM */}
+                              <div className="gap-3 sm:flex sm:items-start sm:justify-between">
+                                <h3
                                   className="
-                                    mt-2
-                                    shrink-0
-                                    text-[9px]
-                                    font-bold
+                                    text-lg
+                                    font-black
                                     uppercase
-                                    tracking-[0.14em]
-                                    text-white/40
-
-                                    sm:mt-1
-                                    sm:text-right
+                                    leading-tight
+                                    tracking-[-0.02em]
+                                    text-white
                                   "
                                 >
-                                  {formatDateRange(
-                                    item.startDate,
-                                    item.endDate,
-                                  )}
-                                </p>
-                              )}
+                                  {item.title}
+                                </h3>
 
-                            </div>
+                                {(item.startDate ||
+                                  item.endDate) && (
+                                  <p
+                                    className="
+                                      mt-2
+                                      shrink-0
+                                      text-[9px]
+                                      font-bold
+                                      uppercase
+                                      tracking-[0.14em]
+                                      text-white/40
+                                      sm:mt-1
+                                      sm:text-right
+                                    "
+                                  >
+                                    {formatDateRange(
+                                      item.startDate,
+                                      item.endDate,
+                                    )}
+                                  </p>
+                                )}
+                              </div>
 
+                              {/* =========================
+                                  SÄSONGSSTÄNGT
+                              ========================= */}
+                              {isSeasonClosed ? (
+                                <div
+                                  className="
+                                    mt-5
+                                    overflow-hidden
+                                    border
+                                    border-[#FAC800]/30
+                                    bg-[#FAC800]/[0.06]
+                                  "
+                                >
+                                  <div className="flex">
+                                    {/* GUL SIDOMARKERING */}
+                                    <div className="w-[4px] shrink-0 bg-[#FAC800]" />
 
-                            {/* =========================
-                                TIDER
-                            ========================= */}
-                            {item.information && (
-                              <div className="mt-5">
+                                    <div className="min-w-0 flex-1 px-5 py-6 sm:px-6">
+                                      {/* STATUS */}
+                                      <div className="mb-4 flex items-center gap-3">
+                                        <span className="h-2 w-2 shrink-0 rounded-full bg-[#FAC800]" />
 
-                                {item.information
-                                  .split('\n')
-                                  .filter(Boolean)
-                                  .map(
-                                    (
-                                      line,
-                                      lineIndex,
-                                    ) => {
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#FAC800]">
+                                          Säsongsstängt
+                                        </span>
+                                      </div>
 
-                                      const firstSpace =
-                                        line.indexOf(' ')
-
-                                      const label =
-                                        firstSpace > -1
-                                          ? line.substring(
-                                              0,
-                                              firstSpace,
-                                            )
-                                          : line
-
-                                      const value =
-                                        firstSpace > -1
-                                          ? line.substring(
-                                              firstSpace +
-                                                1,
-                                            )
-                                          : ''
-
-                                      return (
-                                        <div
-                                          key={
-                                            lineIndex
-                                          }
+                                      {/* MEDDELANDE FRÅN PAYLOAD */}
+                                      {seasonMessage && (
+                                        <p
                                           className="
-                                            flex
-                                            min-h-[48px]
-                                            items-center
-                                            justify-between
-                                            gap-5
-                                            border-b
-                                            border-white/10
-                                            py-3
-
-                                            last:border-b-0
+                                            whitespace-pre-line
+                                            text-lg
+                                            font-black
+                                            uppercase
+                                            leading-snug
+                                            tracking-[-0.02em]
+                                            text-white
+                                            sm:text-xl
                                           "
                                         >
+                                          {seasonMessage}
+                                        </p>
+                                      )}
 
-                                          {/* DAG */}
-                                          <span
+                                      {/* ÅTERÖPPNING FRÅN PAYLOAD */}
+                                      {reopeningText && (
+                                        <div
+                                          className={
+                                            seasonMessage
+                                              ? 'mt-5 border-t border-white/10 pt-5'
+                                              : ''
+                                          }
+                                        >
+                                          <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">
+                                            Vi ses igen
+                                          </p>
+
+                                          <p
                                             className="
-                                              text-sm
+                                              whitespace-pre-line
+                                              text-base
                                               font-bold
-                                              uppercase
-                                              tracking-[0.05em]
-                                              text-white/55
+                                              leading-relaxed
+                                              text-[#FAC800]
+                                              sm:text-lg
                                             "
                                           >
-                                            {label}
-                                          </span>
+                                            {reopeningText}
+                                          </p>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
+                                /* =========================
+                                    VANLIGA ÖPPETTIDER
+                                ========================= */
+                                item.information && (
+                                  <div className="mt-5">
+                                    {item.information
+                                      .split('\n')
+                                      .map((line) => line.trim())
+                                      .filter(Boolean)
+                                      .map((line, lineIndex) => {
+                                        const firstSpace =
+                                          line.indexOf(' ')
 
+                                        const label =
+                                          firstSpace > -1
+                                            ? line.substring(
+                                                0,
+                                                firstSpace,
+                                              )
+                                            : line
 
-                                          {/* TID */}
-                                          {value && (
+                                        const value =
+                                          firstSpace > -1
+                                            ? line
+                                                .substring(
+                                                  firstSpace + 1,
+                                                )
+                                                .trim()
+                                            : ''
+
+                                        return (
+                                          <div
+                                            key={lineIndex}
+                                            className="
+                                              flex
+                                              min-h-[48px]
+                                              items-center
+                                              justify-between
+                                              gap-5
+                                              border-b
+                                              border-white/10
+                                              py-3
+                                              last:border-b-0
+                                            "
+                                          >
+                                            {/* DAG */}
                                             <span
                                               className="
-                                                shrink-0
-                                                text-base
-                                                font-black
-                                                text-white
+                                                text-sm
+                                                font-bold
+                                                uppercase
+                                                tracking-[0.05em]
+                                                text-white/55
                                               "
                                             >
-                                              {value}
+                                              {label}
                                             </span>
-                                          )}
 
-                                        </div>
-                                      )
-                                    },
-                                  )}
-
-                              </div>
-                            )}
-
-                          </div>
-                        ))}
-
+                                            {/* TID */}
+                                            {value && (
+                                              <span
+                                                className="
+                                                  min-w-0
+                                                  text-right
+                                                  text-base
+                                                  font-black
+                                                  text-white
+                                                "
+                                              >
+                                                {value}
+                                              </span>
+                                            )}
+                                          </div>
+                                        )
+                                      })}
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          )
+                        })}
                       </div>
-
 
                       {/* FOOTER */}
                       <div className="border-t border-white/20 pt-5">
-
                         <p
                           className="
                             text-[9px]
@@ -588,22 +581,14 @@ export default async function LocationPage({
                         >
                           Bonnatösen · {location.name}
                         </p>
-
                       </div>
-
                     </div>
-
                   </div>
-
                 </div>
               )}
-
           </div>
-
         </div>
-
       </section>
-
 
       {/* =========================
           GALLERI
@@ -611,26 +596,21 @@ export default async function LocationPage({
       {location.gallery &&
         location.gallery.length > 0 && (
           <section className="px-5 py-20 md:px-10 md:py-28">
-
             <div className="mx-auto max-w-7xl">
-
               {/* RUBRIK */}
               <div className="mb-10 flex items-center gap-4">
-
                 <span className="text-xs font-bold uppercase tracking-[0.3em] text-white">
                   Bilder
                 </span>
 
                 <span className="h-px flex-1 bg-[#FAC800]/40" />
-
               </div>
-
 
               {/* BILDER */}
               <div className="grid items-start gap-4 md:grid-cols-2">
-
                 {location.gallery.map((item, index) => {
                   const image =
+                    item.image &&
                     typeof item.image === 'object'
                       ? item.image
                       : null
@@ -650,7 +630,6 @@ export default async function LocationPage({
                         border-[#242424]
                         bg-[#111111]
                         transition
-
                         hover:border-[#FAC800]
                       "
                     >
@@ -660,11 +639,7 @@ export default async function LocationPage({
                         width={image.width || 1600}
                         height={image.height || 1200}
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        className="
-                          h-auto
-                          w-full
-                          object-contain
-                        "
+                        className="h-auto w-full object-contain"
                       />
 
                       {/* INNER BORDER */}
@@ -676,22 +651,16 @@ export default async function LocationPage({
                           border
                           border-transparent
                           transition
-
                           group-hover:border-[#FAC800]/40
                         "
                       />
-
                     </div>
                   )
                 })}
-
               </div>
-
             </div>
-
           </section>
         )}
-
 
       {/* =========================
           LEADER BERGSLAGEN / EU
@@ -699,22 +668,16 @@ export default async function LocationPage({
       ========================= */}
       {slug === 'ladan' && (
         <section className="border-t border-[#242424] bg-[#f5f2eb] px-5 py-20 text-[#1b1b1b] md:px-10 md:py-28">
-
           <div className="mx-auto max-w-7xl">
-
             <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-20">
-
               {/* TEXT */}
               <div>
-
                 <div className="mb-5 flex items-center gap-4">
-
                   <span className="h-px w-12 bg-[#FAC800]" />
 
                   <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#1b1b1b]">
                     Med stöd från EU & Leader Bergslagen
                   </span>
-
                 </div>
 
                 <h2 className="max-w-2xl text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] md:text-5xl lg:text-6xl">
@@ -724,12 +687,10 @@ export default async function LocationPage({
                 </h2>
 
                 <div className="mt-8 max-w-2xl space-y-6 text-base leading-8 text-[#1b1b1b] md:text-lg">
-
                   <p>
-                    Med stöd från EU och Leader
-                    Bergslagen har vi renoverat den
-                    del av ladans tak som var i
-                    störst behov av åtgärd.
+                    Med stöd från EU och Leader Bergslagen
+                    har vi renoverat den del av ladans tak
+                    som var i störst behov av åtgärd.
                   </p>
 
                   <p>
@@ -750,17 +711,12 @@ export default async function LocationPage({
                     för både lokala aktörer och
                     besökare.
                   </p>
-
                 </div>
-
               </div>
-
 
               {/* LEADER / EU LOGGA */}
               <div className="border border-[#FAC800] bg-white p-6 md:p-10">
-
                 <div className="relative aspect-[2.7/1] w-full max-w-[600px]">
-
                   <Image
                     src="/images/lll.png"
                     alt="Leader Bergslagen – Medfinansieras av Europeiska unionen"
@@ -768,18 +724,12 @@ export default async function LocationPage({
                     sizes="600px"
                     className="object-contain"
                   />
-
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </section>
       )}
-
     </main>
   )
 }

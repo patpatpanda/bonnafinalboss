@@ -10,24 +10,67 @@ export default async function MenuPage() {
 
   const menu = await payload.findGlobal({
     slug: 'menu',
+    depth: 2,
   })
 
+  // =========================
+  // BILDER
+  // =========================
   const heroImage =
-    typeof menu.heroImage === 'object' ? menu.heroImage : null
+    menu.heroImage && typeof menu.heroImage === 'object'
+      ? menu.heroImage
+      : null
 
   const burgerImage =
-    typeof menu.burgerImage === 'object' ? menu.burgerImage : null
+    menu.burgerImage && typeof menu.burgerImage === 'object'
+      ? menu.burgerImage
+      : null
 
+  // =========================
+  // AKTIVA MENYPOSTER
+  // =========================
   const activeSides =
     menu.sides?.filter((side) => side.active !== false) || []
 
   const activeDesserts =
-    menu.desserts?.filter((dessert) => dessert.active !== false) || []
+    menu.desserts?.filter(
+      (dessert) => dessert.active !== false,
+    ) || []
 
   const activeDrinks =
-    menu.drinks?.filter((drink) => drink.active !== false) || []
+    menu.drinks?.filter(
+      (drink) => drink.active !== false,
+    ) || []
 
+  // =========================
+  // EGNA KATEGORIER FRÅN PAYLOAD
+  // =========================
+  const activeCategories =
+    menu.categories
+      ?.filter((category) => category.active !== false)
+      .map((category) => ({
+        ...category,
+        items: category.items?.filter((item) => item.active !== false) || [],
+      }))
+      .filter((category) => category.items.length > 0) || []
+
+  // =========================
+  // BILDGALLERI
+  // =========================
+  const activeGallery =
+    menu.gallery?.filter((item) => {
+      if (item.active === false) return false
+
+      return (
+        item.image &&
+        typeof item.image === 'object' &&
+        Boolean(item.image.url)
+      )
+    }) || []
+
+  // =========================
   // DRYCKESKATEGORIER
+  // =========================
   const drinkCategories = [
     {
       value: 'draft-beer',
@@ -36,7 +79,12 @@ export default async function MenuPage() {
     },
     {
       value: 'canned-beer',
-      aliases: ['canned-beer', 'ol-burk', 'öl-på-burk', 'canned'],
+      aliases: [
+        'canned-beer',
+        'ol-burk',
+        'öl-på-burk',
+        'canned',
+      ],
       label: 'Öl på burk',
     },
     {
@@ -63,10 +111,10 @@ export default async function MenuPage() {
 
   return (
     <main className="min-h-screen overflow-x-clip bg-[#090909] text-white">
-
-      {/* HERO */}
+      {/* =========================
+          HERO
+      ========================= */}
       <section className="relative isolate min-h-[48svh] overflow-hidden border-b border-[#242424] sm:min-h-[60svh]">
-
         {heroImage?.url && (
           <Image
             src={heroImage.url}
@@ -78,12 +126,15 @@ export default async function MenuPage() {
           />
         )}
 
+        {/* TONING */}
         <div className="absolute inset-0 bg-black/55" />
+
         <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-black/15 to-black/35" />
+
         <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" />
 
+        {/* INNEHÅLL */}
         <div className="relative mx-auto flex min-h-[48svh] max-w-7xl flex-col justify-end px-5 pb-9 pt-24 sm:min-h-[60svh] sm:px-8 sm:pb-16 sm:pt-32 md:px-10 md:pb-20">
-
           {menu.eyebrow && (
             <div className="mb-4 flex items-center gap-3 sm:mb-5 sm:gap-4">
               <span className="h-px w-7 shrink-0 bg-[#FAC800] sm:w-12" />
@@ -103,19 +154,17 @@ export default async function MenuPage() {
               {menu.intro}
             </p>
           )}
-
         </div>
       </section>
 
-      {/* VECKANS BURGARE */}
+      {/* =========================
+          VECKANS BURGARE
+      ========================= */}
       {menu.burgerActive !== false && (
         <section className="px-4 py-10 sm:px-6 sm:py-14 md:px-10 md:py-20 lg:py-24">
-
           <div className="mx-auto grid max-w-7xl items-center gap-7 sm:gap-9 lg:grid-cols-2 lg:gap-14 xl:gap-16">
-
             {/* BILD */}
             <div className="group relative aspect-[4/5] w-full overflow-hidden bg-[#111111] shadow-[0_24px_70px_rgba(0,0,0,0.35)]">
-
               {burgerImage?.url ? (
                 <Image
                   src={burgerImage.url}
@@ -141,12 +190,10 @@ export default async function MenuPage() {
               <div className="absolute left-3 top-3 z-20 max-w-[calc(100%-1.5rem)] bg-black/85 px-3 py-2 text-[8px] font-black uppercase tracking-[0.12em] text-white backdrop-blur sm:left-5 sm:top-5 sm:px-4 sm:py-2.5 sm:text-[9px] sm:tracking-[0.22em]">
                 Veckans burgare
               </div>
-
             </div>
 
             {/* TEXT */}
             <div className="min-w-0 py-1 sm:py-0">
-
               <div className="flex items-center gap-3 sm:gap-4">
                 <span className="h-px w-7 shrink-0 bg-[#FAC800] sm:w-9" />
 
@@ -156,7 +203,7 @@ export default async function MenuPage() {
               </div>
 
               {menu.burgerName && (
-                <h2 className="mt-4 max-w-full break-words text-3xl font-black uppercase leading-[0.98] tracking-[-0.045em] [overflow-wrap:anywhere] sm:mt-6 sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl">
+                <h2 className="mt-4 max-w-full break-words text-3xl font-black uppercase leading-[0.98] tracking-[-0.045em] [overflow-wrap:anywhere] sm:mt-6 sm:text-4xl md:text-5xl lg:text-6xl">
                   {menu.burgerName}
                 </h2>
               )}
@@ -176,22 +223,21 @@ export default async function MenuPage() {
 
                 <span className="h-px w-7 shrink-0 bg-[#FAC800] sm:w-9" />
               </div>
-
             </div>
           </div>
         </section>
       )}
 
-      {/* WESTERN MENYBLAD */}
-      {(activeSides.length > 0 ||
+      {/* =========================
+          WESTERN MENYBLAD
+      ========================= */}
+      {(activeCategories.length > 0 ||
+        activeSides.length > 0 ||
         activeDesserts.length > 0 ||
         activeDrinks.length > 0 ||
         menu.burgerActive !== false) && (
-
         <section className="bg-[#0d0d0d] px-3 py-9 sm:px-5 sm:py-14 md:px-10 md:py-20 lg:py-24">
-
           <div className="relative mx-auto max-w-6xl overflow-hidden bg-[#d7bc84] px-5 py-8 text-[#4a3820] shadow-[0_30px_100px_rgba(0,0,0,0.6)] sm:px-8 sm:py-10 md:px-12 md:py-12 lg:px-14">
-
             {/* PAPPERSKÄNSLA */}
             <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_15%_20%,rgba(90,60,24,.18)_0,transparent_24%),radial-gradient(circle_at_85%_75%,rgba(90,60,24,.14)_0,transparent_28%),linear-gradient(rgba(255,255,255,.10),rgba(80,50,20,.08))]" />
 
@@ -199,7 +245,6 @@ export default async function MenuPage() {
             <div className="pointer-events-none absolute inset-2 border border-[#735630]/50 sm:inset-3 md:inset-4" />
 
             <div className="relative z-10 min-w-0">
-
               {/* HEADER */}
               <div className="text-center">
                 <p className="text-[8px] font-black uppercase tracking-[0.16em] sm:text-[9px] sm:tracking-[0.3em]">
@@ -213,16 +258,18 @@ export default async function MenuPage() {
                 <div className="mx-auto mt-5 h-[2px] w-14 bg-[#75562c] sm:mt-6 sm:w-20" />
               </div>
 
-              {/* BURGARE */}
+              {/* =========================
+                  BURGARE
+              ========================= */}
               {menu.burgerActive !== false && (
                 <>
                   <section className="mx-auto mt-9 max-w-2xl sm:mt-10">
-
-                    <WesternHeading>Burgare</WesternHeading>
+                    <WesternHeading>
+                      Burgare
+                    </WesternHeading>
 
                     {menu.burgerName && (
                       <div className="mb-6 sm:mb-7">
-
                         <div className="mb-3 h-[3px] w-8 bg-[#75562c]" />
 
                         <p className="text-[8px] font-black uppercase tracking-[0.12em] text-[#75562c] sm:text-[9px] sm:tracking-[0.2em]">
@@ -238,12 +285,10 @@ export default async function MenuPage() {
                             {menu.burgerDescription}
                           </p>
                         )}
-
                       </div>
                     )}
 
                     <div className="space-y-5 sm:space-y-6">
-
                       <WesternItem
                         name="Enkel"
                         price={`${menu.singleBurgerPrice ?? 135}:-`}
@@ -260,7 +305,6 @@ export default async function MenuPage() {
                         description="Vegetariskt alternativ med grillost"
                         price="145:-"
                       />
-
                     </div>
                   </section>
 
@@ -268,16 +312,47 @@ export default async function MenuPage() {
                 </>
               )}
 
-              {/* TILLBEHÖR, DESSERT OCH DRYCK */}
-              <div className="grid min-w-0 gap-9 sm:gap-10 md:grid-cols-2 md:gap-0">
+              {/* =========================
+                  EGNA KATEGORIER (T.EX. KORV)
+                  VISAS EFTER BURGARE
+              ========================= */}
+              {activeCategories.length > 0 && (
+                <div className="mx-auto mb-10 max-w-2xl space-y-9 sm:mb-12 sm:space-y-10">
+                  {activeCategories.map((category, index) => (
+                    <section key={category.id || index}>
+                      <WesternHeading>{category.name}</WesternHeading>
 
+                      {category.description && (
+                        <p className="mb-6 whitespace-pre-line break-words text-[9px] font-semibold uppercase leading-[1.8] tracking-[0.03em] text-[#665033] sm:text-[10px]">
+                          {category.description}
+                        </p>
+                      )}
+
+                      <div className="space-y-5 sm:space-y-6">
+                        {category.items.map((item, itemIndex) => (
+                          <WesternItem
+                            key={item.id || itemIndex}
+                            name={item.name}
+                            description={item.description || undefined}
+                            price={`${item.price}:-`}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                  <div className="h-px bg-[#75562c]/40" />
+                </div>
+              )}
+
+              {/* =========================
+                  TILLBEHÖR, DESSERT OCH DRYCK
+              ========================= */}
+              <div className="grid min-w-0 gap-9 sm:gap-10 md:grid-cols-2 md:gap-0">
                 {/* VÄNSTER KOLUMN */}
                 <div className="min-w-0 md:border-r md:border-[#765a35]/35 md:pr-6 lg:pr-9">
-
                   {/* TILLBEHÖR */}
                   {activeSides.length > 0 && (
                     <section>
-
                       <WesternHeading>
                         {menu.sidesTitle || 'Tillbehör'}
                       </WesternHeading>
@@ -287,12 +362,13 @@ export default async function MenuPage() {
                           <WesternItem
                             key={side.id || index}
                             name={side.name}
-                            description={side.description || undefined}
+                            description={
+                              side.description || undefined
+                            }
                             price={`${side.price}:-`}
                           />
                         ))}
                       </div>
-
                     </section>
                   )}
 
@@ -305,7 +381,6 @@ export default async function MenuPage() {
                           : ''
                       }
                     >
-
                       <WesternHeading>
                         {menu.dessertsTitle || 'Dessert'}
                       </WesternHeading>
@@ -317,27 +392,30 @@ export default async function MenuPage() {
                       )}
 
                       <div className="space-y-5 sm:space-y-6">
-                        {activeDesserts.map((dessert, index) => (
-                          <WesternItem
-                            key={dessert.id || index}
-                            name={dessert.name}
-                            description={dessert.description || undefined}
-                            price={`${dessert.price}:-`}
-                          />
-                        ))}
+                        {activeDesserts.map(
+                          (dessert, index) => (
+                            <WesternItem
+                              key={dessert.id || index}
+                              name={dessert.name}
+                              description={
+                                dessert.description ||
+                                undefined
+                              }
+                              price={`${dessert.price}:-`}
+                            />
+                          ),
+                        )}
                       </div>
-
                     </section>
                   )}
-
                 </div>
 
-                {/* HÖGER KOLUMN – DRYCK */}
+                {/* =========================
+                    HÖGER KOLUMN – DRYCK
+                ========================= */}
                 <div className="min-w-0 md:pl-6 lg:pl-9">
-
                   {activeDrinks.length > 0 && (
                     <>
-
                       <WesternHeading>
                         {menu.drinksTitle || 'Dryck'}
                       </WesternHeading>
@@ -349,13 +427,14 @@ export default async function MenuPage() {
                       )}
 
                       <div className="space-y-7 sm:space-y-9">
-
                         {drinkCategories.map((category) => {
-
-                          const drinks = activeDrinks.filter((drink) =>
-                            category.aliases.includes(
-                              String(drink.category || '').toLowerCase()
-                            )
+                          const drinks = activeDrinks.filter(
+                            (drink) =>
+                              category.aliases.includes(
+                                String(
+                                  drink.category || '',
+                                ).toLowerCase(),
+                              ),
                           )
 
                           if (drinks.length === 0) {
@@ -364,30 +443,33 @@ export default async function MenuPage() {
 
                           return (
                             <section key={category.value}>
-
                               <h3 className="mb-4 break-words text-base font-black uppercase tracking-[-0.02em] sm:mb-5 sm:text-lg md:text-xl">
                                 {category.label}
                               </h3>
 
                               <div className="space-y-5 sm:space-y-6">
-                                {drinks.map((drink, index) => (
-                                  <WesternItem
-                                    key={drink.id || index}
-                                    name={drink.name}
-                                    description={drink.description || undefined}
-                                    price={`${drink.price}:-`}
-                                  />
-                                ))}
+                                {drinks.map(
+                                  (drink, index) => (
+                                    <WesternItem
+                                      key={
+                                        drink.id || index
+                                      }
+                                      name={drink.name}
+                                      description={
+                                        drink.description ||
+                                        undefined
+                                      }
+                                      price={`${drink.price}:-`}
+                                    />
+                                  ),
+                                )}
                               </div>
-
                             </section>
                           )
                         })}
-
                       </div>
                     </>
                   )}
-
                 </div>
               </div>
 
@@ -399,18 +481,98 @@ export default async function MenuPage() {
                   Bonnatösens Burgare
                 </p>
               </div>
-
             </div>
           </div>
         </section>
       )}
 
+      {/* =========================
+          BILDGALLERI
+          HÄMTAS FRÅN PAYLOAD CMS
+      ========================= */}
+      {activeGallery.length > 0 && (
+        <section className="border-t border-white/10 bg-[#090909] px-4 py-16 sm:px-6 sm:py-20 md:px-10 lg:py-24">
+          <div className="mx-auto max-w-7xl">
+            {/* =========================
+                GALLERI HEADER
+            ========================= */}
+            <div className="mb-10 text-center sm:mb-14">
+              {/* LITEN RUBRIK */}
+              <div className="mb-5 flex items-center justify-center gap-4">
+                <span className="h-px w-8 bg-[#FAC800] sm:w-12" />
+
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FAC800]">
+                  Från vårt kök
+                </span>
+
+                <span className="h-px w-8 bg-[#FAC800] sm:w-12" />
+              </div>
+
+             
+
+              <div className="mx-auto mt-7 h-[3px] w-14 bg-[#FAC800]" />
+            </div>
+
+            {/* =========================
+                BILDER
+            ========================= */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+              {activeGallery.map((item, index) => {
+                const image =
+                  item.image &&
+                  typeof item.image === 'object'
+                    ? item.image
+                    : null
+
+                if (!image?.url) {
+                  return null
+                }
+
+                return (
+                  <figure
+                    key={item.id || index}
+                    className="group min-w-0"
+                  >
+                    <div className="relative aspect-[4/5] overflow-hidden border border-white/10 bg-[#151515]">
+                      {/* BILD */}
+                      <Image
+                        src={image.url}
+                        alt={
+                          image.alt ||
+                          item.caption ||
+                          'Bild från Bonnatösen'
+                        }
+                        fill
+                        sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                        className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                      />
+
+                      {/* GUL HOVER-RAM */}
+                      <div className="pointer-events-none absolute inset-0 border-2 border-transparent transition-colors duration-300 group-hover:border-[#FAC800]" />
+
+                      {/* BILDTEXT FRÅN PAYLOAD */}
+                      {item.caption && (
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent px-5 pb-5 pt-16">
+                          <figcaption className="break-words text-sm font-black uppercase tracking-[0.06em] text-white">
+                            {item.caption}
+                          </figcaption>
+                        </div>
+                      )}
+                    </div>
+                  </figure>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   )
 }
 
-/* WESTERN ITEM */
-
+/* =========================
+    WESTERN ITEM
+========================= */
 function WesternItem({
   name,
   description,
@@ -422,9 +584,7 @@ function WesternItem({
 }) {
   return (
     <div className="min-w-0">
-
       <div className="flex min-w-0 items-baseline gap-2 sm:gap-3">
-
         <h4 className="min-w-0 break-words text-xs font-black uppercase leading-snug tracking-[-0.015em] [overflow-wrap:anywhere] sm:text-sm md:text-base">
           {name}
         </h4>
@@ -437,7 +597,6 @@ function WesternItem({
         <span className="shrink-0 whitespace-nowrap text-xs font-black tabular-nums sm:text-sm md:text-base">
           {price}
         </span>
-
       </div>
 
       {description && (
@@ -445,13 +604,13 @@ function WesternItem({
           {description}
         </p>
       )}
-
     </div>
   )
 }
 
-/* WESTERN HEADING */
-
+/* =========================
+    WESTERN HEADING
+========================= */
 function WesternHeading({
   children,
 }: {
@@ -459,13 +618,11 @@ function WesternHeading({
 }) {
   return (
     <div className="mb-5 sm:mb-7">
-
       <h2 className="break-words text-xl font-black uppercase tracking-[-0.04em] sm:text-2xl md:text-3xl">
         {children}
       </h2>
 
       <div className="mt-2.5 h-[3px] w-9 bg-[#75562c] sm:mt-3 sm:w-11" />
-
     </div>
   )
 }
